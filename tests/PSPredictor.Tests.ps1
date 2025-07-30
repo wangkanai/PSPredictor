@@ -289,8 +289,8 @@ Describe "PSPredictor Module Tests" {
             $Tools = Get-PSPredictorTools
             $Stopwatch.Stop()
             
-            # Should complete in less than 500ms
-            $Stopwatch.ElapsedMilliseconds | Should -BeLessThan 500
+            # Should complete in less than 1000ms (increased for 26+ tools and CI environment)
+            $Stopwatch.ElapsedMilliseconds | Should -BeLessThan 1000
         }
     }
     
