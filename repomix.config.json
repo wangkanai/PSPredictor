@@ -27,7 +27,9 @@
   "ignore": {
     "useGitignore": true,
     "useDefaultPatterns": true,
-    "customPatterns": []
+    "customPatterns": [
+      "scripts/"
+    ]
   },
   "security": {
     "enableSecurityCheck": true

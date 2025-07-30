@@ -11,8 +11,8 @@
 #pragma warning disable CA2243
 
 [assembly: System.Reflection.AssemblyVersionAttribute("0.0.0.0")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("0.0.0.7099")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.0+1bbb059e09")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("0.0.0.44828")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.0+af1cc6a94b")]
 #if NETSTANDARD || NETFRAMEWORK || NETCOREAPP
 [System.CodeDom.Compiler.GeneratedCode("Nerdbank.GitVersioning.Tasks","3.6.133.12845")]
 #endif
@@ -22,14 +22,14 @@
 internal static partial class ThisAssembly {
     internal const string AssemblyCompany = "Wangkanai";
     internal const string AssemblyConfiguration = "Debug";
-    internal const string AssemblyFileVersion = "0.0.0.7099";
-    internal const string AssemblyInformationalVersion = "0.0.0+1bbb059e09";
+    internal const string AssemblyFileVersion = "0.0.0.44828";
+    internal const string AssemblyInformationalVersion = "0.0.0+af1cc6a94b";
     internal const string AssemblyName = "PSPredictor";
     internal const string AssemblyProduct = "PSPredictor";
     internal const string AssemblyTitle = "PSPredictor - Advanced PowerShell Command Predictor";
     internal const string AssemblyVersion = "0.0.0.0";
-    internal static readonly System.DateTime GitCommitDate = new System.DateTime(638894935890000000L, System.DateTimeKind.Utc);
-    internal const string GitCommitId = "1bbb059e09cbef024134d7ab0d0f524303609195";
+    internal static readonly System.DateTime GitCommitDate = new System.DateTime(638894945130000000L, System.DateTimeKind.Utc);
+    internal const string GitCommitId = "af1cc6a94be11fdbf72202b0375e494e2de7f0d7";
     internal const bool IsPrerelease = false;
     internal const bool IsPublicRelease = false;
     internal const string RootNamespace = "PSPredictor";

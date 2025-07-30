@@ -13,6 +13,7 @@
         "packagesPath": "/Users/wangkanai/Sources/PSPredictor/packages",
         "outputPath": "/Users/wangkanai/Sources/PSPredictor/src/Core/obj/",
         "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
         "configFilePaths": [
           "/Users/wangkanai/Sources/PSPredictor/NuGet.Config",
           "/Users/wangkanai/.nuget/NuGet/NuGet.Config"
@@ -107,6 +108,7 @@
         "packagesPath": "/Users/wangkanai/Sources/PSPredictor/packages",
         "outputPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor/obj/",
         "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
         "configFilePaths": [
           "/Users/wangkanai/Sources/PSPredictor/NuGet.Config",
           "/Users/wangkanai/.nuget/NuGet/NuGet.Config"
@@ -248,6 +250,7 @@
         "packagesPath": "/Users/wangkanai/Sources/PSPredictor/packages",
         "outputPath": "/Users/wangkanai/Sources/PSPredictor/src/Shared/obj/",
         "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
         "configFilePaths": [
           "/Users/wangkanai/Sources/PSPredictor/NuGet.Config",
           "/Users/wangkanai/.nuget/NuGet/NuGet.Config"

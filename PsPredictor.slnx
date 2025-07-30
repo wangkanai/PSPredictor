@@ -1,14 +1,38 @@
 <Solution>
-  <Project Path="src\PSPredictor\PSPredictor.csproj" />
+  <Folder Name="/.claude/">
+    <File Path="CLAUDE.md" />
+    <File Path="PRD.md" />
+    <File Path="repomix.config.json" />
+  </Folder>
+  <Folder Name="/.github/">
+    <File Path=".github\FUNDING.yml" />
+    <File Path=".github\workflows\test.yml" />
+    <File Path=".github\workflows\publish.yml" />
+  </Folder>
+  <Folder Name="/.solutions/">
+    <File Path="Directory.Packages.props" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="build.ps1" />
+    <File Path="README.md" />
+    <File Path="LICENSE" />
+    <File Path="global.json" />
+    <File Path="nuget.config" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests\AI.Tests\PSPredictor.AI.Tests.csproj" />
+    <Project Path="tests\Completion.Tests\PSPredictor.Completion.Tests.csproj" />
+    <Project Path="tests\Core.Tests\PSPredictor.Core.Tests.csproj" />
+    <Project Path="tests\Performance.Tests\PSPredictor.Performance.Tests.csproj" />
+    <Project Path="tests\UnitTests\PSPredictor.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools\CodeGen\PSPredictor.CodeGen.csproj" />
+    <Project Path="tools\DevTools\PSPredictor.DevTools.csproj" />
+  </Folder>
   <Project Path="src\Core\PSPredictor.Core.csproj" />
+  <Project Path="src\PSPredictor\PSPredictor.csproj" />
   <Project Path="src\Shared\PSPredictor.Shared.csproj" />
-  <Project Path="tests\UnitTests\PSPredictor.UnitTests.csproj" />
-  <Project Path="tests\Core.Tests\PSPredictor.Core.Tests.csproj" />
-  <Project Path="tests\Completion.Tests\PSPredictor.Completion.Tests.csproj" />
-  <Project Path="tests\AI.Tests\PSPredictor.AI.Tests.csproj" />
   <Project Path="tests\Integration.Tests\PSPredictor.Integration.Tests.csproj" />
-  <Project Path="tests\Performance.Tests\PSPredictor.Performance.Tests.csproj" />
   <Project Path="tools\ModelTrainer\PSPredictor.ModelTrainer.csproj" />
-  <Project Path="tools\CodeGen\PSPredictor.CodeGen.csproj" />
-  <Project Path="tools\DevTools\PSPredictor.DevTools.csproj" />
 </Solution>
