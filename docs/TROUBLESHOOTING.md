@@ -145,6 +145,27 @@ Import-Module PSPredictor
 Install-PSPredictor
 ```
 
+### 6. Multiple Tab Handler Edge Case
+
+#### **Symptom**: Install-PSPredictor fails to detect MenuComplete when multiple handlers exist
+
+#### **Root Cause**: Multiple Tab handlers return an array, breaking single-object comparison
+```powershell
+# Problem: This fails when $currentHandler is an array
+if ($currentHandler.Function -eq 'MenuComplete') {
+
+# Solution: Use Where-Object to handle arrays
+if ($currentHandler | Where-Object { $_.Function -eq 'MenuComplete' }) {
+```
+
+#### **Detection**: Check for multiple handlers
+```powershell
+$tabHandlers = Get-PSReadLineKeyHandler | Where-Object { $_.Key -eq 'Tab' }
+if ($tabHandlers.Count -gt 1) {
+    Write-Warning "Multiple Tab handlers detected: $($tabHandlers.Function -join ', ')"
+}
+```
+
 ---
 
 ## 🔧 **Debugging Techniques**
