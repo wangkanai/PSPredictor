@@ -16,7 +16,7 @@ function Register-KubectlCompletion {
         $words = $commandLine -split '\s+' | Where-Object { $_ -ne '' }
         
         # Determine completion level: kubectl <command> <resource> <name> <options>
-        if ($words.Count -eq 1 -or ($words.Count -eq 2 -and [string]::IsNullOrEmpty($wordToComplete) -eq $false -and $words[1] -like "$wordToComplete*")) {
+        if ($words.Count -eq 1 -or ($words.Count -eq 2 -and -not [string]::IsNullOrEmpty($wordToComplete) -and $words[1] -like "$wordToComplete*")) {
             # Completing kubectl commands
             $commands = @(
                 'get', 'describe', 'create', 'delete', 'apply', 'edit', 'patch',

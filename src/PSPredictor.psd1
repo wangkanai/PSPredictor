@@ -30,7 +30,7 @@ CompanyName = 'wangkanai'
 Copyright = '(c) 2025 Sarin Na Wangkanai. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'PowerShell Universal CLI Predictor - Intelligent auto-completion for 26+ popular CLI tools including Git, Docker, npm, Azure, AWS, .NET, Python, AI tools (Claude, Gemini), shells (PowerShell, Zsh, Bash), and more. Cross-platform support for PowerShell 7+ with modular architecture.'
+Description = 'Supercharge your command line productivity with intelligent tab completion for 26+ CLI tools. Supports Git, Docker, npm, kubectl, Azure CLI, AWS CLI, .NET, Python, AI tools (Claude, Gemini), PowerShell/Zsh/Bash shells, and more. Cross-platform PowerShell 7+ module with modular architecture for easy extension.'
 
 # Minimum version of the PowerShell engine required by this module
 PowerShellVersion = '7.0'
@@ -106,7 +106,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('PowerShell', 'CLI', 'Completion', 'TabCompletion', 'Git', 'Docker', 'NPM', 'kubectl', 'Azure', 'AWS', 'Python', 'AI', 'Claude', 'Gemini', 'Homebrew', 'Cross-Platform', 'PowerShell7', 'Podman', 'tmux', 'DotNet', 'GitHub', 'Terraform', 'Bash', 'Zsh', 'Shell')
+        Tags = @('PowerShell', 'CLI', 'Completion', 'TabCompletion', 'AutoComplete', 'Productivity', 'DevOps', 'Git', 'Docker', 'NPM', 'kubectl', 'Azure', 'AWS', 'Python', 'AI', 'Claude', 'Gemini', 'Homebrew', 'Cross-Platform', 'PowerShell7', 'Podman', 'tmux', 'DotNet', 'GitHub', 'Terraform', 'Bash', 'Zsh', 'Shell', 'ArgumentCompleter', 'IntelliSense', 'Terminal', 'CommandLine')
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/wangkanai/PSPredictor/blob/main/LICENSE'
@@ -128,17 +128,21 @@ PrivateData = @{
 
         # Release notes for this module
         ReleaseNotes = @'
-## Version 1.1.0
-- Major expansion: Now supports 26+ CLI tools (was 9)
-- New completion providers: .NET, Claude AI, Gemini AI, GitHub CLI, Podman, tmux, Hyper, OpenAI Codex, Homebrew, npx, pip, pipx, pyenv, Python
-- Shell completion support: PowerShell (pwsh), Zsh, Bash with comprehensive options and configurations
-- Modular architecture for better maintainability and extensibility
-- PowerShell 7+ cross-platform support (Windows, Linux, macOS)
-- Enhanced Git, Docker, npm, Azure, AWS, kubectl, Terraform completions
-- Improved configuration management with per-tool settings
-- Silent module loading with optimized performance
-- Comprehensive test suite with per-tool test organization (67+ tests)
-- Updated documentation with complete tool coverage and shell support
+## Version 1.3.0
+- 🚀 **Production-Ready AWS CLI & kubectl Support**: Comprehensive completions for AWS services (65+ services: S3, EC2, Lambda, IAM, CloudFormation, RDS) and Kubernetes resources (40+ commands, 60+ resources)
+- 🔧 **Enhanced Dotnet Completion**: Robust .NET CLI support with proper subcommand logic for `dotnet add`, `dotnet new`, package management
+- 🧪 **152 Comprehensive Tests**: All completion providers now fully validated with extensive test coverage across all 26+ CLI tools
+- ⚡ **Improved Module Architecture**: Cleaner separation of concerns, better error handling, optimized loading performance
+- 📊 **Better PowerShell Gallery Discovery**: Enhanced keywords, descriptions, and metadata for improved module findability
+- 🔄 **Bug Fixes**: Resolved completion edge cases, improved cross-platform compatibility, enhanced error reporting
+
+## Complete Tool Coverage (26+ Tools)
+- **DevOps**: Git, Docker, kubectl, Azure CLI, AWS CLI, Terraform, GitHub CLI, Podman
+- **Package Managers**: npm, npx, pip, pipx, Homebrew, .NET CLI
+- **AI Tools**: Claude, Gemini, OpenAI Codex
+- **Shell/Terminal**: PowerShell (pwsh), Zsh, Bash, tmux, Hyper
+- **Languages**: Python, pyenv
+- **Cross-Platform**: Windows, Linux, macOS support with PowerShell 7+
 '@
 
     } # End of PSData hashtable
