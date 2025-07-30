@@ -32,15 +32,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup PowerShell (Non-Windows)
-      if: matrix.os != 'windows-latest'
-      uses: azure/powershell@v2
-      with:
-        inlineScript: |
-          Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)"
-          Write-Host "Platform: $($PSVersionTable.Platform)"
-        azPSVersion: "latest"
-        pwsh: true
+    - name: Check PowerShell version
+      shell: pwsh
+      run: |
+        Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)"
+        Write-Host "Platform: $($PSVersionTable.Platform)"
 
     - name: Install required modules
       shell: pwsh
