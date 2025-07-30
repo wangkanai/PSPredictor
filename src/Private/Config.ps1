@@ -89,4 +89,54 @@ $script:SupportedTools = @{
         CompletionScript = 'GitHub-Completion.ps1'
         Enabled = $true
     }
+    'podman' = @{
+        Description = 'Podman container tool'
+        CompletionScript = 'Podman-Completion.ps1'
+        Enabled = $true
+    }
+    'tmux' = @{
+        Description = 'Terminal multiplexer'
+        CompletionScript = 'Tmux-Completion.ps1'
+        Enabled = $true
+    }
+    'hyper' = @{
+        Description = 'Hyper terminal'
+        CompletionScript = 'Hyper-Completion.ps1'
+        Enabled = $true
+    }
+    'codex' = @{
+        Description = 'OpenAI Codex CLI'
+        CompletionScript = 'Codex-Completion.ps1'
+        Enabled = $true
+    }
+    'brew' = @{
+        Description = 'Homebrew package manager'
+        CompletionScript = 'Brew-Completion.ps1'
+        Enabled = $true
+    }
+    'npx' = @{
+        Description = 'Node.js package runner'
+        CompletionScript = 'NPX-Completion.ps1'
+        Enabled = $true
+    }
+    'pip' = @{
+        Description = 'Python package installer'
+        CompletionScript = 'Pip-Completion.ps1'
+        Enabled = $true
+    }
+    'pipx' = @{
+        Description = 'Python application installer'
+        CompletionScript = 'Pipx-Completion.ps1'
+        Enabled = $true
+    }
+    'pyenv' = @{
+        Description = 'Python version manager'
+        CompletionScript = 'Pyenv-Completion.ps1'
+        Enabled = $true
+    }
+    'python' = @{
+        Description = 'Python interpreter'
+        CompletionScript = 'Python-Completion.ps1'
+        Enabled = $true
+    }
 }
