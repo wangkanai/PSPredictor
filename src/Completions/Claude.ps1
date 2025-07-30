@@ -7,7 +7,7 @@
 
 function Register-ClaudeCompletion {
     $ClaudeScriptBlock = {
-        param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+        param($wordToComplete, $commandAst, $cursorPosition)
         
         $completions = @()
         

@@ -7,7 +7,7 @@
 
 function Register-DotnetCompletion {
     $DotnetScriptBlock = {
-        param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+        param($wordToComplete, $commandAst, $cursorPosition)
         
         $completions = @()
         
