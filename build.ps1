@@ -79,18 +79,18 @@ $Tasks = @{
         # Modular directories are now part of the main PSPredictor module
         
         foreach ($file in $FilesToCopy) {
-            $sourcePath = if ($file.FromSrc) { 
+            $fileSourcePath = if ($file.FromSrc) { 
                 Join-Path $SourcePath $file.Source 
             } else { 
                 Join-Path $RootPath $file.Source 
             }
             $destPath = Join-Path $ModulePath $file.Destination
             
-            if (Test-Path $sourcePath) {
-                Copy-Item $sourcePath $destPath -Force
+            if (Test-Path $fileSourcePath) {
+                Copy-Item $fileSourcePath $destPath -Force
                 Write-Verbose "Copied: $($file.Source) -> $($file.Destination)"
             } else {
-                Write-Warning "File not found: $($file.Source) at $sourcePath"
+                Write-Warning "File not found: $($file.Source) at $fileSourcePath"
             }
         }
         
