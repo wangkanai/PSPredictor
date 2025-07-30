@@ -29,10 +29,10 @@
   <Folder Name="/tools/">
     <Project Path="tools\CodeGen\PSPredictor.CodeGen.csproj" />
     <Project Path="tools\DevTools\PSPredictor.DevTools.csproj" />
+    <Project Path="tools\ModelTrainer\PSPredictor.ModelTrainer.csproj" />
   </Folder>
   <Project Path="src\Core\PSPredictor.Core.csproj" />
   <Project Path="src\PSPredictor\PSPredictor.csproj" />
   <Project Path="src\Shared\PSPredictor.Shared.csproj" />
   <Project Path="tests\Integration.Tests\PSPredictor.Integration.Tests.csproj" />
-  <Project Path="tools\ModelTrainer\PSPredictor.ModelTrainer.csproj" />
 </Solution>

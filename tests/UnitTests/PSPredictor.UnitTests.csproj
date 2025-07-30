@@ -14,20 +14,20 @@
 
   <!-- Additional Test Dependencies not in Directory.Build.props -->
   <ItemGroup>
-    <PackageReference Include="AutoFixture" Version="4.18.0" />
-    <PackageReference Include="AutoFixture.Xunit2" Version="4.18.0" />
-    <PackageReference Include="NSubstitute" Version="5.1.0" />
+    <PackageReference Include="AutoFixture" />
+    <PackageReference Include="AutoFixture.Xunit2" />
+    <PackageReference Include="NSubstitute" />
   </ItemGroup>
 
   <!-- PowerShell Testing Dependencies -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.0" />
-    <PackageReference Include="System.Management.Automation" Version="7.4.0" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" />
+    <PackageReference Include="System.Management.Automation" />
   </ItemGroup>
 
   <!-- Additional Test Coverage Tools -->
   <ItemGroup>
-    <PackageReference Include="coverlet.msbuild" Version="6.0.0">
+    <PackageReference Include="coverlet.msbuild">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

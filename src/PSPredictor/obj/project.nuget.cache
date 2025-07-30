@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eAdZlotbowc=",
+  "dgSpecHash": "s+HUeET7tJE=",
   "success": false,
   "projectFilePath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor/PSPredictor.csproj",
   "expectedPackageFiles": [],
@@ -8,12 +8,18 @@
     {
       "code": "NU1507",
       "level": "Error",
-      "message": "Warning As Error: There are 2 package sources defined in your configuration. When using central package management, please map your package sources with package source mapping (https://aka.ms/nuget-package-source-mapping) or specify a single package source. The following sources are defined: nuget.org, PowerShell Gallery"
+      "message": "Warning As Error: There are 2 package sources defined in your configuration. When using central package management, please map your package sources with package source mapping (https://aka.ms/nuget-package-source-mapping) or specify a single package source. The following sources are defined: nuget.org, PowerShell Gallery",
+      "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor/PSPredictor.csproj",
+      "filePath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor/PSPredictor.csproj",
+      "targetGraphs": []
     },
     {
       "code": "NU1008",
       "level": "Error",
-      "message": "Projects that use central package version management should not define the version on the PackageReference items but on the PackageVersion items: Microsoft.PowerShell.SDK;System.Management.Automation;Microsoft.ML;Microsoft.ML.AutoML;Microsoft.ML.Transforms.Text;Microsoft.Data.Sqlite;System.Data.SQLite.Core;Microsoft.Extensions.Configuration;Microsoft.Extensions.Configuration.Json;Microsoft.Extensions.Logging;Microsoft.Extensions.DependencyInjection;System.Text.Json;Newtonsoft.Json;System.Diagnostics.PerformanceCounter;Microsoft.Extensions.Caching.Memory;Microsoft.SourceLink.GitHub;Nerdbank.GitVersioning."
+      "message": "Projects that use central package version management should not define the version on the PackageReference items but on the PackageVersion items: Microsoft.SourceLink.GitHub;Nerdbank.GitVersioning.",
+      "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor/PSPredictor.csproj",
+      "filePath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor/PSPredictor.csproj",
+      "targetGraphs": []
     }
   ]
 }
