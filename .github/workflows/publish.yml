@@ -82,6 +82,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Publish to PowerShell Gallery
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # NOTE: The "production" environment must be configured in GitHub repository settings
+    # Go to: Settings → Environments → New environment → "production"
+    # Add protection rules: required reviewers, deployment branches (main only)
+    # Add the PSGALLERY_API_KEY secret to this environment
     environment: production
     
     steps:
