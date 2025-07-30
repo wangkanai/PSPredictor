@@ -56,6 +56,16 @@ function Register-PSPredictorCompletion {
         'claude' { Register-ClaudeCompletion }
         'gemini' { Register-GeminiCompletion }
         'gh' { Register-GitHubCompletion }
+        'podman' { Register-PodmanCompletion }
+        'tmux' { Register-TmuxCompletion }
+        'hyper' { Register-HyperCompletion }
+        'codex' { Register-CodexCompletion }
+        'brew' { Register-BrewCompletion }
+        'npx' { Register-NPXCompletion }
+        'pip' { Register-PipCompletion }
+        'pipx' { Register-PipxCompletion }
+        'pyenv' { Register-PyenvCompletion }
+        'python' { Register-PythonCompletion }
         default {
             Write-Warning "No completion handler found for tool: $Tool"
         }

@@ -9,7 +9,7 @@
 
 ## ✨ Features
 
-- **🎯 Universal CLI Prediction**: Intelligent auto-completion for 50+ popular command-line tools
+- **🎯 Universal CLI Prediction**: Intelligent auto-completion for 23+ popular command-line tools
 - **⚡ Fast & Lightweight**: Optimized for performance with minimal startup overhead
 - **🔧 Easy Installation**: Single command installation from PowerShell Gallery
 - **🎨 Enhanced UI**: Beautiful tab completion with syntax highlighting
@@ -51,26 +51,37 @@ npm install --save-d<TAB>  # → npm install --save-dev
 
 ## 📦 Supported CLI Tools
 
-### Development Tools
-- **Git**: Branches, commits, remotes, tags
-- **Docker**: Containers, images, volumes, networks
-- **Node.js**: npm, yarn, pnpm, nvm
-- **.NET**: dotnet CLI with all commands and options
+### Container & Infrastructure
+- **Docker**: Complete container management (run, build, images, networks, volumes)
+- **Podman**: Daemonless container tool with full Docker compatibility
+- **Terraform**: Infrastructure as code (plan, apply, destroy, resources)
+- **Kubernetes**: kubectl with resources, namespaces, and context switching
 
-### Cloud & DevOps
-- **Kubernetes**: kubectl with resources and namespaces
-- **Azure**: az CLI with comprehensive service coverage
-- **AWS**: aws CLI with services and parameters
-- **Terraform**: Plan, apply, destroy with resource completion
+### Development Tools
+- **Git**: Comprehensive version control (branches, commits, remotes, tags, workflows)
+- **.NET**: Complete dotnet CLI (new templates, build, test, publish, packages)
+- **Node.js**: npm, npx package management and script execution
+- **Python**: pip, pipx, pyenv for package and version management
+- **Python Interpreter**: Module execution, command-line options
+
+### AI & Code Assistance
+- **Claude AI**: Chat, completion, models, authentication, conversations
+- **Gemini AI**: Generation, models, file operations, multi-modal support
+- **OpenAI Codex**: Code completion and generation
+
+### Cloud Platforms
+- **Azure**: Comprehensive az CLI coverage (compute, storage, networking)
+- **AWS**: Complete aws CLI with services, regions, and parameters
+- **GitHub**: Full gh CLI integration (repos, PRs, issues, workflows, releases)
 
 ### Package Managers
-- **System**: brew, apt, yum, chocolatey, winget
-- **Language**: pip, cargo, gem, composer
+- **Homebrew**: Complete brew commands (install, upgrade, services, cask)
+- **Python**: pip (install, upgrade, requirements), pipx (applications)
+- **Node.js**: npm (packages, scripts), npx (package execution)
 
-### System Tools
-- **File Operations**: ls, cp, mv, rm with intelligent path completion
-- **System Info**: ps, top, df, du with process and file completion
-- **Network**: curl, wget, ssh with URL and host completion
+### Terminal & System
+- **tmux**: Terminal multiplexer (sessions, windows, panes, key bindings)
+- **Hyper**: Modern terminal emulator
 
 ## 🎯 Key Advantages
 
