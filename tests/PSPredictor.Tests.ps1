@@ -88,7 +88,8 @@ Describe "PSPredictor Module Tests" {
     
     Context "Module Import/Export" {
         It "Should import without errors" {
-            { Import-Module PSPredictor -Force } | Should -Not -Throw
+            $ManifestPath = Join-Path (Split-Path -Parent $PSScriptRoot) 'src/PSPredictor.psd1'
+            { Import-Module $ManifestPath -Force } | Should -Not -Throw
         }
         
         It "Should export all expected commands" {

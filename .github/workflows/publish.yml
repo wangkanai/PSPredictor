@@ -45,8 +45,8 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "Installing required PowerShell modules..."
-        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber
-        Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber
+        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber -Quiet
+        Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber -Quiet
         Write-Host "✅ Required modules installed"
 
     - name: Test module manifest
@@ -64,19 +64,17 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "🔍 Testing module import..."
-        Import-Module './src/PSPredictor.psm1' -Force -Verbose
+        Import-Module './src/PSPredictor.psm1' -Force -WarningAction SilentlyContinue
         Write-Host "✅ Module imported successfully"
         
-        Write-Host "🔍 Testing exported functions..."
         $functions = Get-Command -Module PSPredictor
-        Write-Host "✅ Found $($functions.Count) exported functions:"
-        $functions | ForEach-Object { Write-Host "  - $($_.Name)" }
+        Write-Host "✅ Found $($functions.Count) exported functions"
 
     - name: Run build and test
       shell: pwsh
       run: |
         Write-Host "🔨 Running build and test..."
-        ./build.ps1 -Task Test -Verbose
+        ./build.ps1 -Task Test
         Write-Host "✅ Build and test completed successfully"
 
   publish:
@@ -99,8 +97,8 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "Installing PowerShellGet..."
-        Install-Module -Name PowerShellGet -Force -Scope CurrentUser -SkipPublisherCheck
-        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck
+        Install-Module -Name PowerShellGet -Force -Scope CurrentUser -SkipPublisherCheck -Quiet
+        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -Quiet
 
     - name: Get module version
       id: version
@@ -133,7 +131,7 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "🔨 Building module..."
-        ./build.ps1 -Task Build -Verbose
+        ./build.ps1 -Task Build
         Write-Host "✅ Module built successfully"
 
     - name: Publish to PowerShell Gallery
@@ -150,7 +148,7 @@ jobs:
         Write-Host "📤 Publishing PSPredictor v${{ steps.version.outputs.MODULE_VERSION }} to PowerShell Gallery..."
         
         try {
-          ./build.ps1 -Task Publish -ApiKey $env:PSGALLERY_API_KEY -Verbose
+          ./build.ps1 -Task Publish -ApiKey $env:PSGALLERY_API_KEY
           Write-Host "✅ Successfully published PSPredictor v${{ steps.version.outputs.MODULE_VERSION }}"
           Write-Host "🔗 Module available at: https://www.powershellgallery.com/packages/PSPredictor/${{ steps.version.outputs.MODULE_VERSION }}"
         } catch {

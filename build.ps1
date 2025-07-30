@@ -112,9 +112,9 @@ $Tasks = @{
             $PesterModule = Get-Module Pester -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
             if (-not $PesterModule) {
                 Write-Host "📦 Installing Pester..." -ForegroundColor Yellow
-                Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck
+                Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -Quiet
             }
-            Import-Module Pester -Force
+            Import-Module Pester -Force -Quiet
         } catch {
             Write-Warning "Pester not available, falling back to basic tests"
         }
@@ -125,8 +125,9 @@ $Tasks = @{
             
             $PesterConfig = @{
                 Path = $TestsPath
-                Output = 'Detailed'
+                Output = 'Normal'
                 PassThru = $true
+                Quiet = $true
             }
             
             $TestResults = Invoke-Pester @PesterConfig
@@ -159,7 +160,7 @@ $Tasks = @{
                 Write-Host "✅ Module manifest is valid" -ForegroundColor Green
                 
                 # Test module import
-                Import-Module $manifestPath -Force -Verbose:$false
+                Import-Module $manifestPath -Force -Verbose:$false -WarningAction SilentlyContinue
                 Write-Host "✅ Module imports successfully" -ForegroundColor Green
                 
                 # Test exported functions

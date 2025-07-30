@@ -42,7 +42,7 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "Installing required PowerShell modules..."
-        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber
+        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber -Quiet
         Write-Host "✅ Required modules installed"
 
     - name: Test module manifest
@@ -60,13 +60,11 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "🔍 Testing module import..."
-        Import-Module './src/PSPredictor.psm1' -Force -Verbose
+        Import-Module './src/PSPredictor.psm1' -Force -WarningAction SilentlyContinue
         Write-Host "✅ Module imported successfully"
         
-        Write-Host "🔍 Testing exported functions..."
         $functions = Get-Command -Module PSPredictor
-        Write-Host "✅ Found $($functions.Count) exported functions:"
-        $functions | ForEach-Object { Write-Host "  - $($_.Name)" }
+        Write-Host "✅ Found $($functions.Count) exported functions"
 
     - name: Run Pester tests
       shell: pwsh
@@ -75,14 +73,14 @@ jobs:
         
         # Install Pester if not available
         if (-not (Get-Module Pester -ListAvailable)) {
-          Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber
+          Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber -Quiet
         }
-        Import-Module Pester -Force
+        Import-Module Pester -Force -Quiet
         
         # Run tests
         $PesterConfig = @{
           Path = './tests'
-          Output = 'Detailed'
+          Output = 'Normal'
           PassThru = $true
         }
         
@@ -99,7 +97,7 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "🔍 Testing basic functionality..."
-        Import-Module './src/PSPredictor.psm1' -Force
+        Import-Module './src/PSPredictor.psm1' -Force -WarningAction SilentlyContinue
         
         # Test Get-PSPredictorTools
         $tools = Get-PSPredictorTools
@@ -115,7 +113,7 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "🔨 Running build and test..."
-        ./build.ps1 -Task Test -Verbose
+        ./build.ps1 -Task Test
         Write-Host "✅ Build and test completed successfully"
 
     - name: Test module installation (simulation)
