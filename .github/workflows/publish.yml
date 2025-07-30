@@ -4,14 +4,16 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'PSPredictor.psd1'
-      - 'PSPredictor.psm1'
+      - 'src/PSPredictor.psd1'
+      - 'src/PSPredictor.psm1'
+      - 'tests/**'
       - '.github/workflows/publish.yml'
   pull_request:
     branches: [ main ]
     paths:
-      - 'PSPredictor.psd1'
-      - 'PSPredictor.psm1'
+      - 'src/PSPredictor.psd1'
+      - 'src/PSPredictor.psm1'
+      - 'tests/**'
       - '.github/workflows/publish.yml'
   workflow_dispatch:
     inputs:
@@ -45,14 +47,15 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "Installing required PowerShell modules..."
-        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck
+        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber
+        Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber
         Write-Host "✅ Required modules installed"
 
     - name: Test module manifest
       shell: pwsh
       run: |
         Write-Host "🔍 Testing module manifest..."
-        $manifest = Test-ModuleManifest -Path './PSPredictor.psd1'
+        $manifest = Test-ModuleManifest -Path './src/PSPredictor.psd1'
         Write-Host "✅ Module manifest is valid"
         Write-Host "  Name: $($manifest.Name)"
         Write-Host "  Version: $($manifest.Version)"
@@ -63,7 +66,7 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "🔍 Testing module import..."
-        Import-Module './PSPredictor.psm1' -Force -Verbose
+        Import-Module './src/PSPredictor.psm1' -Force -Verbose
         Write-Host "✅ Module imported successfully"
         
         Write-Host "🔍 Testing exported functions..."
