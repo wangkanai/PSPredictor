@@ -224,15 +224,6 @@ The build system includes comprehensive validation:
 - **`.github/workflows/test.yml`**: Cross-platform testing on pull requests
 - **Environment protection**: Production environment with optional review requirements
 
-**Required Repository Secrets:**
-- `PSGALLERY_API_KEY`: PowerShell Gallery API key for automated publishing
-
-**Automated Release Process:**
-1. Developer creates PR with version bump in `PSPredictor.psd1`
-2. Tests run automatically on multiple platforms
-3. On merge to main, workflow publishes to PowerShell Gallery if version is new
-4. GitHub release is created automatically with installation instructions
-
 ## Development Notes
 
 - **PowerShell 7+ Required**: Cross-platform support with PSReadLine dependency
