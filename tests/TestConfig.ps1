@@ -94,13 +94,5 @@ function Remove-MockCLITools {
     }
 }
 
-# Export functions for use in tests
-Export-ModuleMember -Function @(
-    'Get-TestModulePath',
-    'Import-TestModule', 
-    'Remove-TestModule',
-    'Test-FunctionExists',
-    'Test-ModulePerformance',
-    'Mock-CLITools',
-    'Remove-MockCLITools'
-) -Variable 'TestConfig'
+# Functions are available for dot-sourcing
+# Note: Export-ModuleMember not needed when dot-sourcing

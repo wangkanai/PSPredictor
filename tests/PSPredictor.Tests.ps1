@@ -55,7 +55,8 @@ Describe "PSPredictor Module Tests" {
         }
         
         It "Should have required dependencies" {
-            $Manifest.RequiredModules | Should -Contain 'PSReadLine'
+            $RequiredModules = $Manifest.RequiredModules | ForEach-Object { if ($_ -is [string]) { $_ } else { $_.Name } }
+            $RequiredModules | Should -Contain 'PSReadLine'
         }
         
         It "Should export expected functions" {
@@ -257,7 +258,8 @@ Describe "PSPredictor Module Tests" {
         }
         
         It "Should handle invalid tool names" {
-            { Register-PSPredictorCompletion -Tool "" } | Should -Not -Throw
+            # Empty string should throw because it's a required parameter
+            { Register-PSPredictorCompletion -Tool "" } | Should -Throw
         }
         
         It "Should handle null/empty configurations" {

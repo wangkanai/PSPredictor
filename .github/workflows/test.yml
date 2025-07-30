@@ -3,6 +3,11 @@ name: Test Module
 on:
   pull_request:
     branches: [ main ]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - '.github/workflows/test.yml'
+      - 'build.ps1'
   workflow_dispatch:
 
 permissions:
@@ -48,7 +53,7 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "🔍 Testing module manifest..."
-        $manifest = Test-ModuleManifest -Path './PSPredictor.psd1'
+        $manifest = Test-ModuleManifest -Path './src/PSPredictor.psd1'
         Write-Host "✅ Module manifest is valid"
         Write-Host "  Name: $($manifest.Name)"
         Write-Host "  Version: $($manifest.Version)"
@@ -59,7 +64,7 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "🔍 Testing module import..."
-        Import-Module './PSPredictor.psm1' -Force -Verbose
+        Import-Module './src/PSPredictor.psm1' -Force -Verbose
         Write-Host "✅ Module imported successfully"
         
         Write-Host "🔍 Testing exported functions..."
@@ -67,11 +72,38 @@ jobs:
         Write-Host "✅ Found $($functions.Count) exported functions:"
         $functions | ForEach-Object { Write-Host "  - $($_.Name)" }
 
+    - name: Run Pester tests
+      shell: pwsh
+      run: |
+        Write-Host "🧪 Running Pester tests..."
+        
+        # Install Pester if not available
+        if (-not (Get-Module Pester -ListAvailable)) {
+          Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber
+        }
+        Import-Module Pester -Force
+        
+        # Run tests
+        $PesterConfig = @{
+          Path = './tests'
+          Output = 'Detailed'
+          PassThru = $true
+        }
+        
+        $TestResults = Invoke-Pester @PesterConfig
+        
+        if ($TestResults.FailedCount -gt 0) {
+          Write-Error "❌ $($TestResults.FailedCount) test(s) failed"
+          exit 1
+        }
+        
+        Write-Host "✅ All $($TestResults.PassedCount) Pester tests passed" -ForegroundColor Green
+
     - name: Test basic functionality
       shell: pwsh
       run: |
         Write-Host "🔍 Testing basic functionality..."
-        Import-Module './PSPredictor.psm1' -Force
+        Import-Module './src/PSPredictor.psm1' -Force
         
         # Test Get-PSPredictorTools
         $tools = Get-PSPredictorTools

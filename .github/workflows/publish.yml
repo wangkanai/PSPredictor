@@ -24,7 +24,8 @@ on:
         type: boolean
 
 permissions:
-  contents: read
+  contents: write  # Required for creating releases
+  packages: read
 
 jobs:
   test:
@@ -111,7 +112,7 @@ jobs:
       id: version
       shell: pwsh
       run: |
-        $manifest = Import-PowerShellDataFile -Path './PSPredictor.psd1'
+        $manifest = Import-PowerShellDataFile -Path './src/PSPredictor.psd1'
         $version = $manifest.ModuleVersion
         Write-Host "Module version: $version"
         Write-Output "MODULE_VERSION=$version" >> $env:GITHUB_OUTPUT
@@ -165,12 +166,10 @@ jobs:
 
     - name: Create GitHub Release
       if: steps.version_check.outputs.VERSION_EXISTS == 'false' || github.event.inputs.force_publish == 'true'
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
       with:
         tag_name: "v${{ steps.version.outputs.MODULE_VERSION }}"
-        release_name: "PSPredictor v${{ steps.version.outputs.MODULE_VERSION }}"
+        name: "PSPredictor v${{ steps.version.outputs.MODULE_VERSION }}"
         body: |
           ## PSPredictor v${{ steps.version.outputs.MODULE_VERSION }}
           
@@ -187,8 +186,16 @@ jobs:
           - 📦 [PowerShell Gallery](https://www.powershellgallery.com/packages/PSPredictor/${{ steps.version.outputs.MODULE_VERSION }})
           - 📚 [Documentation](https://github.com/wangkanai/PSPredictor#readme)
           - 🐛 [Report Issues](https://github.com/wangkanai/PSPredictor/issues)
+          
+          ### What's Changed
+          - Enhanced PowerShell CLI completions
+          - Cross-platform compatibility improvements
+          - Performance optimizations
+          
+          **Full Changelog**: https://github.com/wangkanai/PSPredictor/commits/v${{ steps.version.outputs.MODULE_VERSION }}
         draft: false
         prerelease: false
+        generate_release_notes: true
 
     - name: Skip publishing (version exists)
       if: steps.version_check.outputs.VERSION_EXISTS == 'true' && github.event.inputs.force_publish != 'true'

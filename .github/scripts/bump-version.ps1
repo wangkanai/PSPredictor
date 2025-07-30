@@ -27,7 +27,7 @@ param(
     
     [string]$Version,
     
-    [string]$ManifestPath = './PSPredictor.psd1'
+    [string]$ManifestPath = './src/PSPredictor.psd1'
 )
 
 # Ensure manifest exists
@@ -123,6 +123,6 @@ try {
 Write-Host ""
 Write-Host "🎉 Version bump completed successfully!" -ForegroundColor Magenta
 Write-Host "💡 Commit and push changes to trigger automated publishing:" -ForegroundColor Yellow
-Write-Host "   git add PSPredictor.psd1" -ForegroundColor Gray
+Write-Host "   git add src/PSPredictor.psd1" -ForegroundColor Gray
 Write-Host "   git commit -m 'Bump version to $newVersion'" -ForegroundColor Gray
 Write-Host "   git push origin main" -ForegroundColor Gray

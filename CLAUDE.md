@@ -62,7 +62,7 @@ $env:PSGALLERY_API_KEY = "your-api-key"
 ### Development Workflow
 ```powershell
 # Import module for testing during development
-Import-Module ./PSPredictor.psm1 -Force
+Import-Module ./src/PSPredictor.psm1 -Force
 
 # Test basic functionality
 Get-PSPredictorTools
@@ -72,27 +72,61 @@ Install-PSPredictor
 git <TAB>
 docker <TAB>
 npm <TAB>
+
+# Run tests
+./build.ps1 -Task Test
+
+# Run specific Pester tests
+Invoke-Pester ./tests/PSPredictor.Tests.ps1
+Invoke-Pester ./tests/Completions.Tests.ps1
 ```
 
 ## Architecture Overview
 
+### Project Structure
+
+```
+PSPredictor/
+├── src/                          # Source code
+│   ├── PSPredictor.psd1         # Module manifest
+│   └── PSPredictor.psm1         # Main module file
+├── tests/                        # Pester tests
+│   ├── PSPredictor.Tests.ps1    # Core module tests
+│   ├── Completions.Tests.ps1    # Completion functionality tests
+│   └── TestConfig.ps1           # Test configuration and helpers
+├── .github/
+│   ├── workflows/               # GitHub Actions
+│   │   ├── publish.yml         # Automated publishing
+│   │   └── test.yml            # Cross-platform testing
+│   └── scripts/
+│       └── bump-version.ps1    # Version management utility
+└── build.ps1                   # Build automation script
+```
+
 ### Core Components
 
-**PSPredictor.psd1** - Module manifest containing:
+**src/PSPredictor.psd1** - Module manifest containing:
 - Module metadata and versioning
 - Function exports and dependencies
 - PowerShell Gallery publishing information
 - Requires PSReadLine module
 
-**PSPredictor.psm1** - Main module file with:
+**src/PSPredictor.psm1** - Main module file with:
 - Configuration management (`$script:PSPredictorConfig`)
 - Tool registry (`$script:SupportedTools`) with 10+ CLI tools
 - Core installation/management functions
 - Individual completion registration functions
 - Built-in completion implementations for Git, Docker, NPM
 
+**tests/** - Comprehensive test suite:
+- Pester-based testing framework
+- Module validation and functionality tests
+- Completion behavior testing
+- Cross-platform compatibility tests
+
 **build.ps1** - Comprehensive build automation:
 - Multi-task build system (Build, Test, Package, Clean, Install, All)
+- Pester test integration
 - Module validation and testing
 - Package creation for distribution
 - Local installation support
