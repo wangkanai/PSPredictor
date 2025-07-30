@@ -7,31 +7,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor", "src\PSPredictor\PSPredictor.csproj", "{3148E7D0-C26A-421C-A9E8-2A53F16DC570}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Core", "src\PSPredictor.Core\PSPredictor.Core.csproj", "{254AE52F-4935-4A07-823A-F55834F6F4DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Core", "src\Core\PSPredictor.Core.csproj", "{254AE52F-4935-4A07-823A-F55834F6F4DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Shared", "src\PSPredictor.Shared\PSPredictor.Shared.csproj", "{337FC8FC-F0AC-4B8C-B29C-6DBE91B0B5E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Shared", "src\Shared\PSPredictor.Shared.csproj", "{337FC8FC-F0AC-4B8C-B29C-6DBE91B0B5E3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Tests", "tests\PSPredictor.Tests\PSPredictor.Tests.csproj", "{B58BA7B8-06A8-4699-8337-8CFE13274A56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Tests", "tests\UnitTests\PSPredictor.UnitTests.csproj", "{B58BA7B8-06A8-4699-8337-8CFE13274A56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Core.Tests", "tests\PSPredictor.Core.Tests\PSPredictor.Core.Tests.csproj", "{EA562F74-C489-4BC2-A4BD-DEE160327C60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Core.Tests", "tests\Core.Tests\PSPredictor.Core.Tests.csproj", "{EA562F74-C489-4BC2-A4BD-DEE160327C60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Completion.Tests", "tests\PSPredictor.Completion.Tests\PSPredictor.Completion.Tests.csproj", "{D6440F51-A910-4BE9-8F49-9219B306DCF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Completion.Tests", "tests\Completion.Tests\PSPredictor.Completion.Tests.csproj", "{D6440F51-A910-4BE9-8F49-9219B306DCF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.AI.Tests", "tests\PSPredictor.AI.Tests\PSPredictor.AI.Tests.csproj", "{E7E89E93-6F3B-4CB5-A4A7-53BA04FD384E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.AI.Tests", "tests\AI.Tests\PSPredictor.AI.Tests.csproj", "{E7E89E93-6F3B-4CB5-A4A7-53BA04FD384E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Integration.Tests", "tests\PSPredictor.Integration.Tests\PSPredictor.Integration.Tests.csproj", "{EB069373-A37B-45EC-9C4D-85F87ECDBBC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Integration.Tests", "tests\Integration.Tests\PSPredictor.Integration.Tests.csproj", "{EB069373-A37B-45EC-9C4D-85F87ECDBBC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Performance.Tests", "tests\PSPredictor.Performance.Tests\PSPredictor.Performance.Tests.csproj", "{602A5D09-8188-4337-8363-392AC54DF56E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.Performance.Tests", "tests\Performance.Tests\PSPredictor.Performance.Tests.csproj", "{602A5D09-8188-4337-8363-392AC54DF56E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{07C2787E-EAC7-C090-1BA3-A61EC2A24D84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.ModelTrainer", "tools\PSPredictor.ModelTrainer\PSPredictor.ModelTrainer.csproj", "{13314F51-6E6E-434C-A6CE-519E161B1D66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.ModelTrainer", "tools\ModelTrainer\PSPredictor.ModelTrainer.csproj", "{13314F51-6E6E-434C-A6CE-519E161B1D66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.CodeGen", "tools\PSPredictor.CodeGen\PSPredictor.CodeGen.csproj", "{55FD5922-E273-485B-AA7B-9C4852AB6559}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.CodeGen", "tools\CodeGen\PSPredictor.CodeGen.csproj", "{55FD5922-E273-485B-AA7B-9C4852AB6559}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.DevTools", "tools\PSPredictor.DevTools\PSPredictor.DevTools.csproj", "{5CAB5860-7525-4E6C-BBA0-A5316B0FBC41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSPredictor.DevTools", "tools\DevTools\PSPredictor.DevTools.csproj", "{5CAB5860-7525-4E6C-BBA0-A5316B0FBC41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

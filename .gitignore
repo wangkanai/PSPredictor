@@ -6,12 +6,12 @@ dist/
 packages/
 *.zip
 *.nupkg
+bin/
+obj/
 
 ## PowerShell Module Directories
 # User installed modules
-Documents/PowerShell/Modules/
-Documents/WindowsPowerShell/Modules/
-.local/share/powershell/Modules/
+
 
 # Module cache and temporary files
 *.tmp

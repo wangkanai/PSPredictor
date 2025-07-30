@@ -71,8 +71,8 @@
 
   <!-- Project References -->
   <ItemGroup>
-    <ProjectReference Include="../PSPredictor.Core/PSPredictor.Core.csproj" />
-    <ProjectReference Include="../PSPredictor.Shared/PSPredictor.Shared.csproj" />
+    <ProjectReference Include="../Core/PSPredictor.Core.csproj" />
+    <ProjectReference Include="../Shared/PSPredictor.Shared.csproj" />
   </ItemGroup>
 
   <!-- Embedded ML Models -->
