@@ -166,7 +166,7 @@ function Register-KubectlCompletion {
                     }
                 }
                 'rollout' {
-                    if ($words.Count -eq 2 -or ($words.Count -eq 3 -and -not $wordToComplete.StartsWith('-'))) {
+                    if (($words.Count -eq 2) -or ($words.Count -eq 3 -and [string]::IsNullOrEmpty($wordToComplete)) -or ($words.Count -eq 3 -and -not $wordToComplete.StartsWith('-'))) {
                         # Rollout subcommands
                         $rolloutCommands = @('status', 'history', 'undo', 'pause', 'resume', 'restart')
                         $completions += $rolloutCommands | Where-Object { $_ -like "$wordToComplete*" } |
@@ -174,7 +174,7 @@ function Register-KubectlCompletion {
                     }
                 }
                 'config' {
-                    if ($words.Count -eq 2 -or ($words.Count -eq 3 -and -not $wordToComplete.StartsWith('-'))) {
+                    if (($words.Count -eq 2) -or ($words.Count -eq 3 -and [string]::IsNullOrEmpty($wordToComplete)) -or ($words.Count -eq 3 -and -not $wordToComplete.StartsWith('-'))) {
                         # Config subcommands
                         $configCommands = @(
                             'current-context', 'delete-cluster', 'delete-context', 'delete-user',
@@ -187,7 +187,7 @@ function Register-KubectlCompletion {
                     }
                 }
                 'top' {
-                    if ($words.Count -eq 2 -or ($words.Count -eq 3 -and -not $wordToComplete.StartsWith('-'))) {
+                    if (($words.Count -eq 2) -or ($words.Count -eq 3 -and [string]::IsNullOrEmpty($wordToComplete)) -or ($words.Count -eq 3 -and -not $wordToComplete.StartsWith('-'))) {
                         # Top resources
                         $topResources = @('nodes', 'no', 'pods', 'po')
                         $completions += $topResources | Where-Object { $_ -like "$wordToComplete*" } |
