@@ -29,10 +29,8 @@
     <!-- ML.NET Packages -->
     <PackageVersion Include="Microsoft.ML" Version="3.0.1" />
     <PackageVersion Include="Microsoft.ML.AutoML" Version="0.21.1" />
-    <PackageVersion Include="Microsoft.ML.Transforms.Text" Version="3.0.1" />
     <PackageVersion Include="Microsoft.ML.FastTree" Version="3.0.1" />
     <PackageVersion Include="Microsoft.ML.LightGbm" Version="3.0.1" />
-    <PackageVersion Include="Microsoft.ML.TestFramework" Version="3.0.1" />
 
     <!-- Database Packages (Updated for .NET 9.0) -->
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="9.0.0" />
@@ -72,5 +70,9 @@
     <PackageVersion Include="CsvHelper" Version="33.0.1" />
     <PackageVersion Include="CliWrap" Version="3.6.6" />
     <PackageVersion Include="System.IO.Abstractions" Version="21.1.3" />
+
+    <!-- Source Control and Versioning -->
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+    <PackageVersion Include="Nerdbank.GitVersioning" Version="3.6.133" />
   </ItemGroup>
 </Project>

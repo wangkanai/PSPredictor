@@ -23,6 +23,7 @@
     <Project Path="tests\AI.Tests\PSPredictor.AI.Tests.csproj" />
     <Project Path="tests\Completion.Tests\PSPredictor.Completion.Tests.csproj" />
     <Project Path="tests\Core.Tests\PSPredictor.Core.Tests.csproj" />
+    <Project Path="tests\Integration.Tests\PSPredictor.Integration.Tests.csproj" />
     <Project Path="tests\Performance.Tests\PSPredictor.Performance.Tests.csproj" />
     <Project Path="tests\UnitTests\PSPredictor.UnitTests.csproj" />
   </Folder>
@@ -34,5 +35,4 @@
   <Project Path="src\Core\PSPredictor.Core.csproj" />
   <Project Path="src\PSPredictor\PSPredictor.csproj" />
   <Project Path="src\Shared\PSPredictor.Shared.csproj" />
-  <Project Path="tests\Integration.Tests\PSPredictor.Integration.Tests.csproj" />
 </Solution>

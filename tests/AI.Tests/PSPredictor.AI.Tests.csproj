@@ -12,38 +12,17 @@
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <!-- Test Framework Dependencies -->
+  <!-- Test-specific Dependencies (common test dependencies provided by Directory.Build.targets) -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="FluentAssertions" />
     <PackageReference Include="AutoFixture" />
     <PackageReference Include="AutoFixture.Xunit2" />
+    <PackageReference Include="NSubstitute" />
   </ItemGroup>
 
   <!-- ML.NET Testing Dependencies -->
   <ItemGroup>
     <PackageReference Include="Microsoft.ML" />
     <PackageReference Include="Microsoft.ML.AutoML" />
-    <PackageReference Include="Microsoft.ML.TestFramework" />
-  </ItemGroup>
-
-  <!-- Mocking Dependencies -->
-  <ItemGroup>
-    <PackageReference Include="Moq" />
-    <PackageReference Include="NSubstitute" />
-  </ItemGroup>
-
-  <!-- Test Coverage -->
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
   </ItemGroup>
 
   <!-- Project References -->

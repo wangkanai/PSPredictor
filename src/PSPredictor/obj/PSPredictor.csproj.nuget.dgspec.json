@@ -29,11 +29,7 @@
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
-            "projectReferences": {
-              "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj": {
-                "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -71,12 +67,14 @@
             "Microsoft.SourceLink.GitHub": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.0, )",
+              "versionCentrallyManaged": true
             },
             "Nerdbank.GitVersioning": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.6.133, )"
+              "version": "[3.6.133, )",
+              "versionCentrallyManaged": true
             },
             "System.Management.Automation": {
               "target": "Package",
@@ -124,7 +122,9 @@
             "Microsoft.ML.Transforms.Text": "3.0.1",
             "Microsoft.NET.Test.Sdk": "17.11.1",
             "Microsoft.PowerShell.SDK": "7.4.6",
+            "Microsoft.SourceLink.GitHub": "8.0.0",
             "Moq": "4.20.72",
+            "Nerdbank.GitVersioning": "3.6.133",
             "Newtonsoft.Json": "13.0.3",
             "NSubstitute": "5.1.0",
             "Scriban": "5.10.0",
@@ -262,12 +262,14 @@
             "Microsoft.SourceLink.GitHub": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.0, )",
+              "versionCentrallyManaged": true
             },
             "Nerdbank.GitVersioning": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.6.133, )"
+              "version": "[3.6.133, )",
+              "versionCentrallyManaged": true
             },
             "Newtonsoft.Json": {
               "target": "Package",
@@ -330,7 +332,9 @@
             "Microsoft.ML.Transforms.Text": "3.0.1",
             "Microsoft.NET.Test.Sdk": "17.11.1",
             "Microsoft.PowerShell.SDK": "7.4.6",
+            "Microsoft.SourceLink.GitHub": "8.0.0",
             "Moq": "4.20.72",
+            "Nerdbank.GitVersioning": "3.6.133",
             "Newtonsoft.Json": "13.0.3",
             "NSubstitute": "5.1.0",
             "Scriban": "5.10.0",
@@ -416,12 +420,14 @@
             "Microsoft.SourceLink.GitHub": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.0, )",
+              "versionCentrallyManaged": true
             },
             "Nerdbank.GitVersioning": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.6.133, )"
+              "version": "[3.6.133, )",
+              "versionCentrallyManaged": true
             },
             "System.Text.Json": {
               "target": "Package",
@@ -464,7 +470,9 @@
             "Microsoft.ML.Transforms.Text": "3.0.1",
             "Microsoft.NET.Test.Sdk": "17.11.1",
             "Microsoft.PowerShell.SDK": "7.4.6",
+            "Microsoft.SourceLink.GitHub": "8.0.0",
             "Moq": "4.20.72",
+            "Nerdbank.GitVersioning": "3.6.133",
             "Newtonsoft.Json": "13.0.3",
             "NSubstitute": "5.1.0",
             "Scriban": "5.10.0",
