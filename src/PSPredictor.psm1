@@ -455,8 +455,7 @@ New-Alias -Name psp -Value Get-PSPredictorTools -Force
 
 # Auto-install on import if enabled
 if ($script:PSPredictorConfig.Enabled) {
-    Write-Host "🎯 PSPredictor loaded! Enhanced CLI completions ready." -ForegroundColor Cyan
-    Write-Host "💡 Run 'Install-PSPredictor' to enable all completions." -ForegroundColor Yellow
+    # Module loaded silently - use Install-PSPredictor to enable completions
 }
 
 #endregion
