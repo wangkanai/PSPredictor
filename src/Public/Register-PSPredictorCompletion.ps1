@@ -53,6 +53,9 @@ function Register-PSPredictorCompletion {
         'aws' { Register-AWSCompletion }
         'dotnet' { Register-DotnetCompletion }
         'terraform' { Register-TerraformCompletion }
+        'claude' { Register-ClaudeCompletion }
+        'gemini' { Register-GeminiCompletion }
+        'gh' { Register-GitHubCompletion }
         default {
             Write-Warning "No completion handler found for tool: $Tool"
         }

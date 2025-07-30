@@ -74,4 +74,19 @@ $script:SupportedTools = @{
         CompletionScript = 'Terraform-Completion.ps1'
         Enabled = $true
     }
+    'claude' = @{
+        Description = 'Claude AI CLI'
+        CompletionScript = 'Claude-Completion.ps1'
+        Enabled = $true
+    }
+    'gemini' = @{
+        Description = 'Google Gemini AI CLI'
+        CompletionScript = 'Gemini-Completion.ps1'
+        Enabled = $true
+    }
+    'gh' = @{
+        Description = 'GitHub CLI'
+        CompletionScript = 'GitHub-Completion.ps1'
+        Enabled = $true
+    }
 }
