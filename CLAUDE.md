@@ -4,86 +4,84 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-PSPredictor is a PowerShell module that provides comprehensive auto-completion and intelligent prediction for 26+ popular command-line tools. It's designed to enhance PowerShell's tab completion experience with context-aware suggestions for tools like Git, Docker, NPM, kubectl, Azure CLI, AWS CLI, PowerShell Core, Zsh, Bash, and many others.
+PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET that transforms the PowerShell command-line experience into a comprehensive IDE within the terminal. It provides intelligent auto-completion, syntax highlighting, error indication, multi-line editing, predictive IntelliSense, and advanced editing capabilities for 26+ popular command-line tools.
+
+**⚠️ MAJOR VERSION TRANSITION**: This is v2.0 - a complete rewrite from PowerShell scripts to C# binary module. For v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`.
 
 ## Development Commands
 
 ### Building and Testing
-```powershell
-# Build the module (default task)
-./build.ps1
+```bash
+# Build the C# binary module (default configuration: Release)
+dotnet build
 
-# Run all build tasks (clean, build, test, package)
-./build.ps1 -Task All
+# Build specific configuration
+dotnet build --configuration Debug
+dotnet build --configuration Release
 
-# Run specific tasks
-./build.ps1 -Task Clean
-./build.ps1 -Task Build
-./build.ps1 -Task Test
-./build.ps1 -Task Package
+# Run all tests (unit, integration, performance)
+dotnet test
 
-# Build in debug configuration
-./build.ps1 -Task Build -Configuration Debug
+# Run specific test projects
+dotnet test tests/PSPredictor.Core.Tests/
+dotnet test tests/PSPredictor.Completion.Tests/
+dotnet test tests/PSPredictor.AI.Tests/
+dotnet test tests/PSPredictor.Integration.Tests/
+
+# Run tests with coverage
+dotnet test --collect:"XPlat Code Coverage"
+
+# Build NuGet package
+dotnet pack --configuration Release
 
 # Install module locally for testing
-./build.ps1 -Task Install
+dotnet build --configuration Debug
+Import-Module ./src/PSPredictor/bin/Debug/net8.0/PSPredictor.dll -Force
 ```
 
-### Publishing to PowerShell Gallery
-
-**Automated Publishing (Recommended):**
-Publishing is automated via GitHub Actions when code is merged to main branch. The workflow:
-- Tests the module on multiple platforms (Windows, Linux, macOS)
-- Checks if the version already exists in PowerShell Gallery
-- Builds and publishes automatically if version is new
-- Creates GitHub releases with auto-generated notes
-
-**Manual Publishing:**
+### Module Installation and Testing
 ```powershell
-# Publish with API key parameter
-./build.ps1 -Task Publish -ApiKey "your-api-key"
+# Install development build locally
+Install-PSPredictor -Development -Path "./src/PSPredictor/bin/Debug/net8.0/PSPredictor.dll"
 
-# Publish using environment variable (recommended)
-$env:PSGALLERY_API_KEY = "your-api-key"
-./build.ps1 -Task Publish
+# Test core functionality
+Get-PSPredictorStatus
+Enable-PSPredictorMode -Mode Enhanced
 
-# Force publish (overwrite existing version)
-./build.ps1 -Task Publish -Force
-```
+# Test intelligent completion for various tools
+git <TAB>               # Git completion with syntax highlighting
+docker <TAB>            # Docker completion with context awareness
+npm <TAB>               # NPM completion with package suggestions
+kubectl <TAB>           # Kubernetes completion with cluster context
+pwsh <TAB>              # PowerShell Core completion with cmdlet help
+az <TAB>                # Azure CLI completion with subscription context
 
-**Version Management:**
-```powershell
-# Bump version before publishing
-./.github/scripts/bump-version.ps1 -Type Patch    # 1.0.0 → 1.0.1
-./.github/scripts/bump-version.ps1 -Type Minor    # 1.0.1 → 1.1.0
-./.github/scripts/bump-version.ps1 -Type Major    # 1.1.0 → 2.0.0
+# Test advanced editing features
+Set-PSPredictorKeyBinding -Key "Ctrl+Space" -Function "TriggerIntelliSense"
+Set-PSPredictorMode -EditingMode Emacs  # Switch to Emacs mode
+Set-PSPredictorMode -EditingMode Cmd    # Switch to Cmd mode
+
+# Test syntax highlighting and error indication
+Get-PSPredictorSyntaxHighlighting -Command "git status --invalid-flag"
 ```
 
 ### Development Workflow
-```powershell
-# Build and install module for testing during development
-./build.ps1 -Task Build
-./build.ps1 -Task Install
+```bash
+# Full development cycle
+dotnet clean
+dotnet restore
+dotnet build --configuration Debug
+dotnet test
+dotnet pack
 
-# Test basic functionality
-Get-PSPredictorTools
-Register-PSPredictorCompletion -Tool "git"
+# Watch mode for continuous development
+dotnet watch build --project src/PSPredictor/PSPredictor.csproj
 
-# Test specific tool completions
-git <TAB>
-docker <TAB>
-npm <TAB>
-pwsh <TAB>  # PowerShell Core
-zsh <TAB>   # Zsh shell
-bash <TAB>  # Bash shell
+# Performance testing
+dotnet run --project tests/PSPredictor.Performance.Tests/
 
-# Run all tests (145+ tests)
-./build.ps1 -Task Test
-
-# Run specific Pester test suites
-Invoke-Pester ./tests/PSPredictor.Tests.ps1
-Invoke-Pester ./tests/Public/
-Invoke-Pester ./tests/Completions/
+# AI model training and validation
+dotnet run --project tools/PSPredictor.ModelTrainer/ -- --validate-models
 ```
 
 ## Architecture Overview
@@ -92,145 +90,390 @@ Invoke-Pester ./tests/Completions/
 
 ```
 PSPredictor/
-├── src/                          # Source code
-│   ├── PSPredictor.psd1         # Module manifest
-│   ├── PSPredictor.psm1         # Main module loader
-│   ├── Public/                  # Exported functions (4 functions)
-│   │   ├── Get-PSPredictorTools.ps1
-│   │   ├── Install-PSPredictor.ps1
-│   │   ├── Register-PSPredictorCompletion.ps1
-│   │   └── Uninstall-PSPredictor.ps1
-│   ├── Private/                 # Internal functions
-│   │   └── Config.ps1           # Tool configuration
-│   └── Completions/             # CLI completion providers (26+ tools)
-│       ├── Azure.ps1, AWS.ps1, Git.ps1, Docker.ps1
-│       ├── PowerShell.ps1, Zsh.ps1, Bash.ps1
-│       ├── NPM.ps1, Kubectl.ps1, Terraform.ps1
-│       └── ... (20+ more tools)
-├── tests/                        # Pester tests (145+ tests)
-│   ├── PSPredictor.Tests.ps1    # Core module tests
-│   ├── Public/                  # Public function tests
-│   ├── Private/                 # Private function tests
-│   ├── Completions/             # CLI completion tests (17 test files)
-│   └── TestConfig.ps1           # Test configuration and helpers
+├── src/                                    # Source code (C# .NET 8.0)
+│   ├── PSPredictor/                       # Main binary module project
+│   │   ├── PSPredictor.csproj            # Primary project file
+│   │   ├── Module/                        # PowerShell module definition
+│   │   │   ├── PSPredictor.psd1          # Module manifest
+│   │   │   └── PSPredictor.psm1          # Module loader script
+│   │   ├── Cmdlets/                       # PowerShell cmdlet implementations
+│   │   │   ├── BaseCmdlet.cs             # Base cmdlet with common functionality
+│   │   │   ├── GetPSPredictorStatusCmdlet.cs
+│   │   │   ├── SetPSPredictorModeCmdlet.cs
+│   │   │   └── InstallPSPredictorCmdlet.cs
+│   │   ├── Core/                          # Core engine components
+│   │   │   ├── PredictionEngine.cs       # Main prediction orchestrator
+│   │   │   ├── CompletionProvider.cs     # Completion generation system
+│   │   │   ├── SyntaxHighlighter.cs      # Real-time syntax highlighting
+│   │   │   ├── ErrorIndicator.cs         # Visual error indication
+│   │   │   └── CommandHistory.cs         # SQLite-based command history
+│   │   ├── AI/                            # AI-powered prediction system
+│   │   │   ├── MLPredictionEngine.cs     # ML.NET integration
+│   │   │   ├── Models/                    # Embedded ML models
+│   │   │   │   ├── CommandPrediction.zip # Core command prediction model
+│   │   │   │   ├── ParameterPrediction.zip # Parameter completion model
+│   │   │   │   └── ContextAwareness.zip  # Context-aware suggestions model
+│   │   │   └── Training/                  # Model training infrastructure
+│   │   │       ├── DataPipeline.cs       # Training data processing
+│   │   │       └── ModelBuilder.cs       # ML model construction
+│   │   ├── Input/                         # Native input handling system
+│   │   │   ├── KeyHandler.cs             # Custom key binding system
+│   │   │   ├── EditingModes/             # Cmd/Emacs/Vi editing modes
+│   │   │   │   ├── CmdMode.cs            # Windows Cmd-style editing
+│   │   │   │   ├── EmacsMode.cs          # Emacs-style key bindings
+│   │   │   │   └── ViMode.cs             # Vi/Vim-style editing
+│   │   │   ├── KillRing.cs               # Emacs-style clipboard system
+│   │   │   ├── TokenNavigation.cs        # PowerShell token-based navigation
+│   │   │   └── MultiLineEditor.cs        # Advanced multi-line editing
+│   │   ├── Rendering/                     # Console rendering system
+│   │   │   ├── ANSIRenderer.cs           # Cross-platform ANSI rendering
+│   │   │   ├── SyntaxColorizer.cs        # Command-line syntax coloring
+│   │   │   ├── IntelliSenseDisplay.cs    # Predictive IntelliSense UI
+│   │   │   └── DynamicHelpRenderer.cs    # Real-time help display
+│   │   ├── Completions/                   # CLI tool completion providers
+│   │   │   ├── BaseCompletion.cs         # Base completion provider
+│   │   │   ├── Git/                       # Git completion system
+│   │   │   │   ├── GitCompletion.cs      # Main Git provider
+│   │   │   │   ├── Commands/             # Git command completions
+│   │   │   │   └── Context/              # Git context awareness
+│   │   │   ├── Docker/                    # Docker completion system
+│   │   │   ├── Azure/                     # Azure CLI completion
+│   │   │   ├── AWS/                       # AWS CLI completion
+│   │   │   ├── Kubernetes/                # kubectl completion
+│   │   │   ├── PowerShell/                # PowerShell Core completion
+│   │   │   ├── Shells/                    # Shell completions (Zsh/Bash)
+│   │   │   └── [22+ other tools]/        # Additional CLI tool providers
+│   │   ├── Configuration/                 # Configuration management
+│   │   │   ├── PSPredictorConfig.cs      # Main configuration system
+│   │   │   ├── UserSettings.cs           # User preference management
+│   │   │   └── Profiles/                  # Configuration profiles
+│   │   └── Utilities/                     # Shared utilities
+│   │       ├── PowerShellASTParser.cs    # PowerShell AST analysis
+│   │       ├── CrossPlatformSupport.cs   # Platform compatibility
+│   │       └── PerformanceMonitor.cs     # Performance tracking
+│   ├── PSPredictor.Core/                  # Core library (shared components)
+│   │   ├── PSPredictor.Core.csproj      # Core library project
+│   │   ├── Interfaces/                    # Core interfaces and contracts
+│   │   ├── Models/                        # Data models and DTOs
+│   │   └── Extensions/                    # Extension methods
+│   └── PSPredictor.Shared/                # Shared utilities
+│       ├── PSPredictor.Shared.csproj    # Shared utilities project
+│       ├── Constants/                     # Application constants
+│       └── Helpers/                       # Common helper methods
+├── tests/                                  # Test projects (xUnit + FluentAssertions)
+│   ├── PSPredictor.Tests/                # Main module tests
+│   │   ├── PSPredictor.Tests.csproj     # Test project file
+│   │   ├── Cmdlets/                       # Cmdlet testing
+│   │   ├── Core/                          # Core engine tests
+│   │   ├── AI/                            # AI prediction tests
+│   │   ├── Input/                         # Input handling tests
+│   │   ├── Rendering/                     # Rendering system tests
+│   │   └── TestHelpers/                   # Test utilities and mocks
+│   ├── PSPredictor.Core.Tests/           # Core library tests
+│   ├── PSPredictor.Completion.Tests/     # Completion provider tests
+│   ├── PSPredictor.AI.Tests/             # AI/ML model tests
+│   ├── PSPredictor.Integration.Tests/    # Integration testing
+│   └── PSPredictor.Performance.Tests/    # Performance benchmarks
+├── tools/                                  # Development and build tools
+│   ├── PSPredictor.ModelTrainer/         # ML model training tool
+│   ├── PSPredictor.CodeGen/              # Code generation utilities
+│   └── PSPredictor.DevTools/             # Development utilities
+├── docs/                                   # Documentation
+│   ├── PRD.md                            # Product Requirements Document
+│   ├── architecture/                      # Architecture documentation
+│   ├── user-guide/                        # User documentation
+│   └── archives/                          # Archived documentation
+│       └── 2025-07-30-PROJECT.md        # v1.x PowerShell script documentation
 ├── .github/
-│   ├── workflows/               # GitHub Actions
-│   │   ├── publish.yml         # Automated publishing
-│   │   └── test.yml            # Cross-platform testing
-│   └── scripts/
-│       └── bump-version.ps1    # Version management utility
-└── build.ps1                   # Build automation script
+│   ├── workflows/                         # GitHub Actions
+│   │   ├── build-and-test.yml           # CI/CD pipeline
+│   │   ├── publish-nuget.yml            # NuGet package publishing
+│   │   └── performance-tests.yml         # Performance regression testing
+│   └── scripts/                           # GitHub automation scripts
+│       ├── version-bump.ps1             # Version management
+│       └── generate-changelog.ps1        # Changelog generation
+├── PSPredictor.sln                        # Visual Studio solution file
+├── Directory.Build.props                  # MSBuild shared properties
+├── nuget.config                           # NuGet configuration
+└── global.json                            # .NET SDK version specification
 ```
 
-### Core Components
+### Core Architecture Components
 
-**src/PSPredictor.psd1** - Module manifest containing:
-- Module metadata and versioning
-- Function exports and dependencies
-- PowerShell Gallery publishing information
-- Requires PSReadLine module
+**PSPredictor.dll** - Primary binary module containing:
+- PowerShell cmdlet implementations using System.Management.Automation
+- Native input handling system (PSReadLine-independent)
+- AI-powered prediction engine with embedded ML.NET models
+- Cross-platform console rendering with ANSI support
+- Advanced editing modes (Cmd/Emacs/Vi) with customizable key bindings
 
-**src/PSPredictor.psm1** - Main module loader that:
-- Dynamically loads Public/, Private/, and Completions/ functions
-- Exports public functions (Get-PSPredictorTools, Install-PSPredictor, etc.)
-- Manages modular architecture and function discovery
+**AI-Powered Prediction Engine** - ML.NET integration featuring:
+- Embedded models (CommandPrediction.zip, ParameterPrediction.zip, ContextAwareness.zip)
+- Real-time command prediction and parameter suggestion
+- Context-aware completions based on command history and environment
+- Hybrid architecture with core embedded models and optional downloadable enhancements
 
-**src/Private/Config.ps1** - Configuration management with:
-- Tool registry (`$script:SupportedTools`) with 26+ CLI tools  
-- Configuration settings (`$script:PSPredictorConfig`)
-- Tool metadata and enablement status
+**Native Input System** - PSReadLine-independent input handling:
+- Custom key binding system with macro support
+- Multi-modal editing (Cmd/Emacs/Vi modes) with full feature parity
+- Kill-ring system for advanced clipboard functionality
+- Token-based navigation using PowerShell syntax awareness
+- Multi-line editing with sophisticated history management
 
-**src/Completions/*.ps1** - Individual completion providers:
-- 26+ separate completion files (Azure.ps1, Git.ps1, PowerShell.ps1, etc.)
-- Each file contains one Register-{Tool}Completion function
-- Context-aware completion logic for each CLI tool
+**Advanced Rendering System** - Cross-platform console enhancement:
+- Real-time syntax highlighting for PowerShell and CLI tools
+- Visual error indication with contextual error messages
+- Predictive IntelliSense with non-intrusive UI
+- Dynamic help display without losing command-line position
+- ANSI color rendering for consistent cross-platform experience
 
-**tests/** - Comprehensive test suite (145+ tests):
-- Modular test structure matching source organization
-- Pester-based testing framework with 17 test files
-- Public/, Private/, and Completions/ test directories
-- Cross-platform compatibility tests (Windows/Linux/macOS)
-
-**build.ps1** - Comprehensive build automation:
-- Multi-task build system (Build, Test, Package, Clean, Install, All)
-- Pester test integration
-- Module validation and testing
-- Package creation for distribution
-- Local installation support
+**Completion Provider Architecture** - Modular completion system:
+- 26+ CLI tool providers with specialized context awareness
+- Plugin architecture for easy extension and customization
+- Intelligent caching and performance optimization
+- Cross-platform compatibility with tool-specific optimizations
 
 ### Key Architecture Patterns
 
-**Modular Architecture**: Clean separation of concerns with:
-- **Public/**: Exported functions available to users
-- **Private/**: Internal functions and configuration
-- **Completions/**: Individual completion providers (26+ files)
+**Binary Module Architecture**: C# .NET 8.0 PowerShell module with:
+- **Cmdlets/**: PowerShell cmdlet implementations for user interface
+- **Core/**: Core engine components (prediction, completion, syntax, history)
+- **AI/**: Machine learning integration with embedded models
+- **Input/**: Native input handling system with advanced editing modes
+- **Rendering/**: Console rendering and visual enhancement system
+- **Completions/**: Modular CLI tool completion providers
 
-**Tool Registration System**: Each CLI tool is registered in `$script:SupportedTools` (in Private/Config.ps1) with metadata including description, completion script reference, and enabled status.
+**ML.NET Integration**: Local machine learning with:
+- Embedded core models for offline functionality
+- Optional downloadable enhanced models for advanced features
+- Real-time prediction with <100ms response time target
+- Training pipeline for continuous model improvement
 
-**Completion Architecture**: Uses PowerShell's `Register-ArgumentCompleter` with `-Native` parameter. Each tool has its own file in Completions/ with a dedicated registration function (e.g., `Register-GitCompletion`, `Register-PowerShellCompletion`).
+**Cross-Platform Compatibility**: Unified experience across:
+- Windows PowerShell 5.1+ and PowerShell Core 7+
+- Linux with PowerShell Core and terminal emulator support
+- macOS with PowerShell Core and Terminal.app integration
+- Consistent ANSI rendering and input handling across platforms
 
-**Dynamic Loading**: Main module loader automatically discovers and loads:
-- All .ps1 files from Public/, Private/, and Completions/ directories
-- Functions are dot-sourced and available for use
-- Exports only public functions to maintain clean API surface
+**Performance-First Design**: Optimized for speed with:
+- Lazy loading of completion providers and ML models
+- Asynchronous prediction and rendering pipeline
+- SQLite database for efficient command history storage
+- Memory-efficient caching with LRU eviction policies
 
-**Configuration Management**: Centralized configuration in `$script:PSPredictorConfig` supporting:
-- Enable/disable specific tools (26+ CLI tools supported)
-- Completion behavior settings (max suggestions, case sensitivity, fuzzy matching)
-- Shell-specific completions (PowerShell Core, Zsh, Bash)
-- Cross-platform compatibility
+**Configuration Management**: Comprehensive settings system:
+- JSON-based configuration with schema validation
+- Profile system for different use cases (Developer, SysAdmin, etc.)
+- Environment-specific overrides and team settings
+- Real-time configuration updates without restart
 
 ### Extension Points
 
 **Adding New CLI Tools**:
-1. Add tool definition to `$script:SupportedTools` hashtable in `src/Private/Config.ps1`
-2. Create new completion file `src/Completions/{ToolName}.ps1`
-3. Implement `Register-{ToolName}Completion` function in the new file
-4. Add case to the switch statement in `src/Public/Register-PSPredictorCompletion.ps1`
-5. Create test file `tests/Completions/{ToolName}.Tests.ps1`
+1. Create new completion provider in `src/PSPredictor/Completions/{ToolName}/`
+2. Implement `{ToolName}Completion.cs` inheriting from `BaseCompletion`
+3. Add tool registration in `CompletionProvider.cs`
+4. Create test suite in `tests/PSPredictor.Completion.Tests/{ToolName}/`
+5. Update configuration schema in `PSPredictorConfig.cs`
 
-**Completion Function Pattern**:
-```powershell
-function Register-MyToolCompletion {
-    Register-ArgumentCompleter -Native -CommandName mytool -ScriptBlock {
-        param($wordToComplete, $commandAst, $cursorPosition)
-        # Completion logic returning CompletionResult objects
-    }
-}
-```
+**Custom Editing Modes**:
+1. Implement new mode in `src/PSPredictor/Input/EditingModes/{ModeName}Mode.cs`
+2. Inherit from `BaseEditingMode` and implement required key bindings
+3. Register mode in `KeyHandler.cs` mode factory
+4. Add configuration options in `UserSettings.cs`
 
-## Module Structure
+**ML Model Enhancement**:
+1. Create training data pipeline in `tools/PSPredictor.ModelTrainer/`
+2. Implement custom model in `src/PSPredictor/AI/Models/`
+3. Add model loading logic in `MLPredictionEngine.cs`
+4. Create validation tests in `tests/PSPredictor.AI.Tests/`
 
-- **Modular Organization**: Clean separation with Public/, Private/, Completions/ directories
-- **Public Functions**: 4 exported functions for user interaction
-- **Completion Providers**: 26+ individual completion files for CLI tools
-- **Export Strategy**: Only public functions exported for controlled API surface
-- **PowerShell 7+ Requirement**: Cross-platform support with PSReadLine dependency
+## Technology Stack
+
+### Core Technologies
+- **.NET 8.0**: Modern C# with latest language features and performance improvements
+- **PowerShell SDK**: System.Management.Automation for cmdlet development
+- **ML.NET**: Local machine learning with embedded model support
+- **SQLite**: Lightweight database for command history and configuration
+- **xUnit + FluentAssertions**: Comprehensive testing framework
+- **BenchmarkDotNet**: Performance testing and regression detection
+
+### Platform Support
+- **Windows**: PowerShell 5.1+ and PowerShell Core 7+
+- **Linux**: PowerShell Core 7+ with full terminal integration
+- **macOS**: PowerShell Core 7+ with native Terminal.app support
+- **Cross-Platform**: Consistent ANSI rendering and input handling
+
+### Development Tools
+- **Visual Studio 2022** or **Visual Studio Code**: Primary development environment
+- **GitHub Actions**: CI/CD pipeline with automated testing and publishing
+- **NuGet**: Package distribution and dependency management
+- **.NET CLI**: Build automation and project management
 
 ## Testing and Quality
 
-The build system includes comprehensive validation:
-- **145+ Pester tests** across 17 test files with modular structure
-- Module manifest validation with `Test-ModuleManifest`
-- Modular function loading and import testing
-- Public/Private/Completion function verification
-- All 26+ CLI tool completion registration testing
-- Cross-platform compatibility validation
+### Testing Strategy
+- **Unit Tests**: Comprehensive coverage of core components and cmdlets
+- **Integration Tests**: End-to-end testing of completion providers and AI prediction
+- **Performance Tests**: Regression testing with <100ms response time validation
+- **Cross-Platform Tests**: Validation across Windows, Linux, and macOS
 
-## CI/CD Pipeline
+### Quality Metrics
+- **Code Coverage**: Minimum 80% coverage with 90% target for core components
+- **Performance**: <100ms prediction response time, <50ms rendering updates
+- **Memory**: <50MB memory footprint for standard usage patterns
+- **Reliability**: Zero crashes during normal operation, graceful error handling
 
-**GitHub Actions Workflows:**
-- **`.github/workflows/publish.yml`**: Automated publishing to PowerShell Gallery on main branch merges
-- **`.github/workflows/test.yml`**: Cross-platform testing on pull requests
-- **Environment protection**: Production environment with optional review requirements
+### Continuous Integration
+- **Build Pipeline**: Automated builds on all platforms with matrix testing
+- **Test Automation**: Full test suite execution on every pull request
+- **Performance Monitoring**: Automated performance regression detection
+- **Package Publishing**: Automated NuGet publishing on tagged releases
+
+## Development Workflow
+
+### Initial Setup
+```bash
+# Clone repository and initialize development environment
+git clone <repository-url>
+cd PSPredictor
+
+# Restore dependencies and build
+dotnet restore
+dotnet build
+
+# Run initial tests to verify setup
+dotnet test
+
+# Install development build for testing
+dotnet build --configuration Debug
+Import-Module ./src/PSPredictor/bin/Debug/net8.0/PSPredictor.dll -Force
+```
+
+### Development Cycle
+```bash
+# Make code changes
+# Run affected tests
+dotnet test tests/PSPredictor.Tests/ --filter "Category=Core"
+
+# Build and test locally
+dotnet build --configuration Debug
+dotnet test
+
+# Performance validation
+dotnet run --project tests/PSPredictor.Performance.Tests/
+
+# Package for distribution
+dotnet pack --configuration Release
+```
+
+### AI Model Development
+```bash
+# Train new models with updated data
+dotnet run --project tools/PSPredictor.ModelTrainer/ -- --train-all
+
+# Validate model performance
+dotnet run --project tools/PSPredictor.ModelTrainer/ -- --validate-models
+
+# Update embedded models
+dotnet run --project tools/PSPredictor.ModelTrainer/ -- --deploy-models
+```
+
+## Configuration and Customization
+
+### User Configuration
+```powershell
+# Configure editing mode
+Set-PSPredictorMode -EditingMode Emacs
+
+# Customize key bindings
+Set-PSPredictorKeyBinding -Key "Ctrl+Space" -Function "TriggerIntelliSense"
+Set-PSPredictorKeyBinding -Key "Alt+?" -Function "ShowDynamicHelp"
+
+# Configure completion behavior
+Set-PSPredictorCompletion -MaxSuggestions 10 -EnableFuzzyMatching $true
+
+# AI prediction settings
+Set-PSPredictorAI -EnableLocalModels $true -DownloadEnhancedModels $false
+```
+
+### Profile Management
+```powershell
+# Create custom profile
+New-PSPredictorProfile -Name "Developer" -BasedOn "Default"
+
+# Switch profiles
+Set-PSPredictorProfile -Name "Developer"
+
+# Export/import configuration
+Export-PSPredictorConfig -Path "./my-config.json"
+Import-PSPredictorConfig -Path "./my-config.json"
+```
+
+## Performance Optimization
+
+### Response Time Targets
+- **Completion Generation**: <50ms for standard completions
+- **AI Prediction**: <100ms for ML-powered suggestions
+- **Syntax Highlighting**: <20ms for real-time coloring
+- **Multi-line Rendering**: <30ms for complex command structures
+
+### Memory Management
+- **Startup Footprint**: <20MB initial memory usage
+- **Runtime Footprint**: <50MB for typical usage patterns
+- **Model Loading**: Lazy loading with <5MB core models
+- **History Management**: SQLite with automatic cleanup and archiving
+
+### Caching Strategy
+- **Completion Results**: LRU cache with 1000-item capacity
+- **AI Predictions**: Context-aware caching with 5-minute TTL
+- **Syntax Parsing**: AST caching for recently used commands
+- **Configuration**: In-memory caching with file system monitoring
+
+## Distribution and Publishing
+
+### Package Distribution
+- **NuGet Gallery**: Primary distribution channel for stable releases
+- **GitHub Releases**: Development builds and pre-release versions
+- **PowerShell Gallery**: Alternative distribution for PowerShell-focused users
+
+### Version Management
+```bash
+# Version bump utilities
+./tools/version-bump.ps1 -Type Major    # 2.0.0 → 3.0.0
+./tools/version-bump.ps1 -Type Minor    # 2.0.0 → 2.1.0
+./tools/version-bump.ps1 -Type Patch    # 2.0.0 → 2.0.1
+
+# Release preparation
+./tools/prepare-release.ps1 -Version "2.1.0"
+```
+
+### GitHub Actions Workflows
+- **build-and-test.yml**: Cross-platform CI with matrix testing
+- **publish-nuget.yml**: Automated NuGet publishing on tagged releases
+- **performance-tests.yml**: Automated performance regression detection
+
+## Migration from v1.x
+
+### Breaking Changes
+- **Module Type**: PowerShell script module → C# binary module
+- **Dependencies**: PSReadLine dependency removed
+- **Configuration**: PowerShell-based config → JSON configuration
+- **Installation**: PowerShell Gallery → NuGet + PowerShell Gallery
+
+### Migration Guide
+1. **Uninstall v1.x**: `Uninstall-Module PSPredictor -AllVersions`
+2. **Install v2.0**: `Install-Module PSPredictor -RequiredVersion 2.0.0`
+3. **Migrate Settings**: Use `Import-PSPredictorLegacyConfig` cmdlet
+4. **Update Scripts**: Review breaking changes in configuration API
 
 ## Development Notes
 
-- **PowerShell 7+ Required**: Cross-platform support with PSReadLine dependency
-- **Modular Architecture**: Clean separation enables easy extension and maintenance
-- **Performance**: Completion functions should be performant (< 100ms recommended)
-- **Context-Aware**: Completions can parse command AST for intelligent suggestions
-- **26+ CLI Tools**: Comprehensive coverage including shells (PowerShell, Zsh, Bash)
-- **Extensive Testing**: 145+ tests ensure reliability across platforms
-- **Build Automation**: Comprehensive build.ps1 with all development tasks
-- **Version Management**: Helper script available at `.github/scripts/bump-version.ps1`
+- **Performance Critical**: All user-facing operations must meet <100ms response time
+- **Cross-Platform**: Ensure consistent behavior across Windows, Linux, and macOS
+- **Backward Compatible**: Maintain API compatibility within major versions
+- **Extensible**: Design for easy addition of new CLI tools and features
+- **AI-Powered**: Leverage ML.NET for intelligent prediction and learning
+- **Native Experience**: Provide IDE-like features within the terminal environment
+- **Memory Efficient**: Optimize for long-running PowerShell sessions
+- **Configuration Driven**: Support extensive customization without code changes
