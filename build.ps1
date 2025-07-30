@@ -25,7 +25,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Position = 0)]
-    [ValidateSet('Build', 'Test', 'Package', 'Clean', 'Install', 'All')]
+    [ValidateSet('Build', 'Test', 'Package', 'Clean', 'Install', 'Publish', 'All')]
     [string]$Task = 'Build',
     
     [ValidateSet('Debug', 'Release')]
@@ -33,7 +33,11 @@ param(
     
     [string]$OutputPath = './build',
     
-    [switch]$Force
+    [switch]$Force,
+    
+    [string]$ApiKey,
+    
+    [string]$Repository = 'PSGallery'
 )
 
 # Script variables
@@ -189,6 +193,71 @@ $Tasks = @{
         
         Write-Host "✅ PSPredictor $version installed successfully" -ForegroundColor Green
         Write-Host "💡 Run 'Import-Module PSPredictor' to use the module" -ForegroundColor Yellow
+    }
+    
+    Publish = {
+        Write-Host "📤 Publishing PSPredictor to PowerShell Gallery..." -ForegroundColor Cyan
+        
+        # Ensure we have a built module
+        if (-not (Test-Path $ModulePath)) {
+            Write-Host "🔨 Building module first..." -ForegroundColor Yellow
+            & $Tasks.Build
+        }
+        
+        # Check for API key
+        $publishApiKey = $ApiKey
+        if (-not $publishApiKey) {
+            $publishApiKey = $env:PSGALLERY_API_KEY
+        }
+        
+        if (-not $publishApiKey) {
+            Write-Error "❌ PowerShell Gallery API key is required. Provide via -ApiKey parameter or PSGALLERY_API_KEY environment variable."
+            Write-Host "💡 Get your API key from: https://www.powershellgallery.com/account/apikeys" -ForegroundColor Yellow
+            return
+        }
+        
+        try {
+            # Validate the module before publishing
+            Write-Host "🔍 Validating module..." -ForegroundColor Yellow
+            $manifestPath = Join-Path $ModulePath 'PSPredictor.psd1'
+            $manifest = Test-ModuleManifest $manifestPath -Verbose:$false
+            
+            Write-Host "📋 Module Details:" -ForegroundColor Cyan
+            Write-Host "  Name: $($manifest.Name)" -ForegroundColor Gray
+            Write-Host "  Version: $($manifest.Version)" -ForegroundColor Gray
+            Write-Host "  Author: $($manifest.Author)" -ForegroundColor Gray
+            Write-Host "  Description: $($manifest.Description)" -ForegroundColor Gray
+            
+            # Check if this version already exists
+            try {
+                $existingModule = Find-Module -Name $ModuleName -RequiredVersion $manifest.Version -Repository $Repository -ErrorAction SilentlyContinue
+                if ($existingModule) {
+                    if (-not $Force) {
+                        Write-Error "❌ Version $($manifest.Version) already exists in $Repository. Use -Force to overwrite or update the version."
+                        return
+                    }
+                    Write-Warning "⚠️ Version $($manifest.Version) already exists. Force publishing..."
+                }
+            } catch {
+                # Module doesn't exist yet, which is fine for first publish
+            }
+            
+            # Publish the module
+            Write-Host "🚀 Publishing to $Repository..." -ForegroundColor Green
+            Publish-Module -Path $ModulePath -NuGetApiKey $publishApiKey -Repository $Repository -Force:$Force -Verbose
+            
+            Write-Host "✅ PSPredictor $($manifest.Version) published successfully!" -ForegroundColor Green
+            Write-Host "🔗 View at: https://www.powershellgallery.com/packages/$ModuleName/$($manifest.Version)" -ForegroundColor Yellow
+            Write-Host "💡 Users can now install with: Install-Module -Name $ModuleName" -ForegroundColor Yellow
+            
+        } catch {
+            Write-Error "❌ Publishing failed: $_"
+            Write-Host "💡 Common issues:" -ForegroundColor Yellow
+            Write-Host "  - Invalid API key" -ForegroundColor Gray
+            Write-Host "  - Version already exists (use -Force or increment version)" -ForegroundColor Gray
+            Write-Host "  - Module validation errors" -ForegroundColor Gray
+            Write-Host "  - Network connectivity issues" -ForegroundColor Gray
+        }
     }
     
     All = {
