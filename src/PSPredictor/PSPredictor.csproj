@@ -1,0 +1,110 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>PSPredictor</AssemblyName>
+    <RootNamespace>PSPredictor</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>CS1591</WarningsNotAsErrors>
+    
+    <!-- PowerShell Module Properties -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AssemblyTitle>PSPredictor - Advanced PowerShell Command Predictor</AssemblyTitle>
+    <AssemblyDescription>Revolutionary PowerShell Binary Module that transforms the command-line experience into a comprehensive IDE within the terminal</AssemblyDescription>
+    <AssemblyCompany>Wangkanai</AssemblyCompany>
+    <AssemblyProduct>PSPredictor</AssemblyProduct>
+    <Copyright>Copyright © 2025 Wangkanai</Copyright>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <InformationalVersion>2.0.0</InformationalVersion>
+    
+    <!-- Package Properties -->
+    <PackageId>PSPredictor</PackageId>
+    <PackageVersion>2.0.0</PackageVersion>
+    <Authors>Wangkanai</Authors>
+    <PackageDescription>Revolutionary PowerShell Binary Module that transforms the command-line experience into a comprehensive IDE within the terminal with AI-powered predictions, syntax highlighting, error indication, and advanced editing capabilities.</PackageDescription>
+    <PackageTags>PowerShell;Command-Line;Auto-Complete;IntelliSense;Prediction;AI;Machine-Learning;Terminal;IDE;CLI</PackageTags>
+    <PackageProjectUrl>https://github.com/wangkanai/PSPredictor</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/wangkanai/PSPredictor</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <!-- PowerShell Dependencies -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.0" />
+    <PackageReference Include="System.Management.Automation" Version="7.4.0" />
+  </ItemGroup>
+
+  <!-- ML.NET Dependencies -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="3.0.1" />
+    <PackageReference Include="Microsoft.ML.AutoML" Version="0.21.1" />
+    <PackageReference Include="Microsoft.ML.Transforms.Text" Version="3.0.1" />
+  </ItemGroup>
+
+  <!-- Database Dependencies -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
+  </ItemGroup>
+
+  <!-- Configuration and Utilities -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <!-- Performance and Diagnostics -->
+  <ItemGroup>
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
+  </ItemGroup>
+
+  <!-- Project References -->
+  <ItemGroup>
+    <ProjectReference Include="../PSPredictor.Core/PSPredictor.Core.csproj" />
+    <ProjectReference Include="../PSPredictor.Shared/PSPredictor.Shared.csproj" />
+  </ItemGroup>
+
+  <!-- Embedded ML Models -->
+  <ItemGroup>
+    <EmbeddedResource Include="AI/Models/CommandPrediction.zip" />
+    <EmbeddedResource Include="AI/Models/ParameterPrediction.zip" />
+    <EmbeddedResource Include="AI/Models/ContextAwareness.zip" />
+  </ItemGroup>
+
+  <!-- PowerShell Module Files -->
+  <ItemGroup>
+    <Content Include="Module/PSPredictor.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Module/PSPredictor.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- Build Configuration -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+</Project>

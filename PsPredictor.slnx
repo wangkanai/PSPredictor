@@ -1,2 +1,17 @@
-<Solution>
-</Solution>
+{
+  "solution": {
+    "path": "PSPredictor.slnx",
+    "projects": [
+      "src/PSPredictor/PSPredictor.csproj",
+      "src/PSPredictor.Core/PSPredictor.Core.csproj", 
+      "src/PSPredictor.Shared/PSPredictor.Shared.csproj",
+      "tests/PSPredictor.Tests/PSPredictor.Tests.csproj",
+      "tests/PSPredictor.Core.Tests/PSPredictor.Core.Tests.csproj",
+      "tests/PSPredictor.Completion.Tests/PSPredictor.Completion.Tests.csproj",
+      "tests/PSPredictor.AI.Tests/PSPredictor.AI.Tests.csproj",
+      "tests/PSPredictor.Integration.Tests/PSPredictor.Integration.Tests.csproj",
+      "tests/PSPredictor.Performance.Tests/PSPredictor.Performance.Tests.csproj",
+      "tools/PSPredictor.ModelTrainer/PSPredictor.ModelTrainer.csproj"
+    ]
+  }
+}

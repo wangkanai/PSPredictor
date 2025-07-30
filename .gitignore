@@ -3,6 +3,7 @@
 ## Build Artifacts
 build/
 dist/
+packages/
 *.zip
 *.nupkg
 

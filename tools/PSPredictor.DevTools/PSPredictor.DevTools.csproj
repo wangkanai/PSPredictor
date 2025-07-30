@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>PSPredictor.DevTools</AssemblyName>
+    <RootNamespace>PSPredictor.DevTools</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- Development Utilities -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+  </ItemGroup>
+
+  <!-- File System and Process Utilities -->
+  <ItemGroup>
+    <PackageReference Include="System.IO.Abstractions" Version="19.2.87" />
+    <PackageReference Include="CliWrap" Version="3.6.4" />
+  </ItemGroup>
+
+  <!-- Data Processing -->
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+  </ItemGroup>
+
+  <!-- Project References -->
+  <ItemGroup>
+    <ProjectReference Include="../../src/PSPredictor.Core/PSPredictor.Core.csproj" />
+    <ProjectReference Include="../../src/PSPredictor.Shared/PSPredictor.Shared.csproj" />
+  </ItemGroup>
+
+  <!-- Development Tools Configuration -->
+  <ItemGroup>
+    <Content Include="Configuration/**/*" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Scripts/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

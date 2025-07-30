@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "dgSpecHash": "nUryBQgp7x4=",
+  "success": false,
+  "projectFilePath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj",
+  "expectedPackageFiles": [
+    "/Users/wangkanai/Sources/PSPredictor/packages/microsoft.build.tasks.git/8.0.0/microsoft.build.tasks.git.8.0.0.nupkg.sha512",
+    "/Users/wangkanai/Sources/PSPredictor/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "/Users/wangkanai/Sources/PSPredictor/packages/microsoft.extensions.logging.abstractions/8.0.0/microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "/Users/wangkanai/Sources/PSPredictor/packages/microsoft.sourcelink.common/8.0.0/microsoft.sourcelink.common.8.0.0.nupkg.sha512",
+    "/Users/wangkanai/Sources/PSPredictor/packages/microsoft.sourcelink.github/8.0.0/microsoft.sourcelink.github.8.0.0.nupkg.sha512",
+    "/Users/wangkanai/Sources/PSPredictor/packages/nerdbank.gitversioning/3.6.133/nerdbank.gitversioning.3.6.133.nupkg.sha512",
+    "/Users/wangkanai/Sources/PSPredictor/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
+    "/Users/wangkanai/Sources/PSPredictor/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Error",
+      "message": "Warning As Error: Package 'System.Text.Json' 8.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-8g4q-xg66-9fp4",
+      "libraryId": "System.Text.Json",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Error",
+      "message": "Warning As Error: Package 'System.Text.Json' 8.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-hh2w-p6rv-4g7w",
+      "libraryId": "System.Text.Json",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}

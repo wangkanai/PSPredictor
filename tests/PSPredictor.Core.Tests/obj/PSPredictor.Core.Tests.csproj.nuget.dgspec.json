@@ -1,0 +1,313 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/wangkanai/Sources/PSPredictor/tests/PSPredictor.Core.Tests/PSPredictor.Core.Tests.csproj": {}
+  },
+  "projects": {
+    "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Core/PSPredictor.Core.csproj": {
+      "version": "2.0.0-alpha.1",
+      "restore": {
+        "projectUniqueName": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Core/PSPredictor.Core.csproj",
+        "projectName": "PSPredictor.Core",
+        "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Core/PSPredictor.Core.csproj",
+        "packagesPath": "/Users/wangkanai/Sources/PSPredictor/packages",
+        "outputPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/wangkanai/Sources/PSPredictor/NuGet.Config",
+          "/Users/wangkanai/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.powershellgallery.com/api/v2": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj": {
+                "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.SourceLink.GitHub": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Nerdbank.GitVersioning": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.6.133, )"
+            },
+            "System.Management.Automation": {
+              "target": "Package",
+              "version": "[7.4.0, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj": {
+      "version": "2.0.0-alpha.1",
+      "restore": {
+        "projectUniqueName": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj",
+        "projectName": "PSPredictor.Shared",
+        "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj",
+        "packagesPath": "/Users/wangkanai/Sources/PSPredictor/packages",
+        "outputPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/wangkanai/Sources/PSPredictor/NuGet.Config",
+          "/Users/wangkanai/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.powershellgallery.com/api/v2": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.SourceLink.GitHub": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Nerdbank.GitVersioning": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.6.133, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/wangkanai/Sources/PSPredictor/tests/PSPredictor.Core.Tests/PSPredictor.Core.Tests.csproj": {
+      "version": "2.0.0-alpha.1",
+      "restore": {
+        "projectUniqueName": "/Users/wangkanai/Sources/PSPredictor/tests/PSPredictor.Core.Tests/PSPredictor.Core.Tests.csproj",
+        "projectName": "PSPredictor.Core.Tests",
+        "projectPath": "/Users/wangkanai/Sources/PSPredictor/tests/PSPredictor.Core.Tests/PSPredictor.Core.Tests.csproj",
+        "packagesPath": "/Users/wangkanai/Sources/PSPredictor/packages",
+        "outputPath": "/Users/wangkanai/Sources/PSPredictor/tests/PSPredictor.Core.Tests/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/wangkanai/Sources/PSPredictor/NuGet.Config",
+          "/Users/wangkanai/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.powershellgallery.com/api/v2": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Core/PSPredictor.Core.csproj": {
+                "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Core/PSPredictor.Core.csproj"
+              },
+              "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj": {
+                "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ],
+          "warnNotAsError": [
+            "NU1903"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AutoFixture": {
+              "target": "Package",
+              "version": "[4.18.0, )"
+            },
+            "AutoFixture.Xunit2": {
+              "target": "Package",
+              "version": "[4.18.0, )"
+            },
+            "BenchmarkDotNet": {
+              "target": "Package",
+              "version": "[0.13.10, )"
+            },
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[6.12.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.8.0, )"
+            },
+            "Microsoft.SourceLink.GitHub": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.69, )"
+            },
+            "NSubstitute": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
+            "Nerdbank.GitVersioning": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.6.133, )"
+            },
+            "coverlet.collector": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.6.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.5.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
