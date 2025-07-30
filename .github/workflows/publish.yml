@@ -45,8 +45,8 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "Installing required PowerShell modules..."
-        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber -Quiet
-        Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber -Quiet
+        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber -WarningAction SilentlyContinue
+        Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber -WarningAction SilentlyContinue
         Write-Host "✅ Required modules installed"
 
     - name: Test module manifest
@@ -101,8 +101,8 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "Installing PowerShellGet..."
-        Install-Module -Name PowerShellGet -Force -Scope CurrentUser -SkipPublisherCheck -Quiet
-        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -Quiet
+        Install-Module -Name PowerShellGet -Force -Scope CurrentUser -SkipPublisherCheck -WarningAction SilentlyContinue
+        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -WarningAction SilentlyContinue
 
     - name: Get module version
       id: version

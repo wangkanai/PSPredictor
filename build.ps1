@@ -112,9 +112,9 @@ $Tasks = @{
             $PesterModule = Get-Module Pester -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
             if (-not $PesterModule) {
                 Write-Host "📦 Installing Pester..." -ForegroundColor Yellow
-                Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -Quiet
+                Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -WarningAction SilentlyContinue
             }
-            Import-Module Pester -Force -Quiet
+            Import-Module Pester -Force -WarningAction SilentlyContinue
         } catch {
             Write-Warning "Pester not available, falling back to basic tests"
         }
@@ -127,7 +127,7 @@ $Tasks = @{
                 Path = $TestsPath
                 Output = 'Normal'
                 PassThru = $true
-                Quiet = $true
+                WarningAction = 'SilentlyContinue'
             }
             
             $TestResults = Invoke-Pester @PesterConfig
