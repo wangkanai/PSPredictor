@@ -42,9 +42,10 @@ param(
 
 # Script variables
 $ModuleName = 'PSPredictor'
-$ModuleVersion = '1.0.0'
+$ModuleVersion = '1.0.1'
 $RootPath = $PSScriptRoot
-$SourcePath = $RootPath
+$SourcePath = Join-Path $RootPath 'src'
+$TestsPath = Join-Path $RootPath 'tests'
 $BuildPath = Join-Path $RootPath $OutputPath
 $PackagePath = Join-Path $BuildPath 'package'
 $ModulePath = Join-Path $PackagePath $ModuleName
@@ -67,23 +68,27 @@ $Tasks = @{
         # Create build directory structure
         New-Item -Path $ModulePath -ItemType Directory -Force | Out-Null
         
-        # Copy module files
+        # Copy module files from src directory
         $FilesToCopy = @(
-            'PSPredictor.psd1',
-            'PSPredictor.psm1',
-            'LICENSE',
-            'README.md'
+            @{ Source = 'PSPredictor.psd1'; Destination = 'PSPredictor.psd1'; FromSrc = $true },
+            @{ Source = 'PSPredictor.psm1'; Destination = 'PSPredictor.psm1'; FromSrc = $true },
+            @{ Source = 'LICENSE'; Destination = 'LICENSE'; FromSrc = $false },
+            @{ Source = 'README.md'; Destination = 'README.md'; FromSrc = $false }
         )
         
         foreach ($file in $FilesToCopy) {
-            $sourcePath = Join-Path $SourcePath $file
-            $destPath = Join-Path $ModulePath $file
+            $sourcePath = if ($file.FromSrc) { 
+                Join-Path $SourcePath $file.Source 
+            } else { 
+                Join-Path $RootPath $file.Source 
+            }
+            $destPath = Join-Path $ModulePath $file.Destination
             
             if (Test-Path $sourcePath) {
                 Copy-Item $sourcePath $destPath -Force
-                Write-Verbose "Copied: $file"
+                Write-Verbose "Copied: $($file.Source) -> $($file.Destination)"
             } else {
-                Write-Warning "File not found: $file"
+                Write-Warning "File not found: $($file.Source) at $sourcePath"
             }
         }
         
@@ -102,41 +107,77 @@ $Tasks = @{
     Test = {
         Write-Host "🧪 Running tests..." -ForegroundColor Cyan
         
-        # Basic module validation
+        # Check if Pester is available
         try {
-            $manifestPath = Join-Path $ModulePath 'PSPredictor.psd1'
-            $modulePath = Join-Path $ModulePath 'PSPredictor.psm1'
-            
-            if (-not (Test-Path $manifestPath)) {
-                throw "Module manifest not found: $manifestPath"
+            $PesterModule = Get-Module Pester -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
+            if (-not $PesterModule) {
+                Write-Host "📦 Installing Pester..." -ForegroundColor Yellow
+                Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -WarningAction SilentlyContinue
             }
-            
-            if (-not (Test-Path $modulePath)) {
-                throw "Module file not found: $modulePath"
-            }
-            
-            # Test module manifest
-            $manifest = Test-ModuleManifest $manifestPath -Verbose:$false
-            Write-Host "✅ Module manifest is valid" -ForegroundColor Green
-            
-            # Test module import
-            Import-Module $manifestPath -Force -Verbose:$false
-            Write-Host "✅ Module imports successfully" -ForegroundColor Green
-            
-            # Test exported functions
-            $exportedFunctions = Get-Command -Module PSPredictor
-            Write-Host "✅ Exported $($exportedFunctions.Count) functions" -ForegroundColor Green
-            
-            # Basic functionality test
-            $tools = Get-PSPredictorTools
-            Write-Host "✅ Found $($tools.Count) supported tools" -ForegroundColor Green
-            
+            Import-Module Pester -Force -WarningAction SilentlyContinue
         } catch {
-            Write-Error "❌ Test failed: $_"
-            exit 1
-        } finally {
-            # Clean up
-            Remove-Module PSPredictor -Force -ErrorAction SilentlyContinue
+            Write-Warning "Pester not available, falling back to basic tests"
+        }
+        
+        # Run Pester tests if available
+        if (Get-Module Pester -ErrorAction SilentlyContinue) {
+            Write-Host "🧪 Running Pester tests..." -ForegroundColor Cyan
+            
+            $PesterConfig = @{
+                Path = $TestsPath
+                Output = 'Normal'
+                PassThru = $true
+                WarningAction = 'SilentlyContinue'
+            }
+            
+            $TestResults = Invoke-Pester @PesterConfig
+            
+            if ($TestResults.FailedCount -gt 0) {
+                Write-Error "❌ $($TestResults.FailedCount) test(s) failed"
+                exit 1
+            }
+            
+            Write-Host "✅ All $($TestResults.PassedCount) Pester tests passed" -ForegroundColor Green
+        } else {
+            # Fallback to basic tests
+            Write-Host "🔧 Running basic module tests..." -ForegroundColor Yellow
+            
+            try {
+                # Test source module directly
+                $manifestPath = Join-Path $SourcePath 'PSPredictor.psd1'
+                $modulePath = Join-Path $SourcePath 'PSPredictor.psm1'
+                
+                if (-not (Test-Path $manifestPath)) {
+                    throw "Module manifest not found: $manifestPath"
+                }
+                
+                if (-not (Test-Path $modulePath)) {
+                    throw "Module file not found: $modulePath"
+                }
+                
+                # Test module manifest
+                $manifest = Test-ModuleManifest $manifestPath -Verbose:$false
+                Write-Host "✅ Module manifest is valid" -ForegroundColor Green
+                
+                # Test module import
+                Import-Module $manifestPath -Force -Verbose:$false -WarningAction SilentlyContinue
+                Write-Host "✅ Module imports successfully" -ForegroundColor Green
+                
+                # Test exported functions
+                $exportedFunctions = Get-Command -Module PSPredictor
+                Write-Host "✅ Exported $($exportedFunctions.Count) functions" -ForegroundColor Green
+                
+                # Basic functionality test
+                $tools = Get-PSPredictorTools
+                Write-Host "✅ Found $($tools.Count) supported tools" -ForegroundColor Green
+                
+            } catch {
+                Write-Error "❌ Test failed: $_"
+                exit 1
+            } finally {
+                # Clean up
+                Remove-Module PSPredictor -Force -ErrorAction SilentlyContinue
+            }
         }
         
         Write-Host "✅ All tests passed" -ForegroundColor Green
@@ -166,8 +207,18 @@ $Tasks = @{
     Install = {
         Write-Host "🚀 Installing PSPredictor module..." -ForegroundColor Cyan
         
-        # Install to user module directory
-        $userModulePath = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'PowerShell\Modules\PSPredictor'
+        # Ensure we have a built module
+        if (-not (Test-Path $ModulePath)) {
+            Write-Host "🔨 Building module first..." -ForegroundColor Yellow
+            & $Tasks.Build
+        }
+        
+        # Install to user module directory (cross-platform)
+        if ($IsWindows -or $env:OS -eq 'Windows_NT') {
+            $userModulePath = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'PowerShell\Modules\PSPredictor'
+        } else {
+            $userModulePath = Join-Path $env:HOME '.local/share/powershell/Modules/PSPredictor'
+        }
         
         if (Test-Path $userModulePath) {
             if ($Force) {
@@ -187,9 +238,14 @@ $Tasks = @{
         Copy-Item "$ModulePath/*" $userModulePath -Recurse -Force
         
         # Test installation
-        Import-Module PSPredictor -Force
-        $version = (Get-Module PSPredictor).Version
-        Remove-Module PSPredictor -Force
+        try {
+            Import-Module PSPredictor -Force
+            $version = (Get-Module PSPredictor).Version
+            Remove-Module PSPredictor -Force
+        } catch {
+            Write-Warning "Could not import installed module for testing: $_"
+            $version = "unknown"
+        }
         
         Write-Host "✅ PSPredictor $version installed successfully" -ForegroundColor Green
         Write-Host "💡 Run 'Import-Module PSPredictor' to use the module" -ForegroundColor Yellow

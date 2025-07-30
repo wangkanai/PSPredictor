@@ -12,7 +12,7 @@
 RootModule = 'PSPredictor.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.0'
+ModuleVersion = '1.0.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -119,14 +119,10 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = @'
-## Version 1.0.0
-- Initial release of PSPredictor
-- Support for 50+ CLI tools including Git, Docker, NPM, kubectl, Azure CLI, AWS CLI, and more
-- Intelligent context-aware completions
-- Fast and lightweight implementation
-- Easy configuration and customization
-- Auto-update capabilities
-- Comprehensive documentation and examples
+## Version 1.0.1
+- Version bump: Patch update
+- Automated release via GitHub Actions
+- See CHANGELOG.md for detailed changes
 '@
 
         # Prerelease string of this module
