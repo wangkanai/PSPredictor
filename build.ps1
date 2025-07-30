@@ -76,6 +76,14 @@ $Tasks = @{
             @{ Source = 'README.md'; Destination = 'README.md'; FromSrc = $false }
         )
         
+        # Also copy modular files if they exist
+        if (Test-Path (Join-Path $SourcePath 'PSPredictor.New.psd1')) {
+            $FilesToCopy += @(
+                @{ Source = 'PSPredictor.New.psd1'; Destination = 'PSPredictor.New.psd1'; FromSrc = $true },
+                @{ Source = 'PSPredictor.New.psm1'; Destination = 'PSPredictor.New.psm1'; FromSrc = $true }
+            )
+        }
+        
         foreach ($file in $FilesToCopy) {
             $sourcePath = if ($file.FromSrc) { 
                 Join-Path $SourcePath $file.Source 
@@ -89,6 +97,17 @@ $Tasks = @{
                 Write-Verbose "Copied: $($file.Source) -> $($file.Destination)"
             } else {
                 Write-Warning "File not found: $($file.Source) at $sourcePath"
+            }
+        }
+        
+        # Copy modular directories if they exist
+        $ModularDirs = @('Public', 'Private', 'Completions')
+        foreach ($dir in $ModularDirs) {
+            $sourceDirPath = Join-Path $SourcePath $dir
+            if (Test-Path $sourceDirPath) {
+                $destDirPath = Join-Path $ModulePath $dir
+                Write-Verbose "Copying modular directory: $dir"
+                Copy-Item $sourceDirPath $destDirPath -Recurse -Force
             }
         }
         
