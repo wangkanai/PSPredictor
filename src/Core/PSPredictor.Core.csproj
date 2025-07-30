@@ -33,7 +33,7 @@
 
   <!-- Project References -->
   <ItemGroup>
-    <ProjectReference Include="../PSPredictor.Shared/PSPredictor.Shared.csproj" />
+    <ProjectReference Include="../Shared/PSPredictor.Shared.csproj" />
   </ItemGroup>
 
   <!-- Build Configuration -->
