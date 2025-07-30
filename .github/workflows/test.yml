@@ -1,0 +1,98 @@
+name: Test Module
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            pwsh: true
+          - os: windows-latest
+            pwsh: true
+          - os: macos-latest
+            pwsh: true
+    
+    name: Test on ${{ matrix.os }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup PowerShell (Non-Windows)
+      if: matrix.os != 'windows-latest'
+      uses: azure/powershell@v2
+      with:
+        inlineScript: |
+          Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)"
+          Write-Host "Platform: $($PSVersionTable.Platform)"
+        azPSVersion: "latest"
+        pwsh: true
+
+    - name: Install required modules
+      shell: pwsh
+      run: |
+        Write-Host "Installing required PowerShell modules..."
+        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber
+        Write-Host "✅ Required modules installed"
+
+    - name: Test module manifest
+      shell: pwsh
+      run: |
+        Write-Host "🔍 Testing module manifest..."
+        $manifest = Test-ModuleManifest -Path './PSPredictor.psd1'
+        Write-Host "✅ Module manifest is valid"
+        Write-Host "  Name: $($manifest.Name)"
+        Write-Host "  Version: $($manifest.Version)"
+        Write-Host "  Author: $($manifest.Author)"
+        Write-Host "  PowerShell Version: $($manifest.PowerShellVersion)"
+
+    - name: Test module import
+      shell: pwsh
+      run: |
+        Write-Host "🔍 Testing module import..."
+        Import-Module './PSPredictor.psm1' -Force -Verbose
+        Write-Host "✅ Module imported successfully"
+        
+        Write-Host "🔍 Testing exported functions..."
+        $functions = Get-Command -Module PSPredictor
+        Write-Host "✅ Found $($functions.Count) exported functions:"
+        $functions | ForEach-Object { Write-Host "  - $($_.Name)" }
+
+    - name: Test basic functionality
+      shell: pwsh
+      run: |
+        Write-Host "🔍 Testing basic functionality..."
+        Import-Module './PSPredictor.psm1' -Force
+        
+        # Test Get-PSPredictorTools
+        $tools = Get-PSPredictorTools
+        Write-Host "✅ Found $($tools.Count) supported tools"
+        
+        # Test configuration
+        Set-PSPredictorConfig -MaxSuggestions 10
+        Write-Host "✅ Configuration test passed"
+        
+        Write-Host "✅ All basic functionality tests passed"
+
+    - name: Run build and test
+      shell: pwsh
+      run: |
+        Write-Host "🔨 Running build and test..."
+        ./build.ps1 -Task Test -Verbose
+        Write-Host "✅ Build and test completed successfully"
+
+    - name: Test module installation (simulation)
+      shell: pwsh
+      run: |
+        Write-Host "🔍 Testing module installation simulation..."
+        ./build.ps1 -Task Install -Force
+        Write-Host "✅ Module installation test passed"
