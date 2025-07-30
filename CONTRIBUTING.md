@@ -14,8 +14,9 @@
 
 ### Prerequisites
 
-- PowerShell 5.1 or later (PowerShell 7+ recommended)
+- PowerShell 7.0 or later (required for cross-platform support)
 - PSReadLine module
+- Pester module (for testing)
 - Git for version control
 
 ### Getting Started
@@ -31,23 +32,30 @@
    cd PSPredictor
    ```
 
-3. **Import the module for testing**
+3. **Build and test the module**
    ```powershell
-   Import-Module ./PSPredictor.psm1 -Force
+   # Build the module
+   ./build.ps1 -Task Build
+   
+   # Run all tests
+   ./build.ps1 -Task Test
    ```
 
-4. **Test your changes**
+4. **Install and test**
    ```powershell
-   # Test basic functionality
+   # Install locally for testing
+   ./build.ps1 -Task Install
+   
+   # Test functionality
    Get-PSPredictorTools
-   Install-PSPredictor
+   Register-PSPredictorCompletion -Tool "git"
    ```
 
 ## 🔧 Adding New CLI Tool Completions
 
 ### Step 1: Add Tool Definition
 
-Edit `PSPredictor.psm1` and add your tool to the `$script:SupportedTools` hashtable:
+Edit `src/Private/Config.ps1` and add your tool to the `$script:SupportedTools` hashtable:
 
 ```powershell
 'mytool' = @{
@@ -59,7 +67,7 @@ Edit `PSPredictor.psm1` and add your tool to the `$script:SupportedTools` hashta
 
 ### Step 2: Create Completion Function
 
-Add a completion function following this pattern:
+Create a new file `src/Completions/MyTool.ps1` with your completion function:
 
 ```powershell
 function Register-MyToolCompletion {
@@ -78,7 +86,7 @@ function Register-MyToolCompletion {
 
 ### Step 3: Wire It Up
 
-Add your tool to the switch statement in `Register-PSPredictorCompletion`:
+Add your tool to the switch statement in `src/Public/Register-PSPredictorCompletion.ps1`:
 
 ```powershell
 'mytool' { Register-MyToolCompletion }
@@ -87,8 +95,12 @@ Add your tool to the switch statement in `Register-PSPredictorCompletion`:
 ### Step 4: Test Your Addition
 
 ```powershell
-# Reload the module
-Import-Module ./PSPredictor.psm1 -Force
+# Build and test the module
+./build.ps1 -Task Build
+./build.ps1 -Task Test
+
+# Install for testing
+./build.ps1 -Task Install
 
 # Test your completion
 mytool <TAB>
@@ -146,8 +158,8 @@ function Register-GitCompletion {
 
 ### Manual Testing
 ```powershell
-# Test basic installation
-Install-PSPredictor
+# Build and install module
+./build.ps1 -Task Install
 
 # Test tool listing
 Get-PSPredictorTools
@@ -161,12 +173,17 @@ git checkout <TAB>
 ```
 
 ### Writing Tests
-If adding Pester tests:
+Create a new file `tests/Completions/MyTool.Tests.ps1`:
 ```powershell
-Describe "MyTool Completion" {
-    It "Should provide completions for mytool" {
-        $result = TabExpansion2 "mytool " 0
-        $result.CompletionMatches.Count | Should -BeGreaterThan 0
+BeforeAll {
+    Import-Module "$PSScriptRoot/../../src/PSPredictor.psd1" -Force
+}
+
+Describe "MyTool Completion Tests" {
+    Context "MyTool Completion Registration" {
+        It "Should register mytool completion without errors" {
+            { Register-PSPredictorCompletion -Tool "mytool" } | Should -Not -Throw
+        }
     }
 }
 ```

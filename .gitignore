@@ -1,0 +1,201 @@
+# PowerShell Module .gitignore
+
+## Build Artifacts
+build/
+dist/
+*.zip
+*.nupkg
+
+## PowerShell Module Directories
+# User installed modules
+Documents/PowerShell/Modules/
+Documents/WindowsPowerShell/Modules/
+.local/share/powershell/Modules/
+
+# Module cache and temporary files
+*.tmp
+*.temp
+*~
+
+## IDE and Editor Files
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+## Operating System Files
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.nfs*
+
+## PowerShell Specific
+# PowerShell transcript files
+PowerShell_transcript.*
+
+# PowerShell ISE profiles
+Microsoft.PowerShell_profile.ps1
+Microsoft.PowerShellISE_profile.ps1
+
+# PowerShell execution policy backup
+ExecutionPolicy.backup
+
+## Test Results and Coverage
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage.xml
+coverage.json
+lcov.info
+
+# Pester test results
+TestResults.xml
+coverage.xml
+
+## Logs
+*.log
+logs/
+log/
+
+## Secrets and API Keys
+# Never commit secrets!
+*.key
+*.pem
+*.p12
+*.pfx
+secrets.json
+appsettings.*.json
+.env
+.env.local
+.env.*.local
+
+# PowerShell Gallery API keys
+psgallery.key
+apikey.txt
+
+## Node.js (if using for documentation generation)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+## Documentation Generation
+docs/_site/
+docs/.jekyll-cache/
+docs/.sass-cache/
+*.html.backup
+
+## Local Configuration
+.pspredict/
+config.local.json
+
+## Package Manager Files
+# Chocolatey
+*.chocolatey
+
+# Scoop
+scoop/
+
+## Backup Files
+*.bak
+*.backup
+*.old
+*.orig
+
+## Temporary PowerShell Module Files
+psget_*
+temp_module/
+
+## IDE Generated Files
+# PowerShell Studio
+*.psproj
+*.psprojs
+
+# PowerShell Pro Tools
+*.psprojx
+
+## Archive Files (unless intentionally included)
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+## Database Files (if any)
+*.db
+*.sqlite
+*.sqlite3
+
+## Certificate Files (security)
+*.crt
+*.cer
+*.der
+
+## Custom Project Specific
+# Add any project-specific patterns here
+
+# Local testing directories
+test-output/
+sandbox/
+scratch/

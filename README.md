@@ -9,7 +9,7 @@
 
 ## ✨ Features
 
-- **🎯 Universal CLI Prediction**: Intelligent auto-completion for 50+ popular command-line tools
+- **🎯 Universal CLI Prediction**: Intelligent auto-completion for 26+ popular command-line tools
 - **⚡ Fast & Lightweight**: Optimized for performance with minimal startup overhead
 - **🔧 Easy Installation**: Single command installation from PowerShell Gallery
 - **🎨 Enhanced UI**: Beautiful tab completion with syntax highlighting
@@ -51,33 +51,49 @@ npm install --save-d<TAB>  # → npm install --save-dev
 
 ## 📦 Supported CLI Tools
 
-### Development Tools
-- **Git**: Branches, commits, remotes, tags
-- **Docker**: Containers, images, volumes, networks
-- **Node.js**: npm, yarn, pnpm, nvm
-- **.NET**: dotnet CLI with all commands and options
+### Container & Infrastructure
+- **Docker**: Complete container management (run, build, images, networks, volumes)
+- **Podman**: Daemonless container tool with full Docker compatibility
+- **Terraform**: Infrastructure as code (plan, apply, destroy, resources)
+- **Kubernetes**: kubectl with resources, namespaces, and context switching
 
-### Cloud & DevOps
-- **Kubernetes**: kubectl with resources and namespaces
-- **Azure**: az CLI with comprehensive service coverage
-- **AWS**: aws CLI with services and parameters
-- **Terraform**: Plan, apply, destroy with resource completion
+### Development Tools
+- **Git**: Comprehensive version control (branches, commits, remotes, tags, workflows)
+- **.NET**: Complete dotnet CLI (new templates, build, test, publish, packages)
+- **Node.js**: npm, npx package management and script execution
+- **Python**: pip, pipx, pyenv for package and version management
+- **Python Interpreter**: Module execution, command-line options
+
+### AI & Code Assistance
+- **Claude AI**: Chat, completion, models, authentication, conversations
+- **Gemini AI**: Generation, models, file operations, multi-modal support
+- **OpenAI Codex**: Code completion and generation
+
+### Cloud Platforms
+- **Azure**: Comprehensive az CLI coverage (compute, storage, networking)
+- **AWS**: Complete aws CLI with services, regions, and parameters
+- **GitHub**: Full gh CLI integration (repos, PRs, issues, workflows, releases)
 
 ### Package Managers
-- **System**: brew, apt, yum, chocolatey, winget
-- **Language**: pip, cargo, gem, composer
+- **Homebrew**: Complete brew commands (install, upgrade, services, cask)
+- **Python**: pip (install, upgrade, requirements), pipx (applications)
+- **Node.js**: npm (packages, scripts), npx (package execution)
 
-### System Tools
-- **File Operations**: ls, cp, mv, rm with intelligent path completion
-- **System Info**: ps, top, df, du with process and file completion
-- **Network**: curl, wget, ssh with URL and host completion
+### Terminal & System
+- **tmux**: Terminal multiplexer (sessions, windows, panes, key bindings)
+- **Hyper**: Modern terminal emulator
+
+### Shells & Interpreters
+- **PowerShell**: PowerShell Core (pwsh) with parameters, execution policies, profiles
+- **Zsh**: Z shell with comprehensive options, emulation modes, built-in settings
+- **Bash**: Bash shell with options, set configurations, RC file management
 
 ## 🎯 Key Advantages
 
 ### vs. Manual Setup
 | Feature | PSPredictor | Manual Setup |
 |---------|-------------|--------------|
-| **Coverage** | 50+ tools | Limited |
+| **Coverage** | 26+ tools | Limited |
 | **Maintenance** | Auto-updates | Manual effort |
 | **Consistency** | Unified experience | Varies by tool |
 | **Installation** | Single command | Complex setup |
@@ -152,6 +168,21 @@ npm run <TAB>             # Shows available scripts
 dotnet new <TAB>          # Shows project templates
 dotnet add package <TAB>  # Shows NuGet packages
 dotnet run --<TAB>        # Shows run options
+```
+
+### Shell Management
+```powershell
+# PowerShell Core management
+pwsh -<TAB>               # Shows parameters like -Command, -File, -NoProfile
+pwsh -ExecutionPolicy <TAB> # Shows policies: Restricted, AllSigned, RemoteSigned, etc.
+
+# Zsh configuration
+zsh -o <TAB>              # Shows options like autocd, autopushd, correct, etc.
+zsh --emulate <TAB>       # Shows emulation modes: sh, ksh, bash, csh
+
+# Bash configuration  
+bash -o <TAB>             # Shows set options: errexit, nounset, pipefail, etc.
+bash --rcfile <TAB>       # Shows available RC files: ~/.bashrc, ~/.bash_profile
 ```
 
 ## 🔧 Development

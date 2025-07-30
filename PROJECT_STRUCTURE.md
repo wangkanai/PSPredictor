@@ -6,10 +6,54 @@
 PSPredictor/
 ├── src/                          # 📦 Source Code
 │   ├── PSPredictor.psd1         #    Module manifest with metadata
-│   └── PSPredictor.psm1         #    Main module implementation
-├── tests/                        # 🧪 Test Suite
+│   ├── PSPredictor.psm1         #    Main module loader
+│   ├── Public/                  #    Public functions (exported)
+│   │   ├── Get-PSPredictorTools.ps1           #    Tool listing
+│   │   ├── Install-PSPredictor.ps1            #    Installation
+│   │   ├── Register-PSPredictorCompletion.ps1 #    Completion registration
+│   │   └── Uninstall-PSPredictor.ps1          #    Uninstallation
+│   ├── Private/                 #    Private functions (internal)
+│   │   └── Config.ps1           #    Tool configuration and settings
+│   └── Completions/             #    CLI completion providers (26+ tools)
+│       ├── Azure.ps1            #    Azure CLI completions
+│       ├── AWS.ps1              #    AWS CLI completions
+│       ├── Bash.ps1             #    Bash shell completions
+│       ├── Claude.ps1           #    Claude AI CLI completions
+│       ├── Docker.ps1           #    Docker completions
+│       ├── DotNet.ps1           #    .NET CLI completions
+│       ├── Gemini.ps1           #    Gemini AI CLI completions
+│       ├── Git.ps1              #    Git completions
+│       ├── GitHub.ps1           #    GitHub CLI completions
+│       ├── Homebrew.ps1         #    Homebrew completions
+│       ├── Kubectl.ps1          #    Kubernetes kubectl completions
+│       ├── NPM.ps1              #    npm completions
+│       ├── Podman.ps1           #    Podman completions
+│       ├── PowerShell.ps1       #    PowerShell Core (pwsh) completions
+│       ├── Python.ps1           #    Python completions
+│       ├── Terraform.ps1        #    Terraform completions
+│       ├── Tmux.ps1             #    tmux completions
+│       ├── Zsh.ps1              #    Zsh shell completions
+│       └── ... (18+ more tools) #    Additional CLI tools
+├── tests/                        # 🧪 Test Suite (145+ tests)
 │   ├── PSPredictor.Tests.ps1    #    Core module functionality tests
-│   ├── Completions.Tests.ps1    #    CLI completion behavior tests
+│   ├── Public/                  #    Public function tests
+│   │   ├── Get-PSPredictorTools.Tests.ps1
+│   │   ├── Install-PSPredictor.Tests.ps1
+│   │   ├── Register-PSPredictorCompletion.Tests.ps1
+│   │   └── Uninstall-PSPredictor.Tests.ps1
+│   ├── Private/                 #    Private function tests
+│   │   └── Config.Tests.ps1
+│   ├── Completions/             #    CLI completion tests
+│   │   ├── Shell.Tests.ps1      #    Shell completions (PowerShell/Zsh/Bash)
+│   │   ├── Azure.Tests.ps1      #    Azure CLI tests
+│   │   ├── AWS.Tests.ps1        #    AWS CLI tests
+│   │   ├── Claude.Tests.ps1     #    Claude AI tests
+│   │   ├── Docker.Tests.ps1     #    Docker tests
+│   │   ├── Git.Tests.ps1        #    Git tests
+│   │   ├── Kubectl.Tests.ps1    #    Kubernetes tests
+│   │   ├── NPM.Tests.ps1        #    npm tests
+│   │   ├── Terraform.Tests.ps1  #    Terraform tests
+│   │   └── ... (15+ more test files)
 │   └── TestConfig.ps1           #    Test configuration and helpers
 ├── .github/                      # 🤖 CI/CD Automation
 │   ├── workflows/               
@@ -34,8 +78,9 @@ PSPredictor/
 - **Build artifacts** generated in temporary `build/` directory
 
 ### ✅ **Professional Testing**
-- **Pester-based** comprehensive test suite (50+ tests)
-- **Cross-platform** compatibility validation
+- **Pester-based** comprehensive test suite (145+ tests across 17 test files)
+- **Modular test structure** matching source organization
+- **Cross-platform** compatibility validation (Windows/Linux/macOS)  
 - **Performance** and resource usage monitoring
 - **Error handling** and edge case coverage
 
@@ -55,13 +100,16 @@ PSPredictor/
 
 ### 1. **Local Development**
 ```powershell
-# Import for testing
-Import-Module ./src/PSPredictor.psm1 -Force
+# Build module (creates modular structure in build/)
+./build.ps1 -Task Build
 
-# Run comprehensive tests
+# Run comprehensive tests (145+ tests)
 ./build.ps1 -Task Test
 
-# Build and package
+# Install locally for testing
+./build.ps1 -Task Install
+
+# Build and package everything
 ./build.ps1 -Task All
 ```
 
@@ -90,19 +138,22 @@ git push origin feature/my-feature
 ## 🧪 Testing Strategy
 
 ### **Test Coverage**
-- **Module Structure**: Manifest validation, imports, exports
-- **Core Functionality**: Configuration, tool management, completions
-- **Error Handling**: Invalid inputs, edge cases, recovery
+- **Module Structure**: Manifest validation, imports, exports, modular loading
+- **Public Functions**: All 4 exported functions with comprehensive scenarios
+- **Private Functions**: Internal configuration and helper functions
+- **Completion Providers**: All 26+ CLI tools with registration testing
+- **Error Handling**: Invalid inputs, edge cases, recovery scenarios
 - **Performance**: Load times, memory usage, response times
-- **Cross-Platform**: Windows, Linux, macOS compatibility
+- **Cross-Platform**: Windows, Linux, macOS compatibility validation
 
 ### **Test Execution**
 ```powershell
 # Run specific test suites
 Invoke-Pester ./tests/PSPredictor.Tests.ps1
-Invoke-Pester ./tests/Completions.Tests.ps1
+Invoke-Pester ./tests/Public/
+Invoke-Pester ./tests/Completions/
 
-# Run all tests via build script
+# Run all tests via build script (145+ tests)
 ./build.ps1 -Task Test
 
 # Simple functionality validation
@@ -163,6 +214,6 @@ Invoke-Pester ./tests/Completions.Tests.ps1
 ---
 
 **Last Updated**: 2025-07-30  
-**Version**: 2.0 (Updated for src/tests structure)  
+**Version**: 3.0 (Updated for modular architecture with 26+ CLI tools)  
 **Maintainer**: Sarin Na Wangkanai  
 **License**: MIT

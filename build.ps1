@@ -42,7 +42,7 @@ param(
 
 # Script variables
 $ModuleName = 'PSPredictor'
-$ModuleVersion = '1.0.1'
+$ModuleVersion = '1.1.0'
 $RootPath = $PSScriptRoot
 $SourcePath = Join-Path $RootPath 'src'
 $TestsPath = Join-Path $RootPath 'tests'
@@ -76,19 +76,32 @@ $Tasks = @{
             @{ Source = 'README.md'; Destination = 'README.md'; FromSrc = $false }
         )
         
+        # Modular directories are now part of the main PSPredictor module
+        
         foreach ($file in $FilesToCopy) {
-            $sourcePath = if ($file.FromSrc) { 
+            $fileSourcePath = if ($file.FromSrc) { 
                 Join-Path $SourcePath $file.Source 
             } else { 
                 Join-Path $RootPath $file.Source 
             }
             $destPath = Join-Path $ModulePath $file.Destination
             
-            if (Test-Path $sourcePath) {
-                Copy-Item $sourcePath $destPath -Force
+            if (Test-Path $fileSourcePath) {
+                Copy-Item $fileSourcePath $destPath -Force
                 Write-Verbose "Copied: $($file.Source) -> $($file.Destination)"
             } else {
-                Write-Warning "File not found: $($file.Source) at $sourcePath"
+                Write-Warning "File not found: $($file.Source) at $fileSourcePath"
+            }
+        }
+        
+        # Copy modular directories if they exist
+        $ModularDirs = @('Public', 'Private', 'Completions')
+        foreach ($dir in $ModularDirs) {
+            $sourceDirPath = Join-Path $SourcePath $dir
+            if (Test-Path $sourceDirPath) {
+                $destDirPath = Join-Path $ModulePath $dir
+                Write-Verbose "Copying modular directory: $dir"
+                Copy-Item $sourceDirPath $destDirPath -Recurse -Force
             }
         }
         
