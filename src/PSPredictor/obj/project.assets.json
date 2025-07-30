@@ -4605,7 +4605,6 @@
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
-          "PSPredictor.Shared": "2.0.0-alpha.1",
           "System.Management.Automation": "7.4.0",
           "System.Text.Json": "8.0.0"
         },
@@ -10445,13 +10444,13 @@
     },
     "PSPredictor.Core/2.0.0-alpha.1": {
       "type": "project",
-      "path": "../PSPredictor.Core/PSPredictor.Core.csproj",
-      "msbuildProject": "../PSPredictor.Core/PSPredictor.Core.csproj"
+      "path": "../Core/PSPredictor.Core.csproj",
+      "msbuildProject": "../Core/PSPredictor.Core.csproj"
     },
     "PSPredictor.Shared/2.0.0-alpha.1": {
       "type": "project",
-      "path": "../PSPredictor.Shared/PSPredictor.Shared.csproj",
-      "msbuildProject": "../PSPredictor.Shared/PSPredictor.Shared.csproj"
+      "path": "../Shared/PSPredictor.Shared.csproj",
+      "msbuildProject": "../Shared/PSPredictor.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -10505,11 +10504,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Core/PSPredictor.Core.csproj": {
-              "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Core/PSPredictor.Core.csproj"
+            "/Users/wangkanai/Sources/PSPredictor/src/Core/PSPredictor.Core.csproj": {
+              "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/Core/PSPredictor.Core.csproj"
             },
-            "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj": {
-              "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor.Shared/PSPredictor.Shared.csproj"
+            "/Users/wangkanai/Sources/PSPredictor/src/Shared/PSPredictor.Shared.csproj": {
+              "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/Shared/PSPredictor.Shared.csproj"
             }
           }
         }
