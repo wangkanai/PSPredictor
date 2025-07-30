@@ -1,5 +1,10 @@
 BeforeAll {
     Import-Module "$PSScriptRoot/../../src/PSPredictor.psd1" -Force
+    
+    # Mock terraform command for testing (since it might not be installed in CI)
+    if (-not (Get-Command terraform -ErrorAction SilentlyContinue)) {
+        function Global:terraform { }
+    }
 }
 
 Describe "Terraform Completion Tests" {

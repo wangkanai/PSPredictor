@@ -1,5 +1,10 @@
 BeforeAll {
     Import-Module "$PSScriptRoot/../../src/PSPredictor.psd1" -Force
+    
+    # Mock gh command for testing (since it might not be installed in CI)
+    if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
+        function Global:gh { }
+    }
 }
 
 Describe "GitHub CLI Completion Tests" {

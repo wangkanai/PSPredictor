@@ -1,5 +1,10 @@
 BeforeAll {
     Import-Module "$PSScriptRoot/../../src/PSPredictor.psd1" -Force
+    
+    # Mock az command for testing (since it might not be installed in CI)
+    if (-not (Get-Command az -ErrorAction SilentlyContinue)) {
+        function Global:az { }
+    }
 }
 
 Describe "Azure CLI Completion Tests" {

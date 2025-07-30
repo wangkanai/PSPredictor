@@ -42,8 +42,18 @@ param(
 
 # Script variables
 $ModuleName = 'PSPredictor'
-$ModuleVersion = '1.1.0'
 $RootPath = $PSScriptRoot
+$ManifestPath = Join-Path $RootPath "src" | Join-Path -ChildPath "$ModuleName.psd1"
+
+# Read version from module manifest
+try {
+    $Manifest = Import-PowerShellDataFile -Path $ManifestPath
+    $ModuleVersion = $Manifest.ModuleVersion
+    Write-Verbose "Using version $ModuleVersion from manifest"
+} catch {
+    Write-Warning "Could not read version from manifest: $_"
+    $ModuleVersion = '1.3.0'  # Fallback version
+}
 $SourcePath = Join-Path $RootPath 'src'
 $TestsPath = Join-Path $RootPath 'tests'
 $BuildPath = Join-Path $RootPath $OutputPath

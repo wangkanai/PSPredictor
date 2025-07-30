@@ -14,17 +14,11 @@ function Register-PNPMCompletion {
     Write-Verbose "PNPM completion stub - not implemented"
 }
 
-function Register-KubectlCompletion { 
-    Write-Verbose "Kubectl completion stub - not implemented"
-}
 
 function Register-AzureCompletion { 
     Write-Verbose "Azure CLI completion stub - not implemented"
 }
 
-function Register-AWSCompletion { 
-    Write-Verbose "AWS CLI completion stub - not implemented"
-}
 
 
 function Register-TerraformCompletion { 
