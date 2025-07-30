@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "LucSz8OCy/U=",
-  "success": false,
+  "dgSpecHash": "qxW4CBTw14I=",
+  "success": true,
   "projectFilePath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor/PSPredictor.csproj",
   "expectedPackageFiles": [
     "/Users/wangkanai/Sources/PSPredictor/packages/google.protobuf/3.21.9/google.protobuf.3.21.9.nupkg.sha512",
@@ -169,17 +169,5 @@
     "/Users/wangkanai/Sources/PSPredictor/packages/tensorflow.net/0.20.1/tensorflow.net.0.20.1.nupkg.sha512",
     "/Users/wangkanai/Sources/PSPredictor/packages/torchsharp/0.101.5/torchsharp.0.101.5.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1101",
-      "level": "Error",
-      "message": "Unable to find package Microsoft.ML.Transforms.Text. No packages exist with this id in source(s): nuget.org. PackageSourceMapping is enabled, the following source(s) were not considered: /usr/local/share/dotnet/library-packs, PowerShell Gallery.",
-      "projectPath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor/PSPredictor.csproj",
-      "filePath": "/Users/wangkanai/Sources/PSPredictor/src/PSPredictor/PSPredictor.csproj",
-      "libraryId": "Microsoft.ML.Transforms.Text",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  "logs": []
 }

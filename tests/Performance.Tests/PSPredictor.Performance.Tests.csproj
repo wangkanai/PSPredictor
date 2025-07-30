@@ -12,22 +12,10 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <!-- Benchmark Dependencies -->
+  <!-- Benchmark Dependencies (common test dependencies provided by Directory.Build.targets) -->
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" />
     <PackageReference Include="BenchmarkDotNet.Annotations" />
-  </ItemGroup>
-
-  <!-- Test Framework Dependencies -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="FluentAssertions" />
   </ItemGroup>
 
   <!-- Memory and Performance Analysis -->

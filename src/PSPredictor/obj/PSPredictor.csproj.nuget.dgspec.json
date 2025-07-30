@@ -118,8 +118,6 @@
             "Microsoft.ML.AutoML": "0.21.1",
             "Microsoft.ML.FastTree": "3.0.1",
             "Microsoft.ML.LightGbm": "3.0.1",
-            "Microsoft.ML.TestFramework": "3.0.1",
-            "Microsoft.ML.Transforms.Text": "3.0.1",
             "Microsoft.NET.Test.Sdk": "17.11.1",
             "Microsoft.PowerShell.SDK": "7.4.6",
             "Microsoft.SourceLink.GitHub": "8.0.0",
@@ -249,11 +247,6 @@
               "version": "[0.21.1, )",
               "versionCentrallyManaged": true
             },
-            "Microsoft.ML.Transforms.Text": {
-              "target": "Package",
-              "version": "[3.0.1, )",
-              "versionCentrallyManaged": true
-            },
             "Microsoft.PowerShell.SDK": {
               "target": "Package",
               "version": "[7.4.6, )",
@@ -328,8 +321,6 @@
             "Microsoft.ML.AutoML": "0.21.1",
             "Microsoft.ML.FastTree": "3.0.1",
             "Microsoft.ML.LightGbm": "3.0.1",
-            "Microsoft.ML.TestFramework": "3.0.1",
-            "Microsoft.ML.Transforms.Text": "3.0.1",
             "Microsoft.NET.Test.Sdk": "17.11.1",
             "Microsoft.PowerShell.SDK": "7.4.6",
             "Microsoft.SourceLink.GitHub": "8.0.0",
@@ -466,8 +457,6 @@
             "Microsoft.ML.AutoML": "0.21.1",
             "Microsoft.ML.FastTree": "3.0.1",
             "Microsoft.ML.LightGbm": "3.0.1",
-            "Microsoft.ML.TestFramework": "3.0.1",
-            "Microsoft.ML.Transforms.Text": "3.0.1",
             "Microsoft.NET.Test.Sdk": "17.11.1",
             "Microsoft.PowerShell.SDK": "7.4.6",
             "Microsoft.SourceLink.GitHub": "8.0.0",

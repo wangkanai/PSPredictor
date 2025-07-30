@@ -10390,7 +10390,6 @@
       "Microsoft.Extensions.Logging >= 9.0.0",
       "Microsoft.ML >= 3.0.1",
       "Microsoft.ML.AutoML >= 0.21.1",
-      "Microsoft.ML.Transforms.Text >= 3.0.1",
       "Microsoft.PowerShell.SDK >= 7.4.6",
       "Microsoft.SourceLink.GitHub >= 8.0.0",
       "Nerdbank.GitVersioning >= 3.6.133",
@@ -10498,11 +10497,6 @@
             "version": "[0.21.1, )",
             "versionCentrallyManaged": true
           },
-          "Microsoft.ML.Transforms.Text": {
-            "target": "Package",
-            "version": "[3.0.1, )",
-            "versionCentrallyManaged": true
-          },
           "Microsoft.PowerShell.SDK": {
             "target": "Package",
             "version": "[7.4.6, )",
@@ -10577,8 +10571,6 @@
           "Microsoft.ML.AutoML": "0.21.1",
           "Microsoft.ML.FastTree": "3.0.1",
           "Microsoft.ML.LightGbm": "3.0.1",
-          "Microsoft.ML.TestFramework": "3.0.1",
-          "Microsoft.ML.Transforms.Text": "3.0.1",
           "Microsoft.NET.Test.Sdk": "17.11.1",
           "Microsoft.PowerShell.SDK": "7.4.6",
           "Microsoft.SourceLink.GitHub": "8.0.0",
@@ -10615,16 +10607,5 @@
         "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1101",
-      "level": "Error",
-      "message": "Unable to find package Microsoft.ML.Transforms.Text. No packages exist with this id in source(s): nuget.org. PackageSourceMapping is enabled, the following source(s) were not considered: /usr/local/share/dotnet/library-packs, PowerShell Gallery.",
-      "libraryId": "Microsoft.ML.Transforms.Text",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  }
 }

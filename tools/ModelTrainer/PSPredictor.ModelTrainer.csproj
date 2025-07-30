@@ -15,7 +15,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.ML" />
     <PackageReference Include="Microsoft.ML.AutoML" />
-    <PackageReference Include="Microsoft.ML.Transforms.Text" />
     <PackageReference Include="Microsoft.ML.FastTree" />
     <PackageReference Include="Microsoft.ML.LightGbm" />
   </ItemGroup>
