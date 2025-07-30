@@ -15,11 +15,8 @@ function Register-DotnetCompletion {
         $commandLine = $commandAst.ToString()
         $words = $commandLine -split '\s+' | Where-Object { $_ -ne '' }
         
-        # Debug output (remove after testing)
-        Write-Host "Debug: wordToComplete='$wordToComplete', words=[$($words -join ', ')], count=$($words.Count)" -ForegroundColor Yellow
-        
         # Determine if we're completing the main command or a subcommand
-        if ($words.Count -eq 1 -or ($words.Count -eq 2 -and $words[1] -like "$wordToComplete*")) {
+        if ($words.Count -eq 1 -or ($words.Count -eq 2 -and [string]::IsNullOrEmpty($wordToComplete) -eq $false -and $words[1] -like "$wordToComplete*")) {
             # We're completing the main dotnet command
             $mainCommands = @(
                 'new', 'restore', 'build', 'publish', 'run', 'test', 'pack', 'clean',
