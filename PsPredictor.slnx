@@ -1,19 +1,14 @@
-{
-  "solution": {
-    "path": "PSPredictor.slnx",
-    "projects": [
-      "src/PSPredictor/PSPredictor.csproj",
-      "src/Core/PSPredictor.Core.csproj", 
-      "src/Shared/PSPredictor.Shared.csproj",
-      "tests/UnitTests/PSPredictor.UnitTests.csproj",
-      "tests/Core.Tests/PSPredictor.Core.Tests.csproj",
-      "tests/Completion.Tests/PSPredictor.Completion.Tests.csproj",
-      "tests/AI.Tests/PSPredictor.AI.Tests.csproj",
-      "tests/Integration.Tests/PSPredictor.Integration.Tests.csproj",
-      "tests/Performance.Tests/PSPredictor.Performance.Tests.csproj",
-      "tools/ModelTrainer/PSPredictor.ModelTrainer.csproj",
-      "tools/CodeGen/PSPredictor.CodeGen.csproj",
-      "tools/DevTools/PSPredictor.DevTools.csproj"
-    ]
-  }
-}
+<Solution>
+  <Project Path="src\PSPredictor\PSPredictor.csproj" />
+  <Project Path="src\Core\PSPredictor.Core.csproj" />
+  <Project Path="src\Shared\PSPredictor.Shared.csproj" />
+  <Project Path="tests\UnitTests\PSPredictor.UnitTests.csproj" />
+  <Project Path="tests\Core.Tests\PSPredictor.Core.Tests.csproj" />
+  <Project Path="tests\Completion.Tests\PSPredictor.Completion.Tests.csproj" />
+  <Project Path="tests\AI.Tests\PSPredictor.AI.Tests.csproj" />
+  <Project Path="tests\Integration.Tests\PSPredictor.Integration.Tests.csproj" />
+  <Project Path="tests\Performance.Tests\PSPredictor.Performance.Tests.csproj" />
+  <Project Path="tools\ModelTrainer\PSPredictor.ModelTrainer.csproj" />
+  <Project Path="tools\CodeGen\PSPredictor.CodeGen.csproj" />
+  <Project Path="tools\DevTools\PSPredictor.DevTools.csproj" />
+</Solution>
