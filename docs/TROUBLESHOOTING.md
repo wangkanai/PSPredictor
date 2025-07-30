@@ -354,7 +354,20 @@ function Register-{ToolName}Completion {
 
 ### Optimization Techniques
 
-#### 1. Caching Strategies
+#### 1. Avoid Duplicate API Calls
+```powershell
+# Problem: Calling expensive operations multiple times
+$options1 = Get-PSReadLineOption
+# ... later in code ...
+$options2 = Get-PSReadLineOption
+
+# Solution: Store result once and reuse
+$currentOptions = Get-PSReadLineOption
+$currentHandler = Get-PSReadLineKeyHandler -Key Tab
+# Use $currentOptions and $currentHandler throughout function
+```
+
+#### 2. Caching Strategies
 ```powershell
 # Cache expensive operations
 $script:PackageCache = @{}
@@ -363,7 +376,7 @@ if (-not $script:PackageCache.ContainsKey($query)) {
 }
 ```
 
-#### 2. Early Returns
+#### 3. Early Returns
 ```powershell
 # Return early for invalid contexts
 if ($words.Count -eq 0 -or $words[0] -ne 'expected-command') {
@@ -371,7 +384,7 @@ if ($words.Count -eq 0 -or $words[0] -ne 'expected-command') {
 }
 ```
 
-#### 3. Limit Results
+#### 4. Limit Results
 ```powershell
 # Limit completion results to prevent overwhelming UI
 $completions | Select-Object -First 50

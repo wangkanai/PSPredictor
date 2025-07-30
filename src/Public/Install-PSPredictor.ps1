@@ -38,13 +38,15 @@ function Install-PSPredictor {
         Write-Warning "PSPredictor will work without persistent completions."
     }
     
+    # Get PSReadLine configuration once at the beginning for efficiency
+    $currentOptions = Get-PSReadLineOption
+    $currentHandler = Get-PSReadLineKeyHandler -Key Tab
+    
     # Configure PSReadLine for optimal completion experience
     if ($ConfigurePSReadLine -or $Force) {
         Write-Host "🔧 Configuring PSReadLine for PSPredictor..." -ForegroundColor Cyan
         
-        # Check current Tab key handler
-        $currentHandler = Get-PSReadLineKeyHandler -Key Tab
-        
+        # Check if Tab key handler needs fixing
         if ($currentHandler -and ($currentHandler | Where-Object { $_.Function -eq 'MenuComplete' })) {
             Write-Host "⚠️  Current Tab handler is MenuComplete - this may interfere with PSPredictor" -ForegroundColor Yellow
             Write-Host "   Configuring hybrid completion (Complete first, then MenuComplete)" -ForegroundColor Yellow
@@ -61,7 +63,6 @@ function Install-PSPredictor {
         }
         
         # Configure prediction settings to avoid history interference with tab completion
-        $currentOptions = Get-PSReadLineOption
         if ($currentOptions.PredictionViewStyle -eq 'ListView' -and $currentOptions.PredictionSource -ne 'None') {
             Write-Host "⚠️  ListView prediction may interfere with tab completion - configuring..." -ForegroundColor Yellow
             
@@ -72,13 +73,12 @@ function Install-PSPredictor {
             Write-Host "   - PredictionViewStyle: InlineView (cleaner tab completion)" -ForegroundColor Gray
             Write-Host "   - History predictions will not interfere with completions" -ForegroundColor Gray
         }
-    } elseif (Get-PSReadLineKeyHandler -Key Tab | Where-Object { $_.Function -eq 'MenuComplete' }) {
+    } elseif ($currentHandler | Where-Object { $_.Function -eq 'MenuComplete' }) {
         Write-Host "⚠️  MenuComplete detected - use -ConfigurePSReadLine to fix Tab completion" -ForegroundColor Yellow
         Write-Host "   Or manually run: Set-PSReadLineKeyHandler -Chord Tab -Function Complete" -ForegroundColor Gray
     }
     
     # Always check for ListView interference (even without ConfigurePSReadLine flag)
-    $currentOptions = Get-PSReadLineOption
     if ($currentOptions.PredictionViewStyle -eq 'ListView' -and $currentOptions.PredictionSource -ne 'None') {
         Write-Host "⚠️  ListView prediction detected - this causes history to show below completions" -ForegroundColor Yellow
         Write-Host "   Use -ConfigurePSReadLine to fix, or manually run:" -ForegroundColor Gray
