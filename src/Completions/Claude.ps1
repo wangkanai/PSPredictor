@@ -97,5 +97,5 @@ function Register-ClaudeCompletion {
         return $completions
     }
     
-    Register-ArgumentCompleter -CommandName 'claude' -ScriptBlock $ClaudeScriptBlock
+    Register-ArgumentCompleter -Native -CommandName 'claude' -ScriptBlock $ClaudeScriptBlock
 }
