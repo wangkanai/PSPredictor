@@ -72,7 +72,7 @@ function Install-PSPredictor {
             Write-Host "   - PredictionViewStyle: InlineView (cleaner tab completion)" -ForegroundColor Gray
             Write-Host "   - History predictions will not interfere with completions" -ForegroundColor Gray
         }
-    } elseif (Get-PSReadLineKeyHandler | Where-Object { $_.Key -eq 'Tab' -and $_.Function -eq 'MenuComplete' }) {
+    } elseif (Get-PSReadLineKeyHandler -Key Tab | Where-Object { $_.Function -eq 'MenuComplete' }) {
         Write-Host "⚠️  MenuComplete detected - use -ConfigurePSReadLine to fix Tab completion" -ForegroundColor Yellow
         Write-Host "   Or manually run: Set-PSReadLineKeyHandler -Chord Tab -Function Complete" -ForegroundColor Gray
     }
