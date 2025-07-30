@@ -26,9 +26,6 @@ function Register-AWSCompletion {
     Write-Verbose "AWS CLI completion stub - not implemented"
 }
 
-function Register-DotnetCompletion { 
-    Write-Verbose "Dotnet CLI completion stub - not implemented"
-}
 
 function Register-TerraformCompletion { 
     Write-Verbose "Terraform completion stub - not implemented"

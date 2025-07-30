@@ -7,7 +7,7 @@
 
 function Register-ClaudeCompletion {
     $ClaudeScriptBlock = {
-        param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+        param($wordToComplete, $commandAst, $cursorPosition)
         
         $completions = @()
         
@@ -97,5 +97,5 @@ function Register-ClaudeCompletion {
         return $completions
     }
     
-    Register-ArgumentCompleter -CommandName 'claude' -ScriptBlock $ClaudeScriptBlock
+    Register-ArgumentCompleter -Native -CommandName 'claude' -ScriptBlock $ClaudeScriptBlock
 }

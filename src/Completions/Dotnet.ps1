@@ -7,7 +7,7 @@
 
 function Register-DotnetCompletion {
     $DotnetScriptBlock = {
-        param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+        param($wordToComplete, $commandAst, $cursorPosition)
         
         $completions = @()
         
@@ -15,9 +15,9 @@ function Register-DotnetCompletion {
         $commandLine = $commandAst.ToString()
         $words = $commandLine -split '\s+' | Where-Object { $_ -ne '' }
         
-        # If we're at the first argument after 'dotnet'
-        if ($words.Count -le 2) {
-            # Main dotnet commands
+        # Determine if we're completing the main command or a subcommand
+        if ($words.Count -eq 1 -or ($words.Count -eq 2 -and [string]::IsNullOrEmpty($wordToComplete) -eq $false -and $words[1] -like "$wordToComplete*")) {
+            # We're completing the main dotnet command
             $mainCommands = @(
                 'new', 'restore', 'build', 'publish', 'run', 'test', 'pack', 'clean',
                 'sln', 'add', 'remove', 'list', 'nuget', 'tool', 'store', 'help',
@@ -29,8 +29,8 @@ function Register-DotnetCompletion {
                     [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', "dotnet $_")
                 }
         }
-        # Handle subcommands and options
-        elseif ($words.Count -gt 2) {
+        # Handle subcommands and their options (we have a confirmed subcommand)
+        else {
             $subCommand = $words[1]
             
             switch ($subCommand) {
@@ -92,5 +92,5 @@ function Register-DotnetCompletion {
         return $completions
     }
     
-    Register-ArgumentCompleter -CommandName 'dotnet' -ScriptBlock $DotnetScriptBlock
+    Register-ArgumentCompleter -Native -CommandName 'dotnet' -ScriptBlock $DotnetScriptBlock
 }
