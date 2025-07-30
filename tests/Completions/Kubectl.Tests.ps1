@@ -1,5 +1,10 @@
 BeforeAll {
     Import-Module "$PSScriptRoot/../../src/PSPredictor.psd1" -Force
+    
+    # Mock kubectl command for testing (since it might not be installed in CI)
+    if (-not (Get-Command kubectl -ErrorAction SilentlyContinue)) {
+        function Global:kubectl { }
+    }
 }
 
 Describe "Kubectl Completion Tests" {

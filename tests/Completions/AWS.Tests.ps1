@@ -1,5 +1,10 @@
 BeforeAll {
     Import-Module "$PSScriptRoot/../../src/PSPredictor.psd1" -Force
+    
+    # Mock aws command for testing (since it might not be installed in CI)
+    if (-not (Get-Command aws -ErrorAction SilentlyContinue)) {
+        function Global:aws { }
+    }
 }
 
 Describe "AWS CLI Completion Tests" {
