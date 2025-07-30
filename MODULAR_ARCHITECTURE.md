@@ -10,8 +10,6 @@ PSPredictor v1.1+ introduces a modular architecture designed for better maintain
 src/
 ├── PSPredictor.psd1              # Main manifest (PowerShell 7+)
 ├── PSPredictor.psm1              # Main modular module
-├── PSPredictor.legacy.psd1       # Legacy backup (PowerShell 5.1+)
-├── PSPredictor.legacy.psm1       # Legacy backup (monolithic)
 ├── Public/                       # Exported functions
 │   ├── Install-PSPredictor.ps1
 │   ├── Uninstall-PSPredictor.ps1
@@ -64,11 +62,10 @@ Install-PSPredictor
 Get-PSPredictorTools
 ```
 
-### **Legacy Backup Available**  
+### **Clean Modular Structure**  
 ```powershell
-# If needed, legacy files are preserved as .legacy
-# PSPredictor.legacy.psd1 and .legacy.psm1
-# But the main module is now modular by default
+# PSPredictor now uses modular architecture exclusively
+# All legacy files have been removed for clean codebase
 ```
 
 ## 📦 Component Details
@@ -100,11 +97,11 @@ Tool-specific completion implementations:
 ## 🔄 Migration Path
 
 ### **For Users**
-No changes required - the main module is now modular:
+No changes required - PSPredictor is now purely modular:
 
 ```powershell
-# Same import command, now with modular architecture
-Import-Module PSPredictor      # Now modular by default (v1.1+)
+# Same import command, clean modular architecture
+Import-Module PSPredictor      # Modular architecture only (v1.1+)
 ```
 
 ### **For Contributors**  
