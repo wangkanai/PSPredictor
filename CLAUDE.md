@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-PSPredictor is a PowerShell module that provides comprehensive auto-completion and intelligent prediction for 50+ popular command-line tools. It's designed to enhance PowerShell's tab completion experience with context-aware suggestions for tools like Git, Docker, NPM, kubectl, Azure CLI, AWS CLI, and many others.
+PSPredictor is a PowerShell module that provides comprehensive auto-completion and intelligent prediction for 26+ popular command-line tools. It's designed to enhance PowerShell's tab completion experience with context-aware suggestions for tools like Git, Docker, NPM, kubectl, Azure CLI, AWS CLI, PowerShell Core, Zsh, Bash, and many others.
 
 ## Development Commands
 
@@ -61,24 +61,29 @@ $env:PSGALLERY_API_KEY = "your-api-key"
 
 ### Development Workflow
 ```powershell
-# Import module for testing during development
-Import-Module ./src/PSPredictor.psm1 -Force
+# Build and install module for testing during development
+./build.ps1 -Task Build
+./build.ps1 -Task Install
 
 # Test basic functionality
 Get-PSPredictorTools
-Install-PSPredictor
+Register-PSPredictorCompletion -Tool "git"
 
 # Test specific tool completions
 git <TAB>
 docker <TAB>
 npm <TAB>
+pwsh <TAB>  # PowerShell Core
+zsh <TAB>   # Zsh shell
+bash <TAB>  # Bash shell
 
-# Run tests
+# Run all tests (145+ tests)
 ./build.ps1 -Task Test
 
-# Run specific Pester tests
+# Run specific Pester test suites
 Invoke-Pester ./tests/PSPredictor.Tests.ps1
-Invoke-Pester ./tests/Completions.Tests.ps1
+Invoke-Pester ./tests/Public/
+Invoke-Pester ./tests/Completions/
 ```
 
 ## Architecture Overview
@@ -89,10 +94,24 @@ Invoke-Pester ./tests/Completions.Tests.ps1
 PSPredictor/
 ├── src/                          # Source code
 │   ├── PSPredictor.psd1         # Module manifest
-│   └── PSPredictor.psm1         # Main module file
-├── tests/                        # Pester tests
+│   ├── PSPredictor.psm1         # Main module loader
+│   ├── Public/                  # Exported functions (4 functions)
+│   │   ├── Get-PSPredictorTools.ps1
+│   │   ├── Install-PSPredictor.ps1
+│   │   ├── Register-PSPredictorCompletion.ps1
+│   │   └── Uninstall-PSPredictor.ps1
+│   ├── Private/                 # Internal functions
+│   │   └── Config.ps1           # Tool configuration
+│   └── Completions/             # CLI completion providers (26+ tools)
+│       ├── Azure.ps1, AWS.ps1, Git.ps1, Docker.ps1
+│       ├── PowerShell.ps1, Zsh.ps1, Bash.ps1
+│       ├── NPM.ps1, Kubectl.ps1, Terraform.ps1
+│       └── ... (20+ more tools)
+├── tests/                        # Pester tests (145+ tests)
 │   ├── PSPredictor.Tests.ps1    # Core module tests
-│   ├── Completions.Tests.ps1    # Completion functionality tests
+│   ├── Public/                  # Public function tests
+│   ├── Private/                 # Private function tests
+│   ├── Completions/             # CLI completion tests (17 test files)
 │   └── TestConfig.ps1           # Test configuration and helpers
 ├── .github/
 │   ├── workflows/               # GitHub Actions
@@ -111,18 +130,26 @@ PSPredictor/
 - PowerShell Gallery publishing information
 - Requires PSReadLine module
 
-**src/PSPredictor.psm1** - Main module file with:
-- Configuration management (`$script:PSPredictorConfig`)
-- Tool registry (`$script:SupportedTools`) with 10+ CLI tools
-- Core installation/management functions
-- Individual completion registration functions
-- Built-in completion implementations for Git, Docker, NPM
+**src/PSPredictor.psm1** - Main module loader that:
+- Dynamically loads Public/, Private/, and Completions/ functions
+- Exports public functions (Get-PSPredictorTools, Install-PSPredictor, etc.)
+- Manages modular architecture and function discovery
 
-**tests/** - Comprehensive test suite:
-- Pester-based testing framework
-- Module validation and functionality tests
-- Completion behavior testing
-- Cross-platform compatibility tests
+**src/Private/Config.ps1** - Configuration management with:
+- Tool registry (`$script:SupportedTools`) with 26+ CLI tools  
+- Configuration settings (`$script:PSPredictorConfig`)
+- Tool metadata and enablement status
+
+**src/Completions/*.ps1** - Individual completion providers:
+- 26+ separate completion files (Azure.ps1, Git.ps1, PowerShell.ps1, etc.)
+- Each file contains one Register-{Tool}Completion function
+- Context-aware completion logic for each CLI tool
+
+**tests/** - Comprehensive test suite (145+ tests):
+- Modular test structure matching source organization
+- Pester-based testing framework with 17 test files
+- Public/, Private/, and Completions/ test directories
+- Cross-platform compatibility tests (Windows/Linux/macOS)
 
 **build.ps1** - Comprehensive build automation:
 - Multi-task build system (Build, Test, Package, Clean, Install, All)
@@ -133,25 +160,34 @@ PSPredictor/
 
 ### Key Architecture Patterns
 
-**Tool Registration System**: Each CLI tool is registered in `$script:SupportedTools` with metadata including description, completion script reference, and enabled status.
+**Modular Architecture**: Clean separation of concerns with:
+- **Public/**: Exported functions available to users
+- **Private/**: Internal functions and configuration
+- **Completions/**: Individual completion providers (26+ files)
 
-**Completion Architecture**: Uses PowerShell's `Register-ArgumentCompleter` with `-Native` parameter to provide completions for external commands. Each tool has its own registration function (e.g., `Register-GitCompletion`, `Register-DockerCompletion`).
+**Tool Registration System**: Each CLI tool is registered in `$script:SupportedTools` (in Private/Config.ps1) with metadata including description, completion script reference, and enabled status.
+
+**Completion Architecture**: Uses PowerShell's `Register-ArgumentCompleter` with `-Native` parameter. Each tool has its own file in Completions/ with a dedicated registration function (e.g., `Register-GitCompletion`, `Register-PowerShellCompletion`).
+
+**Dynamic Loading**: Main module loader automatically discovers and loads:
+- All .ps1 files from Public/, Private/, and Completions/ directories
+- Functions are dot-sourced and available for use
+- Exports only public functions to maintain clean API surface
 
 **Configuration Management**: Centralized configuration in `$script:PSPredictorConfig` supporting:
-- Enable/disable specific tools
+- Enable/disable specific tools (26+ CLI tools supported)
 - Completion behavior settings (max suggestions, case sensitivity, fuzzy matching)
-- Auto-update capabilities
-- Custom completion path
-
-**Modular Design**: Completion functions are separated by tool, making it easy to add new CLI tools or enhance existing ones.
+- Shell-specific completions (PowerShell Core, Zsh, Bash)
+- Cross-platform compatibility
 
 ### Extension Points
 
 **Adding New CLI Tools**:
-1. Add tool definition to `$script:SupportedTools` hashtable
-2. Create completion function following `Register-{ToolName}Completion` pattern
-3. Add case to the switch statement in `Register-PSPredictorCompletion`
-4. Implement context-aware completion logic using `Register-ArgumentCompleter`
+1. Add tool definition to `$script:SupportedTools` hashtable in `src/Private/Config.ps1`
+2. Create new completion file `src/Completions/{ToolName}.ps1`
+3. Implement `Register-{ToolName}Completion` function in the new file
+4. Add case to the switch statement in `src/Public/Register-PSPredictorCompletion.ps1`
+5. Create test file `tests/Completions/{ToolName}.Tests.ps1`
 
 **Completion Function Pattern**:
 ```powershell
@@ -165,18 +201,21 @@ function Register-MyToolCompletion {
 
 ## Module Structure
 
-- **Core Functions**: Installation, configuration, and tool management
-- **Built-in Completions**: Implemented for Git, Docker, NPM (others are stubs)
-- **Export Strategy**: Explicit function and alias exports for controlled API surface
-- **Dependency**: Requires PSReadLine for enhanced completion experience
+- **Modular Organization**: Clean separation with Public/, Private/, Completions/ directories
+- **Public Functions**: 4 exported functions for user interaction
+- **Completion Providers**: 26+ individual completion files for CLI tools
+- **Export Strategy**: Only public functions exported for controlled API surface
+- **PowerShell 7+ Requirement**: Cross-platform support with PSReadLine dependency
 
 ## Testing and Quality
 
 The build system includes comprehensive validation:
+- **145+ Pester tests** across 17 test files with modular structure
 - Module manifest validation with `Test-ModuleManifest`
-- Module import testing
-- Function export verification
-- Basic functionality testing with supported tools count validation
+- Modular function loading and import testing
+- Public/Private/Completion function verification
+- All 26+ CLI tool completion registration testing
+- Cross-platform compatibility validation
 
 ## CI/CD Pipeline
 
@@ -196,9 +235,11 @@ The build system includes comprehensive validation:
 
 ## Development Notes
 
-- Module supports PowerShell 5.1+ with PSReadLine dependency
-- Uses PowerShell's native argument completion system
-- Completion functions should be performant (< 100ms recommended)
-- Context-aware completions can parse command AST for intelligent suggestions
-- Configuration persists across sessions and can be customized per user
-- Version bumping helper script available at `.github/scripts/bump-version.ps1`
+- **PowerShell 7+ Required**: Cross-platform support with PSReadLine dependency
+- **Modular Architecture**: Clean separation enables easy extension and maintenance
+- **Performance**: Completion functions should be performant (< 100ms recommended)
+- **Context-Aware**: Completions can parse command AST for intelligent suggestions
+- **26+ CLI Tools**: Comprehensive coverage including shells (PowerShell, Zsh, Bash)
+- **Extensive Testing**: 145+ tests ensure reliability across platforms
+- **Build Automation**: Comprehensive build.ps1 with all development tasks
+- **Version Management**: Helper script available at `.github/scripts/bump-version.ps1`
