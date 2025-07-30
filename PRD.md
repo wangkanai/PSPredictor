@@ -396,12 +396,13 @@ public class CommandHistoryEntry
 
 ### FR-009: Advanced Key Handler & Macro System
 **Priority**: P1 (High)  
-**Description**: Comprehensive key binding and macro system for custom productivity workflows
+**Description**: Comprehensive key binding and macro system for custom productivity workflows with native PowerShell integration
 
 **Requirements**:
-- Custom key binding system integrated with PSReadLine
-- Macro recording and playback capabilities
-- Template expansion with parameter substitution
+- Native PowerShell input handling system (PSReadLine-independent)
+- Cross-platform key binding registration and processing
+- Advanced macro recording with keystroke, command, and timing capture
+- Template expansion with parameter substitution and user prompts
 - Context-sensitive key bindings based on current environment
 - Visual macro editor and management interface
 
@@ -432,11 +433,14 @@ public class CustomKeyHandler
 ```
 
 **Advanced Features**:
-- **Macro Recording**: Record complex sequences of commands and keystrokes
-- **Template System**: Parameterized templates with variable substitution and user prompts
+- **Native Input Processing**: Direct console input handling without PSReadLine dependencies
+- **Advanced Macro Recording**: Record keystrokes, commands, timing, and conditional logic
+- **Template System**: Parameterized templates with variable substitution and interactive prompts
+- **Cross-Platform Support**: Consistent key handling across Windows, Linux, and macOS
 - **Chord Sequences**: Multi-key combinations (e.g., Ctrl+K, Ctrl+D for complex actions)
-- **Context Sensitivity**: Different bindings based on current directory, project type
+- **Context Sensitivity**: Different bindings based on current directory, project type, and environment
 - **Visual Editor**: GUI interface for creating and managing complex macros and templates
+- **PowerShell Integration**: Native PowerShell cmdlets for configuration and management
 - **Sharing System**: Export/import key bindings and macros for team collaboration
 
 **Template Example**:
@@ -458,12 +462,17 @@ kubectl set image deployment/myapp myapp=myapp:$Version
 - **Context Awareness**: Key bindings adapt based on current project and environment
 
 **Acceptance Criteria**:
-- [ ] Custom key binding system with conflict resolution
-- [ ] Macro recording and playback with high fidelity
-- [ ] Template system with parameter substitution
-- [ ] Context-sensitive bindings based on environment
-- [ ] Visual editor for complex macro creation
-- [ ] Export/import functionality for sharing configurations
+- [ ] Native PowerShell input handling system independent of PSReadLine
+- [ ] Cross-platform key binding registration and processing (Windows, Linux, macOS)
+- [ ] Custom key binding system with conflict resolution and priority handling
+- [ ] Advanced macro recording with keystroke, command, timing, and conditional capture
+- [ ] High-fidelity macro playback with precise timing and context reproduction
+- [ ] Template system with parameter substitution and interactive user prompts
+- [ ] Context-sensitive bindings that adapt based on environment and project type
+- [ ] PowerShell cmdlet interface for configuration and management
+- [ ] Visual editor for complex macro creation and workflow design
+- [ ] Export/import functionality for sharing configurations across teams
+- [ ] Zero external dependencies beyond .NET and PowerShell core APIs
 
 ---
 
@@ -674,16 +683,20 @@ kubectl set image deployment/myapp myapp=myapp:$Version
 - `HistorySearchService` : Natural language search capabilities
 
 #### 9. Advanced Key Handler & Macro System
-**Technology**: PSReadLine Integration, Windows Input API, Cross-Platform Input  
-**Responsibility**: Custom key bindings, macro recording, and template expansion
+**Technology**: Native PowerShell Integration, .NET Console APIs, Cross-Platform Input Handling  
+**Responsibility**: PSReadLine-independent key bindings, macro recording, and template expansion
 
 **Key Classes**:
-- `KeyHandlerManager` : Key binding registration and management
-- `MacroRecorder` : Keystroke and command sequence recording
-- `MacroPlayer` : Macro playback and execution engine
-- `TemplateEngine` : Parameterized template expansion system
-- `KeyBindingResolver` : Context-sensitive binding resolution
-- `WorkflowManager` : Complex multi-step workflow automation
+- `NativeKeyHandlerSystem` : Core native input processing and orchestration
+- `ConsoleInputManager` : Cross-platform console input handling and interception
+- `KeyHandlerManager` : Key binding registration, conflict resolution, and management
+- `MacroRecorder` : Advanced keystroke, command, and timing sequence recording
+- `MacroPlayer` : High-fidelity macro playback and execution engine
+- `TemplateEngine` : Parameterized template expansion with interactive prompts
+- `KeyBindingResolver` : Context-sensitive binding resolution and priority handling
+- `WorkflowManager` : Complex multi-step workflow automation and orchestration
+- `CrossPlatformInputHandler` : Platform-specific input handling (Windows/Unix)
+- `PowerShellCmdletIntegration` : Native PowerShell cmdlet interface for configuration
 
 ---
 
