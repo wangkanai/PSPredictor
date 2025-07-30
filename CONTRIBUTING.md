@@ -14,8 +14,9 @@
 
 ### Prerequisites
 
-- PowerShell 5.1 or later (PowerShell 7+ recommended)
+- PowerShell 7.0 or later (required for cross-platform support)
 - PSReadLine module
+- Pester module (for testing)
 - Git for version control
 
 ### Getting Started
