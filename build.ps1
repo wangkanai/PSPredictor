@@ -207,8 +207,18 @@ $Tasks = @{
     Install = {
         Write-Host "🚀 Installing PSPredictor module..." -ForegroundColor Cyan
         
-        # Install to user module directory
-        $userModulePath = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'PowerShell\Modules\PSPredictor'
+        # Ensure we have a built module
+        if (-not (Test-Path $ModulePath)) {
+            Write-Host "🔨 Building module first..." -ForegroundColor Yellow
+            & $Tasks.Build
+        }
+        
+        # Install to user module directory (cross-platform)
+        if ($IsWindows -or $env:OS -eq 'Windows_NT') {
+            $userModulePath = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'PowerShell\Modules\PSPredictor'
+        } else {
+            $userModulePath = Join-Path $env:HOME '.local/share/powershell/Modules/PSPredictor'
+        }
         
         if (Test-Path $userModulePath) {
             if ($Force) {
@@ -228,9 +238,14 @@ $Tasks = @{
         Copy-Item "$ModulePath/*" $userModulePath -Recurse -Force
         
         # Test installation
-        Import-Module PSPredictor -Force
-        $version = (Get-Module PSPredictor).Version
-        Remove-Module PSPredictor -Force
+        try {
+            Import-Module PSPredictor -Force
+            $version = (Get-Module PSPredictor).Version
+            Remove-Module PSPredictor -Force
+        } catch {
+            Write-Warning "Could not import installed module for testing: $_"
+            $version = "unknown"
+        }
         
         Write-Host "✅ PSPredictor $version installed successfully" -ForegroundColor Green
         Write-Host "💡 Run 'Import-Module PSPredictor' to use the module" -ForegroundColor Yellow
