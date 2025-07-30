@@ -17,17 +17,20 @@ function Register-DotnetCompletion {
         
         # If we're at the first argument after 'dotnet'
         if ($words.Count -le 2) {
-            # Main dotnet commands
-            $mainCommands = @(
-                'new', 'restore', 'build', 'publish', 'run', 'test', 'pack', 'clean',
-                'sln', 'add', 'remove', 'list', 'nuget', 'tool', 'store', 'help',
-                'dev-certs', 'fsi', 'format', 'workload', 'sdk'
-            )
-            
-            $completions += $mainCommands | Where-Object { $_ -like "$wordToComplete*" } |
-                ForEach-Object { 
-                    [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', "dotnet $_")
-                }
+            # Don't provide dotnet subcommands if the word looks like a file/path
+            if (-not ($wordToComplete -match '^[\.\/\\]' -or $wordToComplete -match '\.dll$' -or $wordToComplete -match '\.exe$')) {
+                # Main dotnet commands
+                $mainCommands = @(
+                    'new', 'restore', 'build', 'publish', 'run', 'test', 'pack', 'clean',
+                    'sln', 'add', 'remove', 'list', 'nuget', 'tool', 'store', 'help',
+                    'dev-certs', 'fsi', 'format', 'workload', 'sdk'
+                )
+                
+                $completions += $mainCommands | Where-Object { $_ -like "$wordToComplete*" } |
+                    ForEach-Object { 
+                        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', "dotnet $_")
+                    }
+            }
         }
         # Handle subcommands and options
         elseif ($words.Count -gt 2) {
