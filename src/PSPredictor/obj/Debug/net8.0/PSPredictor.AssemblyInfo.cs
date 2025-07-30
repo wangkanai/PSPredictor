@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright © 2025 Wangkanai")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("2.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0+dfa6be5d5184a54ef121dec1290f0976f7273912")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0+a4737bd1f99a99894c5c51567e596a47c157fd46")]
 [assembly: System.Reflection.AssemblyProductAttribute("PSPredictor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PSPredictor - Advanced PowerShell Command Predictor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("2.0.0.0")]
