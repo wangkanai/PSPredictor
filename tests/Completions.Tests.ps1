@@ -41,8 +41,8 @@ Describe "PSPredictor Completion Tests" {
             # Mock git command completion
             $MockCompletion = @('add', 'branch', 'checkout', 'commit', 'diff', 'merge', 'pull', 'push')
             
-            # Test that git completion function exists and can be called
-            { & (Get-Module PSPredictor | ForEach-Object { $_.Invoke('Register-GitCompletion') }) } | Should -Not -Throw
+            # Test that git completion can be registered through the public API
+            { Register-PSPredictorCompletion -Tool 'git' } | Should -Not -Throw
         }
         
         It "Should handle git completion with partial input" {
@@ -66,8 +66,8 @@ Describe "PSPredictor Completion Tests" {
         }
         
         It "Should provide docker command completions" {
-            # Test that docker completion function can be registered
-            { & (Get-Module PSPredictor | ForEach-Object { $_.Invoke('Register-DockerCompletion') }) } | Should -Not -Throw
+            # Test that docker completion can be registered through the public API
+            { Register-PSPredictorCompletion -Tool 'docker' } | Should -Not -Throw
         }
         
         It "Should handle docker completion with partial input" {
@@ -89,8 +89,8 @@ Describe "PSPredictor Completion Tests" {
         }
         
         It "Should provide npm command completions" {
-            # Test that npm completion function can be registered
-            { & (Get-Module PSPredictor | ForEach-Object { $_.Invoke('Register-NPMCompletion') }) } | Should -Not -Throw
+            # Test that npm completion can be registered through the public API
+            { Register-PSPredictorCompletion -Tool 'npm' } | Should -Not -Throw
         }
         
         It "Should handle npm completion with partial input" {

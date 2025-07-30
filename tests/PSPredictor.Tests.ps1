@@ -220,7 +220,7 @@ Describe "PSPredictor Module Tests" {
         }
         
         It "Should install PSPredictor without errors" {
-            { Install-PSPredictor } | Should -Not -Throw
+            { Install-PSPredictor -WarningAction SilentlyContinue } | Should -Not -Throw
         }
         
         It "Should uninstall PSPredictor without errors" {

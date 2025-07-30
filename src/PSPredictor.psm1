@@ -26,7 +26,11 @@ $script:PSPredictorConfig = @{
     CaseSensitive = $false
     FuzzyMatching = $true
     AutoUpdate = $true
-    CompletionPath = "$env:USERPROFILE\.pspredict"
+    CompletionPath = if ($IsWindows -or $env:OS -eq 'Windows_NT') {
+        Join-Path $env:USERPROFILE '.pspredict'
+    } else {
+        Join-Path $env:HOME '.pspredict'
+    }
     EnabledTools = @()
     DisabledTools = @()
 }
@@ -103,9 +107,15 @@ function Install-PSPredictor {
     
     Write-Host "🚀 Installing PSPredictor..." -ForegroundColor Green
     
-    # Initialize completion directory
-    if (-not (Test-Path $script:PSPredictorConfig.CompletionPath)) {
-        New-Item -Path $script:PSPredictorConfig.CompletionPath -ItemType Directory -Force | Out-Null
+    # Initialize completion directory with error handling
+    try {
+        if (-not (Test-Path $script:PSPredictorConfig.CompletionPath)) {
+            New-Item -Path $script:PSPredictorConfig.CompletionPath -ItemType Directory -Force | Out-Null
+            Write-Verbose "Created completion directory: $($script:PSPredictorConfig.CompletionPath)"
+        }
+    } catch {
+        Write-Warning "Could not create completion directory: $($_.Exception.Message)"
+        Write-Warning "PSPredictor will work without persistent completions."
     }
     
     # Register completions for enabled tools
