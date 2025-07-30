@@ -160,9 +160,16 @@ if ($currentHandler | Where-Object { $_.Function -eq 'MenuComplete' }) {
 
 #### **Detection**: Check for multiple handlers
 ```powershell
-$tabHandlers = Get-PSReadLineKeyHandler | Where-Object { $_.Key -eq 'Tab' }
+# More efficient: use -Key parameter to filter directly
+$tabHandlers = Get-PSReadLineKeyHandler -Key Tab
 if ($tabHandlers.Count -gt 1) {
     Write-Warning "Multiple Tab handlers detected: $($tabHandlers.Function -join ', ')"
+}
+
+# Robust check for MenuComplete with array handling
+$hasMenuComplete = Get-PSReadLineKeyHandler -Key Tab | Where-Object { $_.Function -eq 'MenuComplete' }
+if ($hasMenuComplete) {
+    Write-Warning "MenuComplete handler detected - may interfere with PSPredictor"
 }
 ```
 
