@@ -14,7 +14,10 @@ function Register-PSPredictorCompletion {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [string]$Tool
+        [string]$Tool,
+        
+        [Parameter()]
+        [scriptblock]$ScriptBlock
     )
     
     if (-not $script:SupportedTools.ContainsKey($Tool)) {
@@ -30,6 +33,13 @@ function Register-PSPredictorCompletion {
     }
     
     Write-Verbose "Registering completion for $Tool"
+    
+    # If a custom ScriptBlock is provided, use it instead of default handler
+    if ($ScriptBlock) {
+        Write-Verbose "Using custom ScriptBlock for $Tool completion"
+        Register-ArgumentCompleter -CommandName $Tool -ScriptBlock $ScriptBlock
+        return
+    }
     
     # Call the specific completion registration function
     switch ($Tool.ToLower()) {

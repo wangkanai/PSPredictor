@@ -2,16 +2,16 @@
 
 ## Overview
 
-PSPredictor v2.0+ introduces a modular architecture designed for better maintainability, testing, and PowerShell 7+ cross-platform compatibility.
+PSPredictor v1.1+ introduces a modular architecture designed for better maintainability, testing, and PowerShell 7+ cross-platform compatibility. The module now uses a unified modular structure that replaces the previous monolithic architecture.
 
 ## 📁 Directory Structure
 
 ```
 src/
-├── PSPredictor.New.psd1          # Modular manifest (PowerShell 7+)
-├── PSPredictor.New.psm1          # Modular main module
-├── PSPredictor.psd1              # Legacy manifest (PowerShell 5.1+)
-├── PSPredictor.psm1              # Legacy monolithic module
+├── PSPredictor.psd1              # Main manifest (PowerShell 7+)
+├── PSPredictor.psm1              # Main modular module
+├── PSPredictor.legacy.psd1       # Legacy backup (PowerShell 5.1+)
+├── PSPredictor.legacy.psm1       # Legacy backup (monolithic)
 ├── Public/                       # Exported functions
 │   ├── Install-PSPredictor.ps1
 │   ├── Uninstall-PSPredictor.ps1
@@ -54,23 +54,21 @@ src/
 
 ## 🚀 Usage
 
-### **Import Modular Version**
+### **Import PSPredictor (Unified Modular)**
 ```powershell
-# PowerShell 7+ (recommended)
-Import-Module PSPredictor.New
+# PowerShell 7+ modular architecture
+Import-Module PSPredictor
 
-# Works exactly like the legacy version
+# Full functionality available
 Install-PSPredictor
 Get-PSPredictorTools
 ```
 
-### **Import Legacy Version**  
+### **Legacy Backup Available**  
 ```powershell
-# PowerShell 5.1+ compatibility
-Import-Module PSPredictor
-
-# Same functionality, monolithic structure
-Install-PSPredictor
+# If needed, legacy files are preserved as .legacy
+# PSPredictor.legacy.psd1 and .legacy.psm1
+# But the main module is now modular by default
 ```
 
 ## 📦 Component Details
@@ -102,12 +100,11 @@ Tool-specific completion implementations:
 ## 🔄 Migration Path
 
 ### **For Users**
-No changes required - both versions provide identical functionality:
+No changes required - the main module is now modular:
 
 ```powershell
-# Both work the same way
-Import-Module PSPredictor      # Legacy
-Import-Module PSPredictor.New  # Modular
+# Same import command, now with modular architecture
+Import-Module PSPredictor      # Now modular by default (v1.1+)
 ```
 
 ### **For Contributors**  
@@ -122,8 +119,8 @@ New contributions should target the modular structure:
 
 ### **Component Testing**
 ```powershell
-# Test individual components
-Import-Module ./src/PSPredictor.New.psd1 -Force
+# Test the modular architecture
+Import-Module ./src/PSPredictor.psd1 -Force
 Invoke-Pester ./tests/PSPredictor.Tests.ps1      # 33 tests
 Invoke-Pester ./tests/Completions.Tests.ps1      # 21 tests
 ```
@@ -150,7 +147,8 @@ All existing tests pass with the modular architecture:
 
 ---
 
-**Architecture Version**: 1.0  
+**Architecture Version**: 1.1  
 **Last Updated**: 2025-07-30  
 **PowerShell Requirements**: 7.0+  
-**Compatibility**: Windows, Linux, macOS
+**Compatibility**: Windows, Linux, macOS  
+**Module Version**: 1.1.0 (Unified Modular)

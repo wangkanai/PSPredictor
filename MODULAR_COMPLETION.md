@@ -50,18 +50,17 @@ src/
 
 ## 🚀 **Usage**
 
-### **Modular Version (Recommended)**
+### **Unified Modular Version**
 ```powershell
-# PowerShell 7+ Cross-Platform
-Import-Module PSPredictor.New
+# PowerShell 7+ Cross-Platform (Modular Architecture)
+Import-Module PSPredictor
 Install-PSPredictor
 ```
 
-### **Legacy Version (Compatibility)**
+### **Legacy Backup Available**
 ```powershell
-# PowerShell 5.1+ Windows/Legacy
-Import-Module PSPredictor
-Install-PSPredictor
+# Legacy files preserved as PSPredictor.legacy.*
+# Main module is now modular by default
 ```
 
 ---

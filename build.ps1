@@ -42,7 +42,7 @@ param(
 
 # Script variables
 $ModuleName = 'PSPredictor'
-$ModuleVersion = '1.0.1'
+$ModuleVersion = '1.1.0'
 $RootPath = $PSScriptRoot
 $SourcePath = Join-Path $RootPath 'src'
 $TestsPath = Join-Path $RootPath 'tests'
@@ -76,13 +76,7 @@ $Tasks = @{
             @{ Source = 'README.md'; Destination = 'README.md'; FromSrc = $false }
         )
         
-        # Also copy modular files if they exist
-        if (Test-Path (Join-Path $SourcePath 'PSPredictor.New.psd1')) {
-            $FilesToCopy += @(
-                @{ Source = 'PSPredictor.New.psd1'; Destination = 'PSPredictor.New.psd1'; FromSrc = $true },
-                @{ Source = 'PSPredictor.New.psm1'; Destination = 'PSPredictor.New.psm1'; FromSrc = $true }
-            )
-        }
+        # Modular directories are now part of the main PSPredictor module
         
         foreach ($file in $FilesToCopy) {
             $sourcePath = if ($file.FromSrc) { 
