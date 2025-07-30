@@ -14,7 +14,7 @@
     Sarin Na Wangkanai
 
 .VERSION
-    1.2.0
+    1.3.0
 
 .LINK
     https://github.com/wangkanai/PSPredictor
