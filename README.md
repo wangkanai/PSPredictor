@@ -9,7 +9,7 @@
 
 ## ✨ Features
 
-- **🎯 Universal CLI Prediction**: Intelligent auto-completion for 23+ popular command-line tools
+- **🎯 Universal CLI Prediction**: Intelligent auto-completion for 26+ popular command-line tools
 - **⚡ Fast & Lightweight**: Optimized for performance with minimal startup overhead
 - **🔧 Easy Installation**: Single command installation from PowerShell Gallery
 - **🎨 Enhanced UI**: Beautiful tab completion with syntax highlighting
@@ -83,12 +83,17 @@ npm install --save-d<TAB>  # → npm install --save-dev
 - **tmux**: Terminal multiplexer (sessions, windows, panes, key bindings)
 - **Hyper**: Modern terminal emulator
 
+### Shells & Interpreters
+- **PowerShell**: PowerShell Core (pwsh) with parameters, execution policies, profiles
+- **Zsh**: Z shell with comprehensive options, emulation modes, built-in settings
+- **Bash**: Bash shell with options, set configurations, RC file management
+
 ## 🎯 Key Advantages
 
 ### vs. Manual Setup
 | Feature | PSPredictor | Manual Setup |
 |---------|-------------|--------------|
-| **Coverage** | 50+ tools | Limited |
+| **Coverage** | 26+ tools | Limited |
 | **Maintenance** | Auto-updates | Manual effort |
 | **Consistency** | Unified experience | Varies by tool |
 | **Installation** | Single command | Complex setup |
@@ -163,6 +168,21 @@ npm run <TAB>             # Shows available scripts
 dotnet new <TAB>          # Shows project templates
 dotnet add package <TAB>  # Shows NuGet packages
 dotnet run --<TAB>        # Shows run options
+```
+
+### Shell Management
+```powershell
+# PowerShell Core management
+pwsh -<TAB>               # Shows parameters like -Command, -File, -NoProfile
+pwsh -ExecutionPolicy <TAB> # Shows policies: Restricted, AllSigned, RemoteSigned, etc.
+
+# Zsh configuration
+zsh -o <TAB>              # Shows options like autocd, autopushd, correct, etc.
+zsh --emulate <TAB>       # Shows emulation modes: sh, ksh, bash, csh
+
+# Bash configuration  
+bash -o <TAB>             # Shows set options: errexit, nounset, pipefail, etc.
+bash --rcfile <TAB>       # Shows available RC files: ~/.bashrc, ~/.bash_profile
 ```
 
 ## 🔧 Development

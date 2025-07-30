@@ -30,7 +30,7 @@ CompanyName = 'wangkanai'
 Copyright = '(c) 2025 Sarin Na Wangkanai. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'PowerShell Universal CLI Predictor - Enhanced tab completion for popular command-line tools with cross-platform support for PowerShell 7+'
+Description = 'PowerShell Universal CLI Predictor - Intelligent auto-completion for 26+ popular CLI tools including Git, Docker, npm, Azure, AWS, .NET, Python, AI tools (Claude, Gemini), shells (PowerShell, Zsh, Bash), and more. Cross-platform support for PowerShell 7+ with modular architecture.'
 
 # Minimum version of the PowerShell engine required by this module
 PowerShellVersion = '7.0'
@@ -106,7 +106,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('PowerShell', 'CLI', 'Completion', 'TabCompletion', 'Git', 'Docker', 'NPM', 'kubectl', 'Azure', 'AWS', 'Cross-Platform', 'PowerShell7')
+        Tags = @('PowerShell', 'CLI', 'Completion', 'TabCompletion', 'Git', 'Docker', 'NPM', 'kubectl', 'Azure', 'AWS', 'Python', 'AI', 'Claude', 'Gemini', 'Homebrew', 'Cross-Platform', 'PowerShell7', 'Podman', 'tmux', 'DotNet', 'GitHub', 'Terraform', 'Bash', 'Zsh', 'Shell')
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/wangkanai/PSPredictor/blob/main/LICENSE'
@@ -129,12 +129,16 @@ PrivateData = @{
         # Release notes for this module
         ReleaseNotes = @'
 ## Version 1.1.0
-- Modular architecture for better maintainability
-- PowerShell 7+ cross-platform support
-- Enhanced Git, Docker, and NPM completions
-- Improved configuration management
-- Silent module loading
-- Cross-platform path handling
+- Major expansion: Now supports 26+ CLI tools (was 9)
+- New completion providers: .NET, Claude AI, Gemini AI, GitHub CLI, Podman, tmux, Hyper, OpenAI Codex, Homebrew, npx, pip, pipx, pyenv, Python
+- Shell completion support: PowerShell (pwsh), Zsh, Bash with comprehensive options and configurations
+- Modular architecture for better maintainability and extensibility
+- PowerShell 7+ cross-platform support (Windows, Linux, macOS)
+- Enhanced Git, Docker, npm, Azure, AWS, kubectl, Terraform completions
+- Improved configuration management with per-tool settings
+- Silent module loading with optimized performance
+- Comprehensive test suite with per-tool test organization (67+ tests)
+- Updated documentation with complete tool coverage and shell support
 '@
 
     } # End of PSData hashtable

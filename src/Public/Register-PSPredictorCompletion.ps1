@@ -66,6 +66,9 @@ function Register-PSPredictorCompletion {
         'pipx' { Register-PipxCompletion }
         'pyenv' { Register-PyenvCompletion }
         'python' { Register-PythonCompletion }
+        'pwsh' { Register-PowerShellCompletion }
+        'zsh' { Register-ZshCompletion }
+        'bash' { Register-BashCompletion }
         default {
             Write-Warning "No completion handler found for tool: $Tool"
         }

@@ -139,4 +139,19 @@ $script:SupportedTools = @{
         CompletionScript = 'Python-Completion.ps1'
         Enabled = $true
     }
+    'pwsh' = @{
+        Description = 'PowerShell Core'
+        CompletionScript = 'PowerShell-Completion.ps1'
+        Enabled = $true
+    }
+    'zsh' = @{
+        Description = 'Z shell'
+        CompletionScript = 'Zsh-Completion.ps1'
+        Enabled = $true
+    }
+    'bash' = @{
+        Description = 'Bash shell'
+        CompletionScript = 'Bash-Completion.ps1'
+        Enabled = $true
+    }
 }
