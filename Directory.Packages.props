@@ -5,25 +5,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- .NET 9.0 Runtime and Core Packages -->
+        <!-- .NET 8.0 Runtime and Core Packages -->
         <PackageVersion Include="Microsoft.PowerShell.SDK" Version="7.4.6"/>
         <PackageVersion Include="System.Management.Automation" Version="7.4.6"/>
 
-        <!-- Microsoft Extensions (Updated for .NET 9.0) -->
-        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0"/>
+        <!-- Microsoft Extensions (Updated for .NET 8.0) -->
+        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="8.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="8.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.1"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="8.0.1"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2"/>
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1"/>
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2"/>
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.1"/>
+        <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1"/>
 
-        <!-- JSON Serialization (Updated for .NET 9.0) -->
-        <PackageVersion Include="System.Text.Json" Version="9.0.0"/>
+        <!-- JSON Serialization (Updated for .NET 8.0) -->
+        <PackageVersion Include="System.Text.Json" Version="8.0.5"/>
         <PackageVersion Include="Newtonsoft.Json" Version="13.0.3"/>
 
         <!-- ML.NET Packages -->
@@ -32,13 +32,13 @@
         <PackageVersion Include="Microsoft.ML.FastTree" Version="3.0.1"/>
         <PackageVersion Include="Microsoft.ML.LightGbm" Version="3.0.1"/>
 
-        <!-- Database Packages (Updated for .NET 9.0) -->
-        <PackageVersion Include="Microsoft.Data.Sqlite" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0"/>
+        <!-- Database Packages (Updated for .NET 8.0) -->
+        <PackageVersion Include="Microsoft.Data.Sqlite" Version="8.0.10"/>
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10"/>
         <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.118"/>
 
-        <!-- Performance and Diagnostics (Updated for .NET 9.0) -->
-        <PackageVersion Include="System.Diagnostics.PerformanceCounter" Version="9.0.0"/>
+        <!-- Performance and Diagnostics (Updated for .NET 8.0) -->
+        <PackageVersion Include="System.Diagnostics.PerformanceCounter" Version="8.0.0"/>
         <PackageVersion Include="System.Diagnostics.Process" Version="4.3.0"/>
         <PackageVersion Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.1.8"/>
 

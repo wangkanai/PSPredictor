@@ -1,18 +1,33 @@
 <Project>
+    <!-- Common Build Properties -->
     <PropertyGroup>
+        <!-- Framework and Language Settings -->
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>12.0</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        
+        <!-- Version and Product Information -->
         <Version>2.0.0-alpha.1</Version>
         <Company>Wangkanai</Company>
         <Product>PSPredictor</Product>
-        <Copyright>Copyright © Wangkanai $(CURRENT_YEAR)</Copyright>
-        <TargetFramework>net8.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-        <WarningsAsErrors/>
-        <TreatWarningsAsErrors Condition="'$(Configuration)' == 'Debug'">false</TreatWarningsAsErrors>
-        <WarningsNotAsErrors>NU1903</WarningsNotAsErrors>
+        <Copyright>Copyright © 2025 Wangkanai</Copyright>
+        
+        <!-- Code Quality and Documentation -->
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningsNotAsErrors>CS1591;NU1903</WarningsNotAsErrors>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        
+        <!-- PowerShell Module Specific Settings -->
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        
+        <!-- Repository and Source Control -->
         <RepositoryUrl>https://github.com/wangkanai/PSPredictor</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        
+        <!-- Package Information -->
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/wangkanai/PSPredictor</PackageProjectUrl>
         <PackageDescription>PowerShell Binary Module that transforms the command-line experience into a comprehensive IDE within the terminal with AI-powered predictions, advanced editing capabilities, syntax highlighting, and intelligent auto-completion for 26+ CLI tools.</PackageDescription>
@@ -20,25 +35,36 @@
         <PackageIcon>icon.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageReleaseNotes>v2.0.0-alpha.1: Complete rewrite to C# binary module with AI-powered predictions, advanced editing modes, and comprehensive CLI tool support.</PackageReleaseNotes>
+        
+        <!-- Symbol Packages -->
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        
+        <!-- CI/CD Settings -->
         <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     </PropertyGroup>
 
+    <!-- Debug Configuration -->
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-        <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+        <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
         <DebugType>full</DebugType>
         <DebugSymbols>true</DebugSymbols>
         <Optimize>false</Optimize>
     </PropertyGroup>
 
+    <!-- Release Configuration -->
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-        <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+        <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
         <DebugType>pdbonly</DebugType>
         <DebugSymbols>true</DebugSymbols>
         <Optimize>true</Optimize>
+    </PropertyGroup>
+    
+    <!-- Test Project Settings -->
+    <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <IsPackable>false</IsPackable>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     </PropertyGroup>
 
 

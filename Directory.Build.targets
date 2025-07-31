@@ -1,9 +1,32 @@
 <Project>
+    <!-- Development Tools (All Projects) -->
     <ItemGroup>
         <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All"/>
         <PackageReference Include="Nerdbank.GitVersioning" PrivateAssets="All"/>
     </ItemGroup>
 
+    <!-- Core Dependencies (All Main Projects) -->
+    <ItemGroup Condition="'$(IsTestProject)' != 'true'">
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
+        <PackageReference Include="System.Text.Json"/>
+        <PackageReference Include="Wangkanai.System"/>
+    </ItemGroup>
+
+    <!-- PowerShell Dependencies (Main Module Projects) -->
+    <ItemGroup Condition="'$(IsTestProject)' != 'true' AND ('$(AssemblyName)' == 'PSPredictor' OR '$(AssemblyName)' == 'PSPredictor.Core' OR $(AssemblyName.StartsWith('PSPredictor.')))'">
+        <PackageReference Include="Microsoft.PowerShell.SDK"/>
+        <PackageReference Include="System.Management.Automation"/>
+    </ItemGroup>
+
+    <!-- ML.NET Dependencies (AI-related Projects) -->
+    <ItemGroup Condition="'$(IsTestProject)' != 'true' AND ($(AssemblyName.Contains('AI')) OR $(AssemblyName.Contains('ML')))">
+        <PackageReference Include="Microsoft.ML"/>
+        <PackageReference Include="Microsoft.ML.AutoML"/>
+    </ItemGroup>
+
+    <!-- Test Dependencies -->
     <ItemGroup Condition="'$(IsTestProject)' == 'true'">
         <PackageReference Include="Microsoft.NET.Test.Sdk"/>
         <PackageReference Include="xunit"/>
@@ -12,5 +35,9 @@
         <PackageReference Include="Moq"/>
         <PackageReference Include="coverlet.collector" PrivateAssets="All"/>
         <PackageReference Include="BenchmarkDotNet"/>
+        
+        <!-- PowerShell Testing Dependencies -->
+        <PackageReference Include="Microsoft.PowerShell.SDK"/>
+        <PackageReference Include="System.Management.Automation"/>
     </ItemGroup>
 </Project>
