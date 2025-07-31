@@ -84,7 +84,7 @@
         <PackageProjectUrl>https://github.com/wangkanai/PSPredictor</PackageProjectUrl>
         <PackageDescription>$(Description)</PackageDescription>
         <PackageTags>PowerShell;CLI;AutoComplete;IntelliSense;AI;MachineLearning;CommandLine;Terminal;IDE;Syntax;Highlighting;Prediction;Completion;Editor;Enhancement</PackageTags>
-        <PackageIcon>icon.png</PackageIcon>
+        <PackageIcon></PackageIcon>
         <PackageIconUrl></PackageIconUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageReleaseNotes>v2.0.0-alpha.1: Complete rewrite to C# binary module with AI-powered predictions, advanced editing modes, and comprehensive CLI tool support.</PackageReleaseNotes>
@@ -214,7 +214,6 @@
 
     <!-- Package Files -->
     <ItemGroup>
-        <None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="\" Condition="Exists('$(MSBuildThisFileDirectory)icon.png')"/>
         <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" Condition="Exists('$(MSBuildThisFileDirectory)README.md')"/>
     </ItemGroup>
 </Project>
