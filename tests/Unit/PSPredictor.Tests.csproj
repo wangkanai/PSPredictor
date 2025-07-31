@@ -19,10 +19,7 @@
 
   <!-- Additional Test Coverage Tools -->
   <ItemGroup>
-    <PackageReference Include="coverlet.msbuild">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" PrivateAssets="all"/>
   </ItemGroup>
 
   <!-- Project References -->
