@@ -66,67 +66,44 @@ jobs:
     - name: Build solution (Release)
       run: dotnet build --configuration Release --no-restore --verbosity minimal
 
+    - name: List build outputs
+      run: |
+        Write-Host "Build outputs for Release configuration:"
+        Get-ChildItem -Path "./src/PSPredictor/bin/Release/" -Recurse -ErrorAction SilentlyContinue | Format-Table Name, FullName -AutoSize
+        Write-Host "\nBuild outputs for all test projects:"
+        Get-ChildItem -Path "./tests/*/bin/Release/" -Recurse -ErrorAction SilentlyContinue | Format-Table Name, FullName -AutoSize
+
     - name: Run unit tests
       run: |
-        dotnet test tests/Unit/PSPredictor.Tests.csproj `
-          --configuration Release `
-          --no-build `
-          --verbosity minimal `
-          --logger trx `
-          --results-directory TestResults/Unit `
-          --collect:"XPlat Code Coverage"
+        dotnet test tests/Unit/PSPredictor.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Unit --collect:"XPlat Code Coverage"
       continue-on-error: false
 
     - name: Run core tests
       run: |
-        dotnet test tests/Core.Tests/PSPredictor.Core.Tests.csproj `
-          --configuration Release `
-          --no-build `
-          --verbosity minimal `
-          --logger trx `
-          --results-directory TestResults/Core `
-          --collect:"XPlat Code Coverage"
+        dotnet test tests/Core.Tests/PSPredictor.Core.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Core --collect:"XPlat Code Coverage"
       continue-on-error: false
 
     - name: Run completion tests
       run: |
-        dotnet test tests/Completion.Tests/PSPredictor.Completion.Tests.csproj `
-          --configuration Release `
-          --no-build `
-          --verbosity minimal `
-          --logger trx `
-          --results-directory TestResults/Completion `
-          --collect:"XPlat Code Coverage"
+        dotnet test tests/Completion.Tests/PSPredictor.Completion.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Completion --collect:"XPlat Code Coverage"
       continue-on-error: false
 
     - name: Run AI tests
       run: |
-        dotnet test tests/AI.Tests/PSPredictor.AI.Tests.csproj `
-          --configuration Release `
-          --no-build `
-          --verbosity minimal `
-          --logger trx `
-          --results-directory TestResults/AI `
-          --collect:"XPlat Code Coverage"
+        dotnet test tests/AI.Tests/PSPredictor.AI.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/AI --collect:"XPlat Code Coverage"
       continue-on-error: false
 
     - name: Run integration tests
       run: |
-        dotnet test tests/Integration.Tests/PSPredictor.Integration.Tests.csproj `
-          --configuration Release `
-          --no-build `
-          --verbosity minimal `
-          --logger trx `
-          --results-directory TestResults/Integration `
-          --collect:"XPlat Code Coverage"
+        dotnet test tests/Integration.Tests/PSPredictor.Integration.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Integration --collect:"XPlat Code Coverage"
       continue-on-error: false
 
     - name: Install PowerShell (Linux/macOS)
       if: runner.os != 'Windows'
       run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
-          # Install PowerShell on Ubuntu
-          wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+          # Install PowerShell on Ubuntu using the official method
+          wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
           sudo dpkg -i packages-microsoft-prod.deb
           sudo apt-get update
           sudo apt-get install -y powershell
@@ -138,26 +115,37 @@ jobs:
 
     - name: Test module loading
       run: |
-        $modulePath = "./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
+        $currentDir = Get-Location
+        $modulePath = Join-Path $currentDir "src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
+        Write-Host "Current directory: $currentDir"
+        Write-Host "Checking for module at: $modulePath"
         if (Test-Path $modulePath) {
-          Write-Host "Module found at: $modulePath"
+          Write-Host "✅ Module found at: $modulePath"
           try {
             Import-Module $modulePath -Force -ErrorAction Stop
             Write-Host "✅ Module loaded successfully"
             
             # Test basic cmdlets
-            $status = Get-Command Get-PSPredictorStatus -ErrorAction SilentlyContinue
-            if ($status) {
-              Write-Host "✅ Get-PSPredictorStatus cmdlet available"
+            $commands = Get-Command -Module PSPredictor -ErrorAction SilentlyContinue
+            if ($commands) {
+              Write-Host "✅ Found $($commands.Count) commands exported from PSPredictor module"
+              $commands | ForEach-Object { Write-Host "  - $($_.Name)" }
             } else {
-              Write-Host "❌ Get-PSPredictorStatus cmdlet not found"
+              Write-Host "⚠️ No commands found in PSPredictor module"
             }
           } catch {
-            Write-Host "❌ Failed to load module: $_"
+            Write-Host "❌ Failed to load module: $($_.Exception.Message)"
+            Write-Host "Exception details: $($_.Exception.ToString())"
             exit 1
           }
         } else {
           Write-Host "❌ Module not found at expected path: $modulePath"
+          Write-Host "Listing contents of build directory:"
+          if (Test-Path "./src/PSPredictor/bin/Release/") {
+            Get-ChildItem -Path "./src/PSPredictor/bin/Release/" -Recurse -ErrorAction SilentlyContinue | Select-Object Name, FullName | Format-Table -AutoSize
+          } else {
+            Write-Host "Build directory does not exist"
+          }
           exit 1
         }
 
