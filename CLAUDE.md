@@ -13,15 +13,21 @@ When searching for information about this project, use the following order:
 
 ## Project Overview
 
-PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET 9.0 that transforms the PowerShell command-line experience into a comprehensive IDE within the terminal. It provides intelligent auto-completion, syntax highlighting, error indication, multi-line editing, predictive IntelliSense, and advanced editing capabilities for 26+ popular command-line tools.
+PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET 9.0 that transforms the PowerShell  
+command-line experience into a comprehensive IDE within the terminal. It provides intelligent auto-completion,  
+syntax highlighting, error indication, multi-line editing, predictive IntelliSense, and advanced editing  
+capabilities for 26+ popular command-line tools.
 
-**⚠️ MAJOR VERSION TRANSITION**: This is v2.0 - a complete rewrite from PowerShell scripts to C# .NET 9.0 binary module. For v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`.
+**⚠️ MAJOR VERSION TRANSITION**: This is v2.0 - a complete rewrite from PowerShell scripts to C# .NET 9.0  
+binary module. For v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`.
 
-**🚀 LATEST UPDATE**: Project upgraded to .NET 9.0 (July 2025) with C# 13.0 language features, updated NuGet packages, and full cross-platform compatibility including ARM64 architecture support for Apple Silicon Macs.
+**🚀 LATEST UPDATE**: Project upgraded to .NET 9.0 (July 2025) with C# 13.0 language features, updated  
+NuGet packages, and full cross-platform compatibility including ARM64 architecture support for Apple Silicon Macs.
 
 ## Current Project Status (July 2025)
 
 ### Recent Upgrades ✅ COMPLETED
+
 - **Framework**: Successfully upgraded from .NET 8.0 to .NET 9.0 with C# 13.0 language support
 - **Package Management**: Central package management via Directory.Packages.props with latest .NET 9.0 compatible versions
 - **NuGet Packages**: Updated Microsoft.Extensions.* to 9.0.0, ML.NET to 3.0.1, testing frameworks to latest
@@ -31,6 +37,7 @@ PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET 
 - **Architecture Compatibility**: ✅ Automatic platform detection and graceful ML.NET feature handling
 
 ### NuGet Configuration Requirements
+
 - **Central Package Management**: ✅ REQUIRED - `ManagePackageVersionsCentrally=true` must remain enabled
 - **Package Source Configuration**: Native .NET solution without custom nuget.config files
 - **Warning Suppression**: NU1507 (package source mapping) warnings are suppressed via NoWarn settings
@@ -38,6 +45,7 @@ PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET 
 - **Package Sources**: Uses default NuGet.org source with PowerShell Gallery available for CI/CD compatibility
 
 ### Package Management Strategy
+
 - **Central Management**: ✅ All package versions managed in Directory.Packages.props
 - **Version Consistency**: ✅ Unified package versions across all 12 projects
 - **Lock Files**: ✅ packages.lock.json files removed and ignored for flexibility
@@ -45,6 +53,7 @@ PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET 
 - **Native Configuration**: ✅ No custom nuget.config - uses default .NET package source configuration
 
 ### Build System Status
+
 - **SDK Version**: ✅ .NET 9.0.100+ required (specified in global.json)
 - **Target Framework**: ✅ net9.0 for all projects
 - **Language Version**: ✅ C# 13.0 with latest language features
@@ -58,17 +67,20 @@ PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET 
 **✅ APPLE SILICON SUPPORT**: Full compatibility with Apple Silicon (M1/M2/M3) Macs
 
 **Architecture Detection**:
+
 - Automatic runtime architecture detection using `System.Runtime.InteropServices.RuntimeInformation`
 - Dynamic platform targeting based on detected architecture
 - Conditional compilation symbols (`NO_MLNET`) for ARM64 platforms
 
 **ML.NET Conditional Compilation**:
+
 - ML.NET packages only referenced on x64 platforms where supported
 - Graceful feature degradation on ARM64 - core functionality preserved
 - Conditional package references in project files prevent build errors
 - AI prediction features disabled on unsupported architectures with fallback implementations
 
 **Build Commands for ARM64**:
+
 ```bash
 # Build successfully on Apple Silicon Macs
 dotnet build                    # ✅ Works on ARM64
@@ -84,6 +96,7 @@ dotnet build tests/Performance.Tests/PSPredictor.Performance.Tests.csproj  # ✅
 ```
 
 **Cross-Platform Testing**:
+
 - Unit tests: ✅ Pass on ARM64 with full coverage
 - Integration tests: ✅ Compatible with conditional compilation
 - Performance tests: ✅ BenchmarkDotNet works with fallback implementations
@@ -92,6 +105,7 @@ dotnet build tests/Performance.Tests/PSPredictor.Performance.Tests.csproj  # ✅
 ## Development Commands
 
 ### Building and Testing
+
 ```bash
 # Build the C# binary module (default configuration: Release)
 dotnet build
@@ -121,6 +135,7 @@ Import-Module ./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll -Force
 ```
 
 ### Module Installation and Testing
+
 ```powershell
 # Install development build locally
 Install-PSPredictor -Development -Path "./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll"
@@ -147,6 +162,7 @@ Get-PSPredictorSyntaxHighlighting -Command "git status --invalid-flag"
 ```
 
 ### Development Workflow
+
 ```bash
 # Full development cycle
 dotnet clean
@@ -169,7 +185,7 @@ dotnet run --project tools/PSPredictor.ModelTrainer/ -- --validate-models
 
 ### Project Structure
 
-```
+```text
 PSPredictor/
 ├── src/                                    # Source code (C# .NET 9.0)
 │   ├── PSPredictor/                       # Main binary module project
@@ -283,6 +299,7 @@ PSPredictor/
 ### Core Architecture Components
 
 **PSPredictor.dll** - Primary binary module containing:
+
 - PowerShell cmdlet implementations using System.Management.Automation
 - Native input handling system (PSReadLine-independent)
 - AI-powered prediction engine with embedded ML.NET models
@@ -290,12 +307,14 @@ PSPredictor/
 - Advanced editing modes (Cmd/Emacs/Vi) with customizable key bindings
 
 **AI-Powered Prediction Engine** - ML.NET integration featuring:
+
 - Embedded models (CommandPrediction.zip, ParameterPrediction.zip, ContextAwareness.zip)
 - Real-time command prediction and parameter suggestion
 - Context-aware completions based on command history and environment
 - Hybrid architecture with core embedded models and optional downloadable enhancements
 
 **Native Input System** - PSReadLine-independent input handling:
+
 - Custom key binding system with macro support
 - Multi-modal editing (Cmd/Emacs/Vi modes) with full feature parity
 - Kill-ring system for advanced clipboard functionality
@@ -303,6 +322,7 @@ PSPredictor/
 - Multi-line editing with sophisticated history management
 
 **Advanced Rendering System** - Cross-platform console enhancement:
+
 - Real-time syntax highlighting for PowerShell and CLI tools
 - Visual error indication with contextual error messages
 - Predictive IntelliSense with non-intrusive UI
@@ -310,6 +330,7 @@ PSPredictor/
 - ANSI color rendering for consistent cross-platform experience
 
 **Completion Provider Architecture** - Modular completion system:
+
 - 26+ CLI tool providers with specialized context awareness
 - Plugin architecture for easy extension and customization
 - Intelligent caching and performance optimization
@@ -318,6 +339,7 @@ PSPredictor/
 ### Key Architecture Patterns
 
 **Binary Module Architecture**: C# .NET 9.0 PowerShell module with:
+
 - **Cmdlets/**: PowerShell cmdlet implementations for user interface
 - **Core/**: Core engine components (prediction, completion, syntax, history)
 - **AI/**: Machine learning integration with embedded models
@@ -326,24 +348,28 @@ PSPredictor/
 - **Completions/**: Modular CLI tool completion providers
 
 **ML.NET Integration**: Local machine learning with:
+
 - Embedded core models for offline functionality
 - Optional downloadable enhanced models for advanced features
 - Real-time prediction with <100ms response time target
 - Training pipeline for continuous model improvement
 
 **Cross-Platform Compatibility**: Unified experience across:
+
 - Windows PowerShell 5.1+ and PowerShell Core 7+
 - Linux with PowerShell Core and terminal emulator support
 - macOS with PowerShell Core and Terminal.app integration
 - Consistent ANSI rendering and input handling across platforms
 
 **Performance-First Design**: Optimized for speed with:
+
 - Lazy loading of completion providers and ML models
 - Asynchronous prediction and rendering pipeline
 - SQLite database for efficient command history storage
 - Memory-efficient caching with LRU eviction policies
 
 **Configuration Management**: Comprehensive settings system:
+
 - JSON-based configuration with schema validation
 - Profile system for different use cases (Developer, SysAdmin, etc.)
 - Environment-specific overrides and team settings
@@ -352,6 +378,7 @@ PSPredictor/
 ### Extension Points
 
 **Adding New CLI Tools**:
+
 1. Create new completion provider in `src/PSPredictor/Completions/{ToolName}/`
 2. Implement `{ToolName}Completion.cs` inheriting from `BaseCompletion`
 3. Add tool registration in `CompletionProvider.cs`
@@ -359,12 +386,14 @@ PSPredictor/
 5. Update configuration schema in `PSPredictorConfig.cs`
 
 **Custom Editing Modes**:
+
 1. Implement new mode in `src/PSPredictor/Input/EditingModes/{ModeName}Mode.cs`
 2. Inherit from `BaseEditingMode` and implement required key bindings
 3. Register mode in `KeyHandler.cs` mode factory
 4. Add configuration options in `UserSettings.cs`
 
 **ML Model Enhancement**:
+
 1. Create training data pipeline in `tools/PSPredictor.ModelTrainer/`
 2. Implement custom model in `src/PSPredictor/AI/Models/`
 3. Add model loading logic in `MLPredictionEngine.cs`
@@ -373,6 +402,7 @@ PSPredictor/
 ## Technology Stack
 
 ### Core Technologies
+
 - **.NET 9.0**: Latest .NET with C# 13.0 language features, performance improvements, and enhanced cross-platform support
 - **PowerShell SDK 7.4.6**: System.Management.Automation for cmdlet development with full PowerShell Core compatibility
 - **ML.NET 3.0.1**: Local machine learning with embedded model support and AutoML capabilities
@@ -381,6 +411,7 @@ PSPredictor/
 - **BenchmarkDotNet 0.14.0**: Performance testing and regression detection with detailed metrics
 
 ### Platform Support
+
 - **Windows**: PowerShell 5.1+ and PowerShell Core 7+ (x64 and ARM64 supported)
 - **Linux**: PowerShell Core 7+ with full terminal integration (x64 and ARM64 supported)  
 - **macOS**: PowerShell Core 7+ with native Terminal.app support (Intel x64 and Apple Silicon ARM64)
@@ -388,6 +419,7 @@ PSPredictor/
 - **ML.NET Features**: Available on x64 platforms, gracefully disabled on ARM64 with fallback implementations
 
 ### Development Tools
+
 - **Visual Studio 2022** or **Visual Studio Code**: Primary development environment with .NET 9.0 SDK
 - **GitHub Actions**: Multi-platform CI/CD pipeline (Windows, Linux, macOS) with automated testing and publishing
 - **NuGet Central Package Management**: Centralized package version management via Directory.Packages.props
@@ -396,26 +428,30 @@ PSPredictor/
 ## Testing and Quality
 
 ### Testing Strategy
+
 - **Unit Tests**: Comprehensive coverage of core components and cmdlets
 - **Integration Tests**: End-to-end testing of completion providers and AI prediction
 - **Performance Tests**: Regression testing with <100ms response time validation
 - **Cross-Platform Tests**: Validation across Windows, Linux, and macOS
 
 ### Quality Metrics
+
 - **Code Coverage**: Minimum 80% coverage with 90% target for core components
 - **Performance**: <100ms prediction response time, <50ms rendering updates
 - **Memory**: <50MB memory footprint for standard usage patterns
 - **Reliability**: Zero crashes during normal operation, graceful error handling
 
 ### Continuous Integration
+
 - **Build Pipeline**: Automated builds on all platforms with matrix testing
 - **Test Automation**: Full test suite execution on every pull request
 - **Performance Monitoring**: Automated performance regression detection
 - **Package Publishing**: Automated NuGet publishing on tagged releases
 
-## Development Workflow
+## Development Workflow and Setup
 
 ### Initial Setup
+
 ```bash
 # Clone repository and initialize development environment
 git clone <repository-url>
@@ -434,6 +470,7 @@ Import-Module ./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll -Force
 ```
 
 ### Development Cycle
+
 ```bash
 # Make code changes
 # Run affected tests
@@ -451,6 +488,7 @@ dotnet pack --configuration Release
 ```
 
 ### AI Model Development
+
 ```bash
 # Train new models with updated data
 dotnet run --project tools/PSPredictor.ModelTrainer/ -- --train-all
@@ -465,6 +503,7 @@ dotnet run --project tools/PSPredictor.ModelTrainer/ -- --deploy-models
 ## Configuration and Customization
 
 ### User Configuration
+
 ```powershell
 # Configure editing mode
 Set-PSPredictorMode -EditingMode Emacs
@@ -481,6 +520,7 @@ Set-PSPredictorAI -EnableLocalModels $true -DownloadEnhancedModels $false
 ```
 
 ### Profile Management
+
 ```powershell
 # Create custom profile
 New-PSPredictorProfile -Name "Developer" -BasedOn "Default"
@@ -496,18 +536,21 @@ Import-PSPredictorConfig -Path "./my-config.json"
 ## Performance Optimization
 
 ### Response Time Targets
+
 - **Completion Generation**: <50ms for standard completions
 - **AI Prediction**: <100ms for ML-powered suggestions
 - **Syntax Highlighting**: <20ms for real-time coloring
 - **Multi-line Rendering**: <30ms for complex command structures
 
 ### Memory Management
+
 - **Startup Footprint**: <20MB initial memory usage
 - **Runtime Footprint**: <50MB for typical usage patterns
 - **Model Loading**: Lazy loading with <5MB core models
 - **History Management**: SQLite with automatic cleanup and archiving
 
 ### Caching Strategy
+
 - **Completion Results**: LRU cache with 1000-item capacity
 - **AI Predictions**: Context-aware caching with 5-minute TTL
 - **Syntax Parsing**: AST caching for recently used commands
@@ -516,11 +559,13 @@ Import-PSPredictorConfig -Path "./my-config.json"
 ## Distribution and Publishing
 
 ### Package Distribution
+
 - **NuGet Gallery**: Primary distribution channel for stable releases
 - **GitHub Releases**: Development builds and pre-release versions
 - **PowerShell Gallery**: Alternative distribution for PowerShell-focused users
 
 ### Version Management
+
 ```bash
 # Version bump utilities
 ./tools/version-bump.ps1 -Type Major    # 2.0.0 → 3.0.0
@@ -532,12 +577,14 @@ Import-PSPredictorConfig -Path "./my-config.json"
 ```
 
 ### GitHub Actions Workflows
+
 - **dotnet.yml**: Cross-platform CI/CD pipeline with comprehensive testing across Windows, Linux, and macOS
 - **publish.yml**: Automated dual publishing to NuGet.org and PowerShell Gallery with tag-based versioning
 - **performance.yml**: Performance regression testing with <100ms response time and <50MB memory validation
 - **FUNDING.yml**: GitHub sponsorship configuration for project sustainability
 
 ### CI/CD Pipeline Status
+
 - **Build System**: ✅ All 12 projects build successfully across Windows, Linux, and macOS
 - **Performance Tests**: ✅ Proper BenchmarkDotNet console application with JSON output for CI/CD integration
 - **Test Framework**: ✅ xUnit-based testing with comprehensive coverage tracking
@@ -546,12 +593,14 @@ Import-PSPredictorConfig -Path "./my-config.json"
 ## Migration from v1.x
 
 ### Breaking Changes
+
 - **Module Type**: PowerShell script module → C# binary module
 - **Dependencies**: PSReadLine dependency removed
 - **Configuration**: PowerShell-based config → JSON configuration
 - **Installation**: PowerShell Gallery → NuGet + PowerShell Gallery
 
 ### Migration Guide
+
 1. **Uninstall v1.x**: `Uninstall-Module PSPredictor -AllVersions`
 2. **Install v2.0**: `Install-Module PSPredictor -RequiredVersion 2.0.0`
 3. **Migrate Settings**: Use `Import-PSPredictorLegacyConfig` cmdlet
@@ -560,6 +609,7 @@ Import-PSPredictorConfig -Path "./my-config.json"
 ## Development Notes
 
 ### Architecture Requirements
+
 - **Performance Critical**: All user-facing operations must meet <100ms response time
 - **Cross-Platform**: Ensure consistent behavior across Windows, Linux, and macOS (x64 and ARM64 architectures)
 - **Backward Compatible**: Maintain API compatibility within major versions
@@ -570,6 +620,7 @@ Import-PSPredictorConfig -Path "./my-config.json"
 - **Architecture Agnostic**: Core functionality must work across all supported CPU architectures
 
 ### Current Development State
+
 - **Framework**: ✅ Fully migrated to .NET 9.0 with C# 13.0 support
 - **Build Status**: ✅ All 12 projects building successfully with .NET 9.0 on both x64 and ARM64
 - **Test Status**: ✅ Unit tests passing on both x64 and ARM64 architectures
@@ -580,6 +631,7 @@ Import-PSPredictorConfig -Path "./my-config.json"
 - **Cross-Platform Support**: ✅ Full ARM64 architecture support with graceful ML.NET feature degradation
 
 ### Known Issues & TODOs
+
 - **DevTools Project**: Contains placeholder "Hello, World!" - needs actual implementation or removal
 - **Model Training**: ModelTrainer project has placeholder implementation - needs ML model training logic
 - **CodeGen Project**: Contains placeholder "Hello, World!" - needs code generation utilities
@@ -587,6 +639,7 @@ Import-PSPredictorConfig -Path "./my-config.json"
 - **Performance Tests**: ✅ Implemented proper BenchmarkDotNet console application with CI/CD integration
 
 ### Development Priorities
+
 1. **Implement Core Functionality**: Replace placeholder implementations with actual PSPredictor logic
 2. **Complete Test Suite**: Expand beyond placeholder tests to comprehensive coverage
 3. **ML Model Training**: Implement actual model training pipeline in ModelTrainer project
@@ -594,6 +647,7 @@ Import-PSPredictorConfig -Path "./my-config.json"
 5. **Performance Optimization**: Ensure <100ms response times and <50MB memory usage
 
 ### Key Dependencies (.NET 9.0 Compatible)
+
 - **Microsoft.PowerShell.SDK 7.4.6**: Core PowerShell integration
 - **System.Management.Automation 7.4.6**: PowerShell cmdlet development
 - **Microsoft.ML 3.0.1**: Machine learning capabilities with AutoML support
@@ -604,6 +658,7 @@ Import-PSPredictorConfig -Path "./my-config.json"
 - **System.CommandLine 2.0.0-beta4.22272.1**: Command-line argument parsing for performance tests
 
 ### Build Environment Requirements
+
 - **.NET 9.0 SDK**: Minimum version 9.0.100 (specified in global.json)
 - **Platform**: x64 or ARM64 architecture supported - dynamic platform targeting
 - **PowerShell**: PowerShell Core 7+ recommended for testing
@@ -612,3 +667,208 @@ Import-PSPredictorConfig -Path "./my-config.json"
 - **Apple Silicon**: Full native support on M1/M2/M3 Macs with automatic ML.NET feature detection
 
 **Configuration Driven**: Support extensive customization without code changes
+
+## Documentation Framework
+
+### Core Documentation Structure
+
+The PSPredictor project now includes a comprehensive documentation framework to guide development and ensure consistent quality:
+
+**📋 Documentation Files Created:**
+
+1. **STANDARDS.md** - Development standards, coding guidelines, and quality metrics
+   - Performance requirements (<100ms response times, <50MB memory footprint)
+   - C# 13.0/.NET 9.0 coding standards with modern language features
+   - Cross-platform architecture guidelines (x64/ARM64 support)
+   - Testing requirements (80% code coverage minimum)
+   - Security standards and quality gates
+
+2. **SPECIFICATIONS.md** - Technical specifications, API contracts, and system requirements
+   - System requirements and platform support matrix
+   - Detailed API specifications for core interfaces (IPredictionEngine, ICompletionProvider)
+   - ML.NET integration specifications with ARM64 fallback strategies
+   - Performance specifications and memory management targets
+   - Security specifications and deployment requirements
+
+3. **FRAMEWORK.md** - Architectural framework, design patterns, and principles
+   - Performance-first architecture with sub-100ms response targets
+   - Modular component design with dependency injection
+   - AI-powered intelligence with embedded ML models
+   - Multi-modal editing system (Cmd/Emacs/Vi modes)
+   - Provider ecosystem framework for 26+ CLI tools
+
+4. **PLANNING.md** - Development roadmap, milestones, and project planning
+   - Agile development methodology with 2-week sprints
+   - 4-phase development plan (Q1-Q4 2025)
+   - Resource planning and team structure
+   - Risk management with technical and project risks
+   - Success metrics and KPIs
+
+5. **ROADMAP.md** - Strategic roadmap and long-term vision (2025-2027)
+   - Vision: Transform PowerShell into intelligent, IDE-like terminal experience
+   - Market analysis and competitive positioning
+   - Technology evolution roadmap with innovation pipeline
+   - Business strategy and go-to-market plan
+   - Success metrics and growth targets
+
+### Quality Assurance Integration
+
+**Markdown Quality Control:**
+
+- ✅ **markdownlint Integration**: Added to GitHub Actions CI/CD pipeline
+- ✅ **Configuration**: `.markdownlint.json` with project-specific rules
+- ✅ **EditorConfig**: Updated `.editorconfig` with markdown-specific settings
+- ✅ **IDE Support**: Automatic formatting and real-time linting in development environment
+
+**Quality Standards:**
+
+- **Line Length**: 120 characters maximum for readability
+- **Consistent Formatting**: Proper heading structure, list formatting, code block language specification
+- **Cross-Platform Compatibility**: Consistent rendering across all markdown viewers
+- **Automated Validation**: CI/CD pipeline enforces markdown quality on all pull requests
+
+### Development Workflow Integration
+
+The documentation framework is integrated into the development workflow:
+
+**Pre-Development Phase:**
+
+- Review STANDARDS.md for coding guidelines and quality requirements
+- Consult SPECIFICATIONS.md for API contracts and technical requirements
+- Reference FRAMEWORK.md for architectural patterns and design principles
+
+**During Development:**
+
+- Follow PLANNING.md for sprint planning and milestone tracking
+- Use ROADMAP.md for strategic direction and long-term planning
+- Leverage documentation for consistent decision-making
+
+**Quality Gates:**
+
+- Markdown linting runs automatically on all pull requests
+- Documentation updates required for significant architectural changes
+- Regular review and updates to maintain accuracy and relevance
+
+This documentation framework ensures consistent development practices, clear technical specifications, and  
+strategic alignment across the entire PSPredictor project lifecycle.
+
+## Markdown Quality Status
+
+The project has successfully integrated comprehensive markdown quality control:
+
+**✅ Completed Fixes**: Core documentation files (STANDARDS.md, SPECIFICATIONS.md, FRAMEWORK.md, PLANNING.md,  
+ROADMAP.md, CLAUDE.md) have been cleaned up with major formatting issues resolved.
+
+**📊 Current Status**: Reduced from 4,732 initial errors to 2,167 remaining errors (54% improvement).
+
+**🔄 Remaining Work**: Most remaining errors are in archived documentation (`docs/archives/`), third-party package  
+files (`packages/`), and generated content. These require targeted cleanup or exclusion from linting rules.
+
+**🎯 Next Steps**:
+
+- Consider adding `docs/archives/` and `packages/` to `.markdownlint.json` ignore patterns
+- Focus quality efforts on active documentation and user-facing content
+- Maintain high standards for new documentation through automated CI/CD validation
+
+## Repository Branch Structure
+
+The PSPredictor repository follows a structured branching model with automated rules and protections:
+
+### Branch Hierarchy
+
+**🌟 `main`** - Production Branch
+
+- **Purpose**: Stable, production-ready code for releases
+- **Protection**: Protected branch with required status checks
+- **Merge Requirements**: Pull request required, 1+ approval, all CI/CD checks must pass
+- **Direct Commits**: Disabled - all changes via pull requests only
+- **Auto-Deploy**: Triggers release pipeline for NuGet/PowerShell Gallery publishing
+
+**🔧 `dev`** - Development Integration Branch
+
+- **Purpose**: Integration branch for completed features and bug fixes
+- **Protection**: Protected branch with status checks
+- **Merge Requirements**: Pull request required, CI/CD checks must pass
+- **Source**: Merges from `feature/*` and `release/*` branches
+- **Target**: Periodically merged to `main` for releases
+
+**🚀 `feature/*`** - Feature Development Branches
+
+- **Naming**: `feature/description-of-feature` (e.g., `feature/git-completion-provider`)
+- **Purpose**: Individual feature development and experimentation
+- **Lifecycle**: Created from `dev`, merged back to `dev` when complete
+- **Protection**: Standard CI/CD validation, no direct protection rules
+- **Examples**: `feature/ml-prediction-engine`, `feature/syntax-highlighting`, `feature/docker-completion`
+
+**📦 `release/*`** - Release Preparation Branches
+
+- **Naming**: `release/v2.0.0` or `release/v2.1.0-beta1`
+- **Purpose**: Release preparation, version bumping, final testing
+- **Lifecycle**: Created from `dev`, merged to both `main` and `dev`
+- **Protection**: Protected branch, requires approval for final release merge
+- **Activities**: Version updates, changelog generation, final integration testing
+
+### Branch Rules and Automation
+
+**Branch Protection Rules**:
+
+```yaml
+main:
+  required_status_checks:
+    - "ci/build-windows"
+    - "ci/build-linux" 
+    - "ci/build-macos"
+    - "ci/test-suite"
+    - "ci/performance-tests"
+    - "ci/markdown-lint"
+  required_reviews: 1
+  dismiss_stale_reviews: true
+  require_code_owner_reviews: true
+  restrict_pushes: true
+
+dev:
+  required_status_checks:
+    - "ci/build-windows"
+    - "ci/build-linux"
+    - "ci/build-macos" 
+    - "ci/test-suite"
+    - "ci/markdown-lint"
+  required_reviews: 1
+  dismiss_stale_reviews: false
+```
+
+**Automated Workflows**:
+
+- **Feature Branches**: Run full CI/CD pipeline on every push
+- **Release Branches**: Additional release validation and package generation
+- **Main Branch**: Trigger production deployment and release publication
+- **All Branches**: Markdown linting, code formatting, security scanning
+
+### Branch Development Workflow
+
+**Standard Feature Development**:
+
+1. Create `feature/your-feature-name` from latest `dev`
+2. Develop and commit changes with descriptive messages
+3. Push feature branch and create pull request to `dev`
+4. Address review feedback and ensure all CI/CD checks pass
+5. Merge to `dev` via pull request (squash and merge preferred)
+
+**Release Process**:
+
+1. Create `release/v2.x.x` from latest `dev`
+2. Update version numbers, changelog, and documentation
+3. Perform final integration testing and bug fixes
+4. Create pull request to `main` for release approval
+5. After approval, merge to `main` (triggers release automation)
+6. Merge release branch back to `dev` to maintain synchronization
+
+**Hotfix Process**:
+
+1. Create `feature/hotfix-description` from `main`
+2. Implement critical fix with minimal scope
+3. Create pull request directly to `main` (emergency approval)
+4. After merge, cherry-pick or merge changes back to `dev`
+
+This branching model ensures code quality, enables parallel development, and maintains a clean release history  
+while supporting both planned releases and emergency hotfixes.

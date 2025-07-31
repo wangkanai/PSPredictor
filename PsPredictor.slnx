@@ -4,12 +4,18 @@
     <File Path="PRD.md" />
     <File Path="repomix.config.json" />
     <File Path=".repomixignore" />
+    <File Path="FRAMEWORK.md" />
+    <File Path="PLANNING.md" />
+    <File Path="SPECIFICATIONS.md" />
+    <File Path="STANDARDS.md" />
+    <File Path="TASKS.md" />
   </Folder>
   <Folder Name="/.github/">
     <File Path=".github\FUNDING.yml" />
     <File Path=".github\workflows\dotnet.yml" />
     <File Path=".github\workflows\performance.yml" />
     <File Path=".github\workflows\publish.yml" />
+    <File Path=".github\workflows\markdownlint.yml" />
   </Folder>
   <Folder Name="/.solutions/">
     <File Path="Directory.Packages.props" />
@@ -19,13 +25,16 @@
     <File Path="LICENSE" />
     <File Path="global.json" />
     <File Path=".gitignore" />
+    <File Path=".editorconfig" />
+    <File Path=".markdownlintignore" />
+    <File Path=".markdownlint-cli2.jsonc" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests\AI.Tests\PSPredictor.AI.Tests.csproj" />
-    <Project Path="tests\Completion.Tests\PSPredictor.Completion.Tests.csproj" />
-    <Project Path="tests\Core.Tests\PSPredictor.Core.Tests.csproj" />
-    <Project Path="tests\Integration.Tests\PSPredictor.Integration.Tests.csproj" />
-    <Project Path="tests\Performance.Tests\PSPredictor.Performance.Tests.csproj" />
+    <Project Path="tests\AI\PSPredictor.AI.Tests.csproj" />
+    <Project Path="tests\Completion\PSPredictor.Completion.Tests.csproj" />
+    <Project Path="tests\Core\PSPredictor.Core.Tests.csproj" />
+    <Project Path="tests\Integration\PSPredictor.Integration.Tests.csproj" />
+    <Project Path="tests\Performance\PSPredictor.Performance.Tests.csproj" />
     <Project Path="tests\Unit\PSPredictor.Tests.csproj" />
   </Folder>
   <Folder Name="/tools/">

@@ -19,14 +19,17 @@ The publish workflow requires a "production" environment to be configured in the
 Add the following protection rules for security:
 
 #### **Required Reviewers** (Recommended)
+
 - Add trusted maintainers who can approve production deployments
 - Minimum 1 reviewer required for publishing to PowerShell Gallery
 
 #### **Deployment Branches**
+
 - Restrict to: `main` branch only
 - This ensures only approved code from the main branch can be published
 
 #### **Wait Timer** (Optional)
+
 - Add a brief wait period (e.g., 5 minutes) for last-minute cancellations
 
 ### 3. Add Environment Secrets
@@ -34,6 +37,7 @@ Add the following protection rules for security:
 Add the following secrets to the **production** environment:
 
 #### **PSGALLERY_API_KEY**
+
 1. Get your API key from [PowerShell Gallery](https://www.powershellgallery.com/account/apikeys)
 2. In the production environment settings, click **Add secret**
 3. Name: `PSGALLERY_API_KEY`
@@ -83,15 +87,18 @@ Before your first publish, verify:
 ## 🆘 Troubleshooting
 
 ### Workflow Fails with "Environment not found"
+
 - Ensure the production environment is created in repository settings
 - Check that the environment name exactly matches "production" (case-sensitive)
 
 ### API Key Errors
+
 - Verify the `PSGALLERY_API_KEY` secret exists in the production environment
 - Check that the API key is valid and has publish permissions
 - Ensure the key hasn't expired
 
 ### Permission Denied
+
 - Verify you have admin access to the repository
 - Check that the workflow has `contents: write` permission
 - Ensure branch protection rules allow the workflow to run

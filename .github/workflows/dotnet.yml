@@ -2,9 +2,9 @@ name: Build and Test
 
 on:
   push:
-    branches: [ main, develop, 'feature/*', 'release/*' ]
+    branches: [ main, dev, 'feature/*', 'release/*' ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, dev ]
   workflow_dispatch:
 
 permissions:
@@ -18,6 +18,22 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
 jobs:
+  markdown-lint:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Run markdownlint
+      uses: DavidAnson/markdownlint-cli2-action@v16
+      with:
+        globs: '**/*.md'
+        config: '.markdownlint-cli2.jsonc'
+        fix: false
+
   build-and-test:
     name: Build and Test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
@@ -82,84 +98,84 @@ jobs:
 
     - name: Run core tests
       run: |
-        dotnet test tests/Core.Tests/PSPredictor.Core.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Core --collect:"XPlat Code Coverage"
+        dotnet test tests/Core/PSPredictor.Core.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Core --collect:"XPlat Code Coverage"
       continue-on-error: false
 
     - name: Run completion tests
       run: |
-        dotnet test tests/Completion.Tests/PSPredictor.Completion.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Completion --collect:"XPlat Code Coverage"
+        dotnet test tests/Completion/PSPredictor.Completion.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Completion --collect:"XPlat Code Coverage"
       continue-on-error: false
 
     - name: Run AI tests
       run: |
-        dotnet test tests/AI.Tests/PSPredictor.AI.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/AI --collect:"XPlat Code Coverage"
+        dotnet test tests/AI/PSPredictor.AI.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/AI --collect:"XPlat Code Coverage"
       continue-on-error: false
 
     - name: Run integration tests
       run: |
-        dotnet test tests/Integration.Tests/PSPredictor.Integration.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Integration --collect:"XPlat Code Coverage"
+        dotnet test tests/Integration/PSPredictor.Integration.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Integration --collect:"XPlat Code Coverage"
       continue-on-error: false
 
     - name: Install PowerShell (Linux/macOS)
       if: runner.os != 'Windows'
       run: |
         set -euo pipefail
-        
+
         if [ "$RUNNER_OS" == "Linux" ]; then
           # Install PowerShell on Ubuntu using the official method with error handling
           echo "Installing PowerShell on Linux..."
-          
+
           # Get Ubuntu version dynamically and validate
           UBUNTU_VERSION=$(lsb_release -rs)
           echo "Detected Ubuntu version: $UBUNTU_VERSION"
-          
+
           # Download Microsoft package configuration with timeout and verification
           TEMP_DEB="/tmp/packages-microsoft-prod.deb"
           if ! wget --timeout=30 --tries=3 -q "https://packages.microsoft.com/config/ubuntu/$UBUNTU_VERSION/packages-microsoft-prod.deb" -O "$TEMP_DEB"; then
             echo "Failed to download Microsoft package configuration"
             exit 1
           fi
-          
+
           # Verify the downloaded file exists and has reasonable size
           if [ ! -f "$TEMP_DEB" ] || [ ! -s "$TEMP_DEB" ]; then
             echo "Downloaded file is invalid or empty"
             exit 1
           fi
-          
+
           # Install with proper error handling
           if ! sudo dpkg -i "$TEMP_DEB"; then
             echo "Failed to install Microsoft package configuration"
             exit 1
           fi
-          
+
           # Clean up temporary file
           rm -f "$TEMP_DEB"
-          
+
           # Update package list and install PowerShell
           if ! sudo apt-get update; then
             echo "Failed to update package list"
             exit 1
           fi
-          
+
           if ! sudo apt-get install -y powershell; then
             echo "Failed to install PowerShell"
             exit 1
           fi
-          
+
           echo "PowerShell installed successfully on Linux"
-          
+
         elif [ "$RUNNER_OS" == "macOS" ]; then
           # Install PowerShell on macOS with error handling
           echo "Installing PowerShell on macOS..."
-          
+
           if ! brew install --cask powershell; then
             echo "Failed to install PowerShell via Homebrew"
             exit 1
           fi
-          
+
           echo "PowerShell installed successfully on macOS"
         fi
-        
+
         # Verify PowerShell installation
         if command -v pwsh >/dev/null 2>&1; then
           echo "✅ PowerShell installation verified"
@@ -179,13 +195,13 @@ jobs:
         Write-Host "GitHub workspace: $env:GITHUB_WORKSPACE"
         Write-Host "Current directory: $currentDir"
         Write-Host "Checking for module at: $modulePath"
-        
+
         if (Test-Path $modulePath) {
           Write-Host "✅ Module found at: $modulePath"
           try {
             Import-Module $modulePath -Force -ErrorAction Stop
             Write-Host "✅ Module loaded successfully"
-            
+
             # Test basic cmdlets
             $commands = Get-Command -Module PSPredictor -ErrorAction SilentlyContinue
             if ($commands) {

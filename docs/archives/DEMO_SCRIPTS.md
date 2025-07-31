@@ -21,6 +21,7 @@ Get-PSPredictorTools
 ### 1. Before/After Comparison - Git Commands
 
 **Before PSPredictor (Frustrating Experience):**
+
 ```bash
 # Terminal shows no helpful suggestions
 git che<TAB>           # No completions
@@ -29,6 +30,7 @@ git log --gra<TAB>     # No option hints
 ```
 
 **After PSPredictor (Smooth Experience):**
+
 ```bash
 # Terminal shows intelligent completions
 git che<TAB>           # Shows: checkout, cherry-pick, check-ignore
@@ -39,6 +41,7 @@ git log --gra<TAB>     # Shows: --graph, --grep
 ### 2. DevOps Workflow - Docker & Kubernetes
 
 **Docker Demo:**
+
 ```bash
 # Show powerful Docker completions
 docker <TAB>                    # Shows all commands: run, build, pull, push, etc.
@@ -48,6 +51,7 @@ docker exec -it mycontainer <TAB> # Shows available commands in container
 ```
 
 **Kubernetes Demo:**
+
 ```bash
 # Demonstrate kubectl intelligence
 kubectl <TAB>                   # Shows: get, describe, create, delete, apply, etc.
@@ -59,6 +63,7 @@ kubectl describe pod <TAB>      # Shows actual pod names from cluster
 ### 3. Cloud CLI Productivity - AWS & Azure
 
 **AWS CLI Demo:**
+
 ```bash
 # Show comprehensive AWS service support
 aws <TAB>                       # Shows: s3, ec2, lambda, iam, etc. (65+ services)
@@ -68,6 +73,7 @@ aws lambda <TAB>                # Shows: create-function, list-functions, invoke
 ```
 
 **Azure CLI Demo:**
+
 ```bash
 # Demonstrate Azure intelligence
 az <TAB>                        # Shows all Azure service groups
@@ -78,6 +84,7 @@ az storage <TAB>                # Shows storage commands: account, blob, contain
 ### 4. Package Manager Efficiency
 
 **npm Demo:**
+
 ```bash
 # Show npm package management completions
 npm <TAB>                       # Shows: install, run, build, test, publish
@@ -86,6 +93,7 @@ npm run <TAB>                   # Shows scripts from package.json
 ```
 
 **Python Package Management:**
+
 ```bash
 # Demonstrate Python ecosystem support
 pip <TAB>                       # Shows: install, uninstall, list, show, freeze
@@ -97,6 +105,7 @@ pyenv <TAB>                     # Shows version management commands
 ### 5. AI Tools Integration
 
 **AI CLI Demo:**
+
 ```bash
 # Show modern AI tool support
 claude <TAB>                    # Shows Claude AI CLI options
@@ -107,6 +116,7 @@ codex <TAB>                     # Shows OpenAI Codex options
 ### 6. Cross-Platform Shell Support
 
 **PowerShell Demo:**
+
 ```bash
 # Show PowerShell-specific completions
 pwsh <TAB>                      # Shows PowerShell options and parameters
@@ -115,6 +125,7 @@ Set-Location <TAB>              # Shows directory completions
 ```
 
 **Shell Configuration Demo:**
+
 ```bash
 # Demonstrate shell support
 zsh <TAB>                       # Shows Zsh options and configurations
@@ -127,6 +138,7 @@ tmux <TAB>                      # Shows tmux session management
 ### Terminal Setup for Best Results
 
 1. **Terminal Configuration:**
+
    ```bash
    # Set up clean terminal environment
    Set-PSReadLineOption -PredictionSource History
@@ -146,16 +158,19 @@ tmux <TAB>                      # Shows tmux session management
 ### Recording Software Recommendations
 
 **For Windows:**
+
 - **ScreenToGif** (Free, lightweight)
 - **OBS Studio** (Free, professional)
 - **Camtasia** (Paid, full-featured)
 
 **For macOS:**
+
 - **Kap** (Free, simple)
 - **CleanShot X** (Paid, excellent quality)
 - **ScreenFlow** (Paid, professional)
 
 **For Linux:**
+
 - **Peek** (Free, simple GIF recorder)
 - **SimpleScreenRecorder** (Free, versatile)
 - **OBS Studio** (Free, cross-platform)
@@ -182,6 +197,7 @@ tmux <TAB>                      # Shows tmux session management
 ## Social Media Optimized Scripts
 
 ### 30-Second Twitter/X Video
+
 ```
 [0-3s]   "Tired of remembering CLI commands?"
 [3-8s]   Show struggling with git checkout<TAB> (no completions)
@@ -192,6 +208,7 @@ tmux <TAB>                      # Shows tmux session management
 ```
 
 ### 60-Second LinkedIn Demo
+
 ```
 [0-5s]   Problem: DevOps productivity bottleneck
 [5-15s]  Show multiple tool struggles (git, docker, kubectl)
@@ -201,6 +218,7 @@ tmux <TAB>                      # Shows tmux session management
 ```
 
 ### 90-Second YouTube Short
+
 ```
 [0-10s]  Hook: "Stop googling CLI commands"
 [10-20s] Problem demo across multiple scenarios
@@ -212,12 +230,14 @@ tmux <TAB>                      # Shows tmux session management
 ## Demo Assets Creation
 
 ### Text Overlays
+
 - **Hook Lines:** "Stop googling CLI commands", "DevOps productivity hack", "26+ tools, 1 module"
 - **Problem Statements:** "Before: Frustrating", "Remembering commands is hard"
 - **Solution Reveals:** "After: Smooth sailing", "PSPredictor to the rescue"
 - **CTAs:** "Install now: Install-Module PSPredictor", "GitHub: wangkanai/PSPredictor"
 
 ### Hashtag Strategies
+
 - **PowerShell:** #PowerShell #PSModule #PowerShellGallery #PowerShell7
 - **DevOps:** #DevOps #CLI #Productivity #Automation #Developer
 - **Tools:** #Git #Docker #kubectl #AWS #Azure #Python
@@ -226,12 +246,14 @@ tmux <TAB>                      # Shows tmux session management
 ## Metrics Tracking
 
 ### Engagement Metrics to Monitor
+
 - Views, likes, shares, comments
 - Click-through rate to GitHub/PowerShell Gallery
 - Module download increases after posts
 - Community feedback and feature requests
 
 ### Success Indicators
+
 - 10%+ increase in module downloads within 7 days
 - Positive community feedback and contributions
 - Featured by PowerShell community accounts
@@ -240,6 +262,7 @@ tmux <TAB>                      # Shows tmux session management
 ## Call-to-Action Templates
 
 ### Installation CTA
+
 ```
 🚀 Ready to supercharge your CLI?
 
@@ -251,6 +274,7 @@ Get-PSPredictorTools
 ```
 
 ### Community CTA
+
 ```
 💡 Missing your favorite CLI tool?
 🔧 Contributors welcome!

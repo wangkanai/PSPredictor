@@ -9,13 +9,15 @@ Comprehensive guide for resolving common PSPredictor completion issues based on 
 ### 1. Tab Completions Not Working
 
 #### **Symptom**: No completions appear when pressing Tab
+
 ```powershell
 dotnet <TAB>    # Shows nothing or falls back to file completions
 ```
 
-#### **Root Causes & Solutions**:
+#### **Root Causes & Solutions**
 
 **A. PSPredictor Not Installed/Activated**
+
 ```powershell
 # Check if module is loaded
 Get-Module PSPredictor
@@ -26,6 +28,7 @@ Install-PSPredictor
 ```
 
 **B. PSReadLine MenuComplete Conflict**
+
 ```powershell
 # Check current Tab handler
 Get-PSReadLineKeyHandler | Where-Object Key -eq 'Tab'
@@ -35,8 +38,10 @@ Set-PSReadLineKeyHandler -Chord Tab -Function Complete
 ```
 
 **C. Missing -Native Parameter**
+
 - **Issue**: Completion provider uses wrong parameter signature
 - **Fix**: Ensure external CLI completers use `-Native` parameter:
+
 ```powershell
 Register-ArgumentCompleter -Native -CommandName 'dotnet' -ScriptBlock $ScriptBlock
 ```
@@ -44,6 +49,7 @@ Register-ArgumentCompleter -Native -CommandName 'dotnet' -ScriptBlock $ScriptBlo
 ### 2. History Showing Below Completions
 
 #### **Symptom**: Command history appears below tab completions
+
 ```powershell
 dotnet <TAB>
 new        build      run        # <-- Completions (good)
@@ -53,19 +59,22 @@ new        build      run        # <-- Completions (good)
 
 #### **Root Cause**: PSReadLine PredictionViewStyle set to ListView
 
-#### **Solutions**:
+#### **Solutions**
 
 **Option A: InlineView (Recommended)**
+
 ```powershell
 Set-PSReadLineOption -PredictionViewStyle InlineView
 ```
 
 **Option B: Disable History Predictions**
+
 ```powershell
 Set-PSReadLineOption -PredictionSource Plugin
 ```
 
 **Option C: Smart Profile Configuration**
+
 ```powershell
 # In your PowerShell profile
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
@@ -76,14 +85,16 @@ Set-PSReadLineKeyHandler -Chord Tab -Function Complete
 ### 3. Subcommand Completions Not Working
 
 #### **Symptom**: Subcommands show main commands instead of sub-options
+
 ```powershell
 dotnet add <TAB>    # Shows: new, build, run (wrong)
                     # Should show: package, reference (correct)
 ```
 
-#### **Root Causes**:
+#### **Root Causes**
 
 **A. Incorrect Word Count Logic**
+
 ```powershell
 # Problem: Using > instead of >=
 if ($words.Count -gt 2) {
@@ -93,6 +104,7 @@ if ($words.Count -ge 2) {
 ```
 
 **B. Wrong Completion Detection Logic**
+
 ```powershell
 # Problem: Not detecting subcommand context correctly
 if ($words.Count -le 2) {
@@ -110,6 +122,7 @@ if ($words.Count -eq 1 -or ($words.Count -eq 2 -and $words[1] -like "$wordToComp
 ### 4. Stub Function Conflicts
 
 #### **Symptom**: Verbose message shows "stub not implemented"
+
 ```powershell
 Register-PSPredictorCompletion -Tool dotnet -Verbose
 # Output: "Dotnet CLI completion stub - not implemented"
@@ -118,6 +131,7 @@ Register-PSPredictorCompletion -Tool dotnet -Verbose
 #### **Root Cause**: Stub functions in `Stubs.ps1` override real implementations
 
 #### **Solution**: Remove conflicting stubs
+
 ```powershell
 # Remove from src/Completions/Stubs.ps1:
 function Register-DotnetCompletion { 
@@ -128,6 +142,7 @@ function Register-DotnetCompletion {
 ### 5. Module Loading Issues
 
 #### **Symptom**: Completions work in testing but not in profile
+
 ```powershell
 # Works:
 Import-Module PSPredictor -Force
@@ -139,6 +154,7 @@ Install-PSPredictor
 #### **Root Cause**: Missing `Install-PSPredictor` in profile
 
 #### **Solution**: Add activation to profile
+
 ```powershell
 # In PowerShell profile:
 Import-Module PSPredictor
@@ -150,6 +166,7 @@ Install-PSPredictor
 #### **Symptom**: Install-PSPredictor fails to detect MenuComplete when multiple handlers exist
 
 #### **Root Cause**: Multiple Tab handlers return an array, breaking single-object comparison
+
 ```powershell
 # Problem: This fails when $currentHandler is an array
 if ($currentHandler.Function -eq 'MenuComplete') {
@@ -159,6 +176,7 @@ if ($currentHandler | Where-Object { $_.Function -eq 'MenuComplete' }) {
 ```
 
 #### **Detection**: Check for multiple handlers
+
 ```powershell
 # More efficient: use -Key parameter to filter directly
 $tabHandlers = Get-PSReadLineKeyHandler -Key Tab
@@ -201,6 +219,7 @@ Get-Command Register-DotnetCompletion -ErrorAction SilentlyContinue
 ### 3. Debug Completion Parameters
 
 Add debug output to completion script blocks:
+
 ```powershell
 $ScriptBlock = {
     param($wordToComplete, $commandAst, $cursorPosition)
@@ -247,18 +266,21 @@ Get-PSPredictorTools | Where-Object Name -in @('dotnet', 'claude')
 ## 📋 **Diagnostic Checklist**
 
 ### Basic Functionality Check
+
 - [ ] PSPredictor module loaded: `Get-Module PSPredictor`
 - [ ] Completions installed: `Install-PSPredictor` executed
 - [ ] Tab handler correct: `Get-PSReadLineKeyHandler | Where Key -eq 'Tab'`
 - [ ] Programmatic test works: `TabExpansion2 'dotnet ' 7`
 
 ### Advanced Configuration Check
+
 - [ ] No stub conflicts: Search for stub functions in module
 - [ ] PSReadLine optimal: `InlineView` + `HistoryAndPlugin`
 - [ ] Profile activation: `Install-PSPredictor` in profile
 - [ ] Native completers: `-Native` parameter used for external tools
 
 ### Specific Tool Testing
+
 - [ ] Main commands: `dotnet <TAB>` shows new, build, run
 - [ ] Subcommands: `dotnet new <TAB>` shows templates
 - [ ] Sub-subcommands: `dotnet add <TAB>` shows package, reference
@@ -348,6 +370,7 @@ function Register-{ToolName}Completion {
 ## 🚀 **Performance Optimization**
 
 ### Completion Response Time Targets
+
 - **Target**: < 100ms for most completions
 - **Maximum**: < 500ms for complex completions
 - **Timeout**: 2 seconds for network-dependent completions
@@ -355,6 +378,7 @@ function Register-{ToolName}Completion {
 ### Optimization Techniques
 
 #### 1. Avoid Duplicate API Calls
+
 ```powershell
 # Problem: Calling expensive operations multiple times
 $options1 = Get-PSReadLineOption
@@ -368,6 +392,7 @@ $currentHandler = Get-PSReadLineKeyHandler -Key Tab
 ```
 
 #### 2. Caching Strategies
+
 ```powershell
 # Cache expensive operations
 $script:PackageCache = @{}
@@ -377,6 +402,7 @@ if (-not $script:PackageCache.ContainsKey($query)) {
 ```
 
 #### 3. Early Returns
+
 ```powershell
 # Return early for invalid contexts
 if ($words.Count -eq 0 -or $words[0] -ne 'expected-command') {
@@ -385,6 +411,7 @@ if ($words.Count -eq 0 -or $words[0] -ne 'expected-command') {
 ```
 
 #### 4. Limit Results
+
 ```powershell
 # Limit completion results to prevent overwhelming UI
 $completions | Select-Object -First 50
@@ -395,12 +422,15 @@ $completions | Select-Object -First 50
 ## 📞 **Getting Help**
 
 ### Self-Help Resources
+
 1. **This troubleshooting guide** - Common issues and solutions
 2. **TASKS.md** - Known issues and planned improvements
 3. **Test your setup** - Use diagnostic commands above
 
 ### Reporting Issues
+
 When reporting issues, include:
+
 - **PowerShell version**: `$PSVersionTable.PSVersion`
 - **PSPredictor version**: `Get-Module PSPredictor | Select-Object Version`
 - **PSReadLine settings**: `Get-PSReadLineOption`
@@ -408,6 +438,7 @@ When reporting issues, include:
 - **Debug output**: Use debug techniques from this guide
 
 ### Community Support
+
 - **GitHub Issues**: [PSPredictor Issues](https://github.com/wangkanai/PSPredictor/issues)
 - **PowerShell Gallery**: Package management and installation issues
 - **Documentation**: Comprehensive guides and examples

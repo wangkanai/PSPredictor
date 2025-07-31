@@ -5,6 +5,7 @@ This document explains the automated publishing setup for PSPredictor to PowerSh
 ## 📋 Overview
 
 The automation consists of:
+
 - **Continuous Testing**: Tests run on every PR and push
 - **Automated Publishing**: Publishes to PowerShell Gallery on merge to main
 - **Version Management**: Prevents duplicate versions and manages releases
@@ -38,11 +39,13 @@ For additional security, set up a production environment:
 ### Automated Publishing (`publish.yml`)
 
 **Triggers:**
+
 - ✅ Push to `main` branch (when module files change)
 - ✅ Manual trigger via workflow_dispatch
 - ✅ Only publishes if version doesn't exist in PowerShell Gallery
 
 **Files that trigger publishing:**
+
 - `PSPredictor.psd1` (manifest changes)
 - `PSPredictor.psm1` (module code changes)
 - `.github/workflows/publish.yml` (workflow updates)
@@ -50,10 +53,12 @@ For additional security, set up a production environment:
 ### Testing (`test.yml`)
 
 **Triggers:**
+
 - ✅ All pull requests to `main`
 - ✅ Manual trigger via workflow_dispatch
 
 **Platforms tested:**
+
 - 🐧 Ubuntu (Linux)
 - 🪟 Windows
 - 🍎 macOS
@@ -72,11 +77,13 @@ For additional security, set up a production environment:
 ### Version Management
 
 **Current Version Detection:**
+
 - Reads version from `PSPredictor.psd1`
 - Checks PowerShell Gallery for existing versions
 - Skips publishing if version already exists
 
 **Version Bumping Helper:**
+
 ```powershell
 # Patch version (1.0.0 → 1.0.1)
 ./.github/scripts/bump-version.ps1 -Type Patch
@@ -96,11 +103,13 @@ For additional security, set up a production environment:
 ### For Contributors
 
 1. **Create Feature Branch:**
+
    ```bash
    git checkout -b feature/my-feature
    ```
 
 2. **Make Changes and Test Locally:**
+
    ```powershell
    ./build.ps1 -Task All
    ```
@@ -120,6 +129,7 @@ For additional security, set up a production environment:
    - Review changes and test results
 
 2. **Version Management:**
+
    ```powershell
    # Quick version bump
    ./.github/scripts/bump-version.ps1 -Type Patch
@@ -136,12 +146,14 @@ For additional security, set up a production environment:
 ### Success Indicators
 
 **✅ Tests Pass:**
+
 - Module manifest validation
 - Module import successful
 - All exported functions available
 - Cross-platform compatibility
 
 **✅ Publishing Success:**
+
 - Version doesn't already exist (or force flag used)
 - Module built successfully
 - Published to PowerShell Gallery
@@ -149,19 +161,23 @@ For additional security, set up a production environment:
 
 ### Common Issues & Solutions
 
-**❌ "Version already exists"**
+#### "Version already exists"
+
 - **Solution**: Increment version in `PSPredictor.psd1`
 - **Quick fix**: Use bump-version script
 
-**❌ "API Key invalid"**
-- **Solution**: Check `PSGALLERY_API_KEY` secret is set correctly
-- **Get new key**: https://www.powershellgallery.com/account/apikeys
+#### "API Key invalid"
 
-**❌ "Module validation failed"**
+- **Solution**: Check `PSGALLERY_API_KEY` secret is set correctly
+- **Get new key**: <https://www.powershellgallery.com/account/apikeys>
+
+#### "Module validation failed"
+
 - **Solution**: Run `./build.ps1 -Task Test` locally to debug
 - **Common causes**: Missing dependencies, syntax errors, manifest issues
 
-**❌ "Build failed"**
+#### "Build failed"
+
 - **Solution**: Check build script compatibility with GitHub Actions environment
 - **Debug**: Review workflow logs for specific error messages
 
@@ -181,19 +197,22 @@ For additional security, set up a production environment:
 
 ## 🎯 Best Practices
 
-### Version Management
+### Version Management Best Practices
+
 - ✅ Always increment version before merging to main
 - ✅ Use semantic versioning (MAJOR.MINOR.PATCH)
 - ✅ Test locally before pushing to main
 - ✅ Write meaningful commit messages
 
 ### Security
+
 - ✅ Use repository secrets for API keys
 - ✅ Enable environment protection for production
 - ✅ Regularly rotate API keys
 - ✅ Review workflow permissions
 
 ### Quality
+
 - ✅ All PRs must pass tests
 - ✅ Test on multiple platforms
 - ✅ Validate module manifest before publishing
@@ -210,4 +229,5 @@ If you encounter issues with the automation:
 
 ---
 
-**🎉 Happy Publishing! Your PowerShell module will now be automatically published to the PowerShell Gallery whenever you merge changes to the main branch.**
+**🎉 Happy Publishing!** Your PowerShell module will now be automatically published to the PowerShell Gallery
+whenever you merge changes to the main branch.
