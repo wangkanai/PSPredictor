@@ -9,11 +9,12 @@ PSReadLine and posh-git, two of the most popular PowerShell enhancement tools.
 
 ## Executive Summary
 
-| Tool                 | Philosophy                            | Primary Focus                    | Architecture              | AI-Powered |
-|----------------------|---------------------------------------|----------------------------------|---------------------------|------------|
-| **PSReadLine**       | PowerShell command-line enhancement   | PowerShell editing & history     | PowerShell module         | ❌ No       |
-| **posh-git**         | Git integration for PowerShell        | Git-specific completion          | PowerShell module         | ❌ No       |
-| **PSPredictor v2.0** | Revolutionary terminal IDE experience | Multi-tool AI-powered prediction | C# .NET 9.0 binary module | ✅ ML.NET   |
+| Aspect        | PSPredictor v2.0                      | PSReadLine                          | posh-git                       |
+|---------------|---------------------------------------|-------------------------------------|--------------------------------|
+| Philosophy    | Revolutionary terminal IDE experience | PowerShell command-line enhancement | Git integration for PowerShell |
+| Primary Focus | Multi-tool AI-powered prediction      | PowerShell editing & history        | Git-specific completion        |
+| Architecture  | C# .NET 9.0 binary module             | PowerShell module                   | PowerShell module              |
+| AI-Powered    | ✅ ML.NET                              | ❌ No                                | ❌ No                           |
 
 **PSPredictor v2.0 Positioning**: *"Build Better, Not Dependent"* - A revolutionary C# .NET 9.0 binary module that
 transforms PowerShell into an intelligent, IDE-like terminal experience with native AI-powered prediction for 26+ CLI
@@ -54,16 +55,16 @@ dependencies
 
 ## 2. Input Handling & Editing Capabilities
 
-| Feature                | PSReadLine      | posh-git                | PSPredictor v2.0                    |
-|------------------------|------------ ----|------------ ------------|-------------------------------------|
-| **Multi-line Editing** | ✅ Basic        | ❌ No                   | ✅ Advanced with IDE features        |
-| **Editing Modes**      | ✅ Vi, Emacs    | ❌ Relies on PSReadLine | ✅ Cmd, Vi, Emacs (enhanced)         |
-| **Key Bindings**       | ✅ Customizable | ❌ Limited              | ✅ Fully customizable with macros    |
-| **Kill Ring**          | ✅ Basic        | ❌ No                   | ✅ Advanced Emacs-style system       |
-| **Undo/Redo**          | ✅ Yes          | ❌ Relies on PSReadLine | ✅ Enhanced with visual feedback     |
-| **Word Navigation**    | ✅ Basic        | ❌ No                   | ✅ Token-aware PowerShell navigation |
-| **Block Selection**    | ❌ No           | ❌ No                   | ✅ IDE-style block editing           |
-| **Multi-cursor**       | ❌ No           | ❌ No                   | ✅ Advanced multi-cursor editing     |
+| Feature                | PSPredictor v2.0                    | PSReadLine     | posh-git               |
+|------------------------|-------------------------------------|----------------|------------------------|
+| **Multi-line Editing** | ✅ Advanced with IDE features        | ✅ Basic        | ❌ No                   |
+| **Editing Modes**      | ✅ Cmd, Vi, Emacs (enhanced)         | ✅ Vi, Emacs    | ❌ Relies on PSReadLine |
+| **Key Bindings**       | ✅ Fully customizable with macros    | ✅ Customizable | ❌ Limited              |
+| **Kill Ring**          | ✅ Advanced Emacs-style system       | ✅ Basic        | ❌ No                   |
+| **Undo/Redo**          | ✅ Enhanced with visual feedback     | ✅ Yes          | ❌ Relies on PSReadLine |
+| **Word Navigation**    | ✅ Token-aware PowerShell navigation | ✅ Basic        | ❌ No                   |
+| **Block Selection**    | ✅ IDE-style block editing           | ❌ No           | ❌ No                   |
+| **Multi-cursor**       | ✅ Advanced multi-cursor editing     | ❌ No           | ❌ No                   |
 
 ### PSReadLine Strengths
 
@@ -98,15 +99,15 @@ dependencies
 
 ## 3. Completion & Prediction Systems
 
-| Feature                      | PSReadLine             | posh-git           | PSPredictor v2.0               |
-|------------------------------|------------------------|--------------------|--------------------------------|
-| **PowerShell Completion**    | ✅ Basic tab completion | ❌ No               | ✅ AI-enhanced completion       |
-| **History-based Prediction** | ✅ Basic suggestions    | ❌ No               | ✅ ML-powered prediction        |
-| **Context Awareness**        | ❌ Limited              | ✅ Git context only | ✅ Multi-tool context awareness |
-| **Fuzzy Matching**           | ❌ No                   | ❌ No               | ✅ AI-powered fuzzy matching    |
-| **Predictive IntelliSense**  | ❌ No                   | ❌ No               | ✅ Real-time ML suggestions     |
-| **Parameter Completion**     | ✅ Basic                | ✅ Git parameters   | ✅ 26+ tools with context       |
-| **File Path Completion**     | ✅ Standard             | ✅ Git files        | ✅ Intelligent path prediction  |
+| Feature                      | PSPredictor v2.0               | PSReadLine             | posh-git           |
+|------------------------------|--------------------------------|------------------------|--------------------|
+| **PowerShell Completion**    | ✅ AI-enhanced completion       | ✅ Basic tab completion | ❌ No               |
+| **History-based Prediction** | ✅ ML-powered prediction        | ✅ Basic suggestions    | ❌ No               |
+| **Context Awareness**        | ✅ Multi-tool context awareness | ❌ Limited              | ✅ Git context only |
+| **Fuzzy Matching**           | ✅ AI-powered fuzzy matching    | ❌ No                   | ❌ No               |
+| **Predictive IntelliSense**  | ✅ Real-time ML suggestions     | ❌ No                   | ❌ No               |
+| **Parameter Completion**     | ✅ 26+ tools with context       | ✅ Basic                | ✅ Git parameters   |
+| **File Path Completion**     | ✅ Intelligent path prediction  | ✅ Standard             | ✅ Git files        |
 
 ### PSReadLine Capabilities
 
@@ -151,15 +152,15 @@ intelligence
 
 ## 4. Syntax Highlighting & Visual Enhancement
 
-| Feature                   | PSReadLine           | posh-git | PSPredictor v2.0                |
-|---------------------------|----------------------|----------|---------------------------------|
-| **PowerShell Syntax**     | ✅ Basic highlighting | ❌ No     | ✅ Advanced syntax coloring      |
-| **CLI Tool Syntax**       | ❌ No                 | ❌ No     | ✅ 26+ tools syntax highlighting |
-| **Error Indication**      | ❌ No real-time       | ❌ No     | ✅ Real-time error indication    |
-| **Bracket Matching**      | ✅ Basic              | ❌ No     | ✅ Advanced with nesting         |
-| **String Recognition**    | ✅ Basic              | ❌ No     | ✅ Advanced string parsing       |
-| **Variable Highlighting** | ✅ Basic              | ❌ No     | ✅ Scope-aware highlighting      |
-| **Comment Recognition**   | ✅ Basic              | ❌ No     | ✅ Multi-language comments       |
+| Feature                   | PSPredictor v2.0                | PSReadLine           | posh-git |
+|---------------------------|---------------------------------|----------------------|----------|
+| **PowerShell Syntax**     | ✅ Advanced syntax coloring      | ✅ Basic highlighting | ❌ No     |
+| **CLI Tool Syntax**       | ✅ 26+ tools syntax highlighting | ❌ No                 | ❌ No     |
+| **Error Indication**      | ✅ Real-time error indication    | ❌ No real-time       | ❌ No     |
+| **Bracket Matching**      | ✅ Advanced with nesting         | ✅ Basic              | ❌ No     |
+| **String Recognition**    | ✅ Advanced string parsing       | ✅ Basic              | ❌ No     |
+| **Variable Highlighting** | ✅ Scope-aware highlighting      | ✅ Basic              | ❌ No     |
+| **Comment Recognition**   | ✅ Multi-language comments       | ✅ Basic              | ❌ No     |
 
 ### PSReadLine Visual Features
 
@@ -203,16 +204,16 @@ intelligence
 
 ## 5. CLI Tool Support Ecosystem
 
-| Tool Category         | PSReadLine            | posh-git        | PSPredictor v2.0            |
-|-----------------------|-----------------------|-----------------|-----------------------------|
-| **Git**               | ❌ No specific support | ✅ Comprehensive | ✅ AI-enhanced Git support   |
-| **Docker**            | ❌ No                  | ❌ No            | ✅ Complete Docker ecosystem |
-| **Kubernetes**        | ❌ No                  | ❌ No            | ✅ kubectl + helm + context  |
-| **Cloud Platforms**   | ❌ No                  | ❌ No            | ✅ Azure CLI, AWS CLI, GCP   |
-| **Package Managers**  | ❌ No                  | ❌ No            | ✅ npm, yarn, pip, etc.      |
-| **Shells**            | ❌ No                  | ❌ No            | ✅ bash, zsh, pwsh           |
-| **Development Tools** | ❌ No                  | ❌ No            | ✅ VS Code, dotnet, etc.     |
-| **Database Tools**    | ❌ No                  | ❌ No            | ✅ PostgreSQL, MySQL, etc.   |
+| Tool Category         | PSPredictor v2.0            | PSReadLine            | posh-git        |
+|-----------------------|-----------------------------|-----------------------|-----------------|
+| **Git**               | ✅ AI-enhanced Git support   | ❌ No specific support | ✅ Comprehensive |
+| **Docker**            | ✅ Complete Docker ecosystem | ❌ No                  | ❌ No            |
+| **Kubernetes**        | ✅ kubectl + helm + context  | ❌ No                  | ❌ No            |
+| **Cloud Platforms**   | ✅ Azure CLI, AWS CLI, GCP   | ❌ No                  | ❌ No            |
+| **Package Managers**  | ✅ npm, yarn, pip, etc.      | ❌ No                  | ❌ No            |
+| **Shells**            | ✅ bash, zsh, pwsh           | ❌ No                  | ❌ No            |
+| **Development Tools** | ✅ VS Code, dotnet, etc.     | ❌ No                  | ❌ No            |
+| **Database Tools**    | ✅ PostgreSQL, MySQL, etc.   | ❌ No                  | ❌ No            |
 
 ### PSReadLine Tool Support
 
@@ -250,15 +251,15 @@ intelligence
 
 ## 6. AI & Machine Learning Capabilities
 
-| Feature                   | PSReadLine | posh-git | PSPredictor v2.0             |
-|---------------------------|------------|----------|------------------------------|
-| **AI Prediction**         | ❌ No       | ❌ No     | ✅ ML.NET embedded models     |
-| **Learning from Usage**   | ❌ No       | ❌ No     | ✅ Continuous learning        |
-| **Context Understanding** | ❌ No       | ❌ No     | ✅ Multi-tool context         |
-| **Pattern Recognition**   | ❌ No       | ❌ No     | ✅ Command pattern analysis   |
-| **Predictive Text**       | ❌ No       | ❌ No     | ✅ Real-time prediction       |
-| **Error Prevention**      | ❌ No       | ❌ No     | ✅ AI-powered error detection |
-| **Smart Completion**      | ❌ No       | ❌ No     | ✅ Intelligent ranking        |
+| Feature                   | PSPredictor v2.0              | PSReadLine | posh-git |
+|---------------------------|-------------------------------|------------|----------|
+| **AI Prediction**         | ✅ ML\.NET embedded models     | ❌ No       | ❌ No     |
+| **Learning from Usage**   | ✅ Continuous learning         | ❌ No       | ❌ No     |
+| **Context Understanding** | ✅ Multi\-tool context         | ❌ No       | ❌ No     |
+| **Pattern Recognition**   | ✅ Command pattern analysis    | ❌ No       | ❌ No     |
+| **Predictive Text**       | ✅ Real\-time prediction       | ❌ No       | ❌ No     |
+| **Error Prevention**      | ✅ AI\-powered error detection | ❌ No       | ❌ No     |
+| **Smart Completion**      | ✅ Intelligent ranking         | ❌ No       | ❌ No     |
 
 ### PSReadLine Intelligence
 
@@ -299,14 +300,14 @@ learning
 
 ## 7. Performance & Memory Optimization
 
-| Metric               | PSReadLine | posh-git  | PSPredictor v2.0       |
-|----------------------|------------|-----------|------------------------|
-| **Response Time**    | ~50-200ms  | ~10-50ms  | <100ms (target)        |
-| **Memory Footprint** | ~10-30MB   | ~5-15MB   | <50MB (target)         |
-| **Startup Time**     | ~100-300ms | ~50-100ms | <200ms (target)        |
-| **CPU Usage**        | Low-Medium | Low       | Optimized (ML-aware)   |
-| **Disk I/O**         | Minimal    | Minimal   | SQLite + caching       |
-| **Network Usage**    | None       | None      | Optional model updates |
+| Metric               | PSPredictor v2.0       | PSReadLine | posh-git  |
+|----------------------|------------------------|------------|-----------|
+| **Response Time**    | <100ms (target)        | ~50-200ms  | ~10-50ms  |
+| **Memory Footprint** | <50MB (target)         | ~10-30MB   | ~5-15MB   |
+| **Startup Time**     | <200ms (target)        | ~100-300ms | ~50-100ms |
+| **CPU Usage**        | Optimized (ML-aware)   | Low-Medium | Low       |
+| **Disk I/O**         | SQLite + caching       | Minimal    | Minimal   |
+| **Network Usage**    | Optional model updates | None       | None      |
 
 ### PSReadLine Performance
 
@@ -345,15 +346,15 @@ learning
 
 ## 8. Cross-Platform Compatibility
 
-| Platform                | PSReadLine        | posh-git | PSPredictor v2.0      |
-|-------------------------|-------------------|----------|-----------------------|
-| **Windows x64**         | ✅ Native          | ✅ Yes    | ✅ Optimized           |
-| **Windows ARM64**       | ✅ Yes             | ✅ Yes    | ✅ Native support      |
-| **Linux x64**           | ✅ PowerShell Core | ✅ Yes    | ✅ Optimized           |
-| **Linux ARM64**         | ✅ PowerShell Core | ✅ Yes    | ✅ Native support      |
-| **macOS Intel**         | ✅ PowerShell Core | ✅ Yes    | ✅ Optimized           |
-| **macOS Apple Silicon** | ✅ PowerShell Core | ✅ Yes    | ✅ Native ARM64        |
-| **ML Features**         | ❌ N/A             | ❌ N/A    | ✅ x64, Fallback ARM64 |
+| Platform                | PSPredictor v2.0      | PSReadLine        | posh-git |
+|-------------------------|-----------------------|-------------------|----------|
+| **Windows x64**         | ✅ Optimized           | ✅ Native          | ✅ Yes    |
+| **Windows ARM64**       | ✅ Native support      | ✅ Yes             | ✅ Yes    |
+| **Linux x64**           | ✅ Optimized           | ✅ PowerShell Core | ✅ Yes    |
+| **Linux ARM64**         | ✅ Native support      | ✅ PowerShell Core | ✅ Yes    |
+| **macOS Intel**         | ✅ Optimized           | ✅ PowerShell Core | ✅ Yes    |
+| **macOS Apple Silicon** | ✅ Native ARM64        | ✅ PowerShell Core | ✅ Yes    |
+| **ML Features**         | ✅ x64, Fallback ARM64 | ❌ N/A             | ❌ N/A    |
 
 ### PSReadLine Cross-Platform
 
@@ -390,15 +391,15 @@ learning
 
 ## 9. Customization & Configuration
 
-| Feature                  | PSReadLine           | posh-git             | PSPredictor v2.0           |
-|--------------------------|----------------------|----------------------|----------------------------|
-| **Configuration Format** | PowerShell variables | PowerShell variables | JSON + PowerShell API      |
-| **Key Bindings**         | ✅ Extensive          | ❌ Limited            | ✅ Advanced with macros     |
-| **Color Themes**         | ✅ Basic              | ✅ Prompt themes      | ✅ Comprehensive theming    |
-| **Profiles**             | ❌ No                 | ❌ No                 | ✅ Profile system           |
-| **Plugin Architecture**  | ❌ Limited            | ❌ No                 | ✅ Extensible providers     |
-| **Real-time Updates**    | ❌ Requires restart   | ❌ Requires restart   | ✅ Live configuration       |
-| **Import/Export**        | ❌ Manual             | ❌ Manual             | ✅ Configuration management |
+| Feature                  | PSPredictor v2.0           | PSReadLine           | posh-git             |
+|--------------------------|----------------------------|----------------------|----------------------|
+| **Configuration Format** | JSON + PowerShell API      | PowerShell variables | PowerShell variables |
+| **Key Bindings**         | ✅ Advanced with macros     | ✅ Extensive          | ❌ Limited            |
+| **Color Themes**         | ✅ Comprehensive theming    | ✅ Basic              | ✅ Prompt themes      |
+| **Profiles**             | ✅ Profile system           | ❌ No                 | ❌ No                 |
+| **Plugin Architecture**  | ✅ Extensible providers     | ❌ Limited            | ❌ No                 |
+| **Real-time Updates**    | ✅ Live configuration       | ❌ Requires restart   | ❌ Requires restart   |
+| **Import/Export**        | ✅ Configuration management | ❌ Manual             | ❌ Manual             |
 
 ### PSReadLine Customization
 
@@ -436,14 +437,14 @@ learning
 
 ## 10. Installation & Dependencies
 
-| Aspect                  | PSReadLine                  | posh-git           | PSPredictor v2.0           |
-|-------------------------|-----------------------------|--------------------|----------------------------|
-| **Installation Method** | Built-in/PowerShell Gallery | PowerShell Gallery | NuGet + PowerShell Gallery |
-| **Dependencies**        | PowerShell Core/Windows     | PSReadLine + Git   | None (self-contained)      |
-| **Package Size**        | ~2-5MB                      | ~1-2MB             | ~15-25MB (includes ML)     |
-| **Auto-update**         | Via PowerShell              | Via PowerShell     | NuGet + PowerShell         |
-| **Offline Capability**  | ✅ Full                      | ✅ Full             | ✅ Core features + ML       |
-| **System Requirements** | PowerShell 5.1+             | PowerShell + Git   | .NET 9.0 Runtime           |
+| Aspect                  | PSPredictor v2.0           | PSReadLine                  | posh-git           |
+|-------------------------|----------------------------|-----------------------------|--------------------|
+| **Installation Method** | NuGet + PowerShell Gallery | Built-in/PowerShell Gallery | PowerShell Gallery |
+| **Dependencies**        | None (self-contained)      | PowerShell Core/Windows     | PSReadLine + Git   |
+| **Package Size**        | ~15-25MB (includes ML)     | ~2-5MB                      | ~1-2MB             |
+| **Auto-update**         | NuGet + PowerShell         | Via PowerShell              | Via PowerShell     |
+| **Offline Capability**  | ✅ Core features + ML       | ✅ Full                      | ✅ Full             |
+| **System Requirements** | .NET 9.0 Runtime           | PowerShell 5.1+             | PowerShell + Git   |
 
 ### PSReadLine Installation
 
@@ -479,15 +480,15 @@ learning
 
 ## 11. Development & Extensibility
 
-| Feature               | PSReadLine      | posh-git   | PSPredictor v2.0         |
-|-----------------------|-----------------|------------|--------------------------|
-| **Language**          | PowerShell + C# | PowerShell | C# .NET 9.0              |
-| **Plugin System**     | ❌ Limited       | ❌ No       | ✅ Provider architecture  |
-| **API Access**        | ✅ Basic         | ❌ No       | ✅ Comprehensive API      |
-| **Custom Providers**  | ❌ No            | ❌ No       | ✅ Easy CLI tool addition |
-| **ML Model Training** | ❌ N/A           | ❌ N/A      | ✅ Training pipeline      |
-| **Testing Framework** | ❌ Limited       | ❌ Limited  | ✅ Comprehensive xUnit    |
-| **Documentation**     | ✅ Good          | ✅ Good     | ✅ Comprehensive          |
+| Feature               | PSPredictor v2.0         | PSReadLine      | posh-git   |
+|-----------------------|--------------------------|-----------------|------------|
+| **Language**          | C# .NET 9.0              | PowerShell + C# | PowerShell |
+| **Plugin System**     | ✅ Provider architecture  | ❌ Limited       | ❌ No       |
+| **API Access**        | ✅ Comprehensive API      | ✅ Basic         | ❌ No       |
+| **Custom Providers**  | ✅ Easy CLI tool addition | ❌ No            | ❌ No       |
+| **ML Model Training** | ✅ Training pipeline      | ❌ N/A           | ❌ N/A      |
+| **Testing Framework** | ✅ Comprehensive xUnit    | ❌ Limited       | ❌ Limited  |
+| **Documentation**     | ✅ Comprehensive          | ✅ Good          | ✅ Good     |
 
 ### PSReadLine Development
 
