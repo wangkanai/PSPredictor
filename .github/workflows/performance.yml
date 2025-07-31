@@ -75,7 +75,7 @@ jobs:
 
     - name: Run performance tests
       run: |
-        dotnet run --project tests/Performance.Tests/PSPredictor.Performance.Tests.csproj `
+        dotnet run --project tests/Performance/PSPredictor.Performance.Tests.csproj `
           --configuration Release `
           --no-build `
           -- `

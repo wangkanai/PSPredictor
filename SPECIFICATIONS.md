@@ -1080,7 +1080,7 @@ public static class SecureProcessExecutor
 
 **NuGet Package Structure**:
 
-```
+```text
 PSPredictor.2.0.0.nupkg
 ├── lib/
 │   └── net9.0/

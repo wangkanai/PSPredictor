@@ -278,7 +278,7 @@ public Task<CompletionResult[]> GetGitStatusAsync(CancellationToken cancellation
 
 - **ArrayPool**: Use `ArrayPool<T>` for temporary large arrays
 - **StringBuilder**: Use for string concatenation in loops
-- **Span<T>/Memory<T>**: Use for high-performance buffer operations
+- **Span&lt;T&gt;/Memory&lt;T&gt;**: Use for high-performance buffer operations
 
 ---
 

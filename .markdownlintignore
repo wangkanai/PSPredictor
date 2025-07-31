@@ -1,0 +1,14 @@
+# Exclude auto-generated and third-party files
+packages/**/*.md
+build/**/*.md
+bin/**/*.md
+obj/**/*.md
+tools/**/*.md
+.nuget/**/*.md
+TestResults/**/*.md
+coverage/**/*.md
+**/node_modules/**/*.md
+docs/archives/**/*.md
+
+# Exclude specific auto-generated files
+CONTRIBUTING_TEMPLATE.md

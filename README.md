@@ -266,6 +266,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Made with ❤️ for the PowerShell community**
+## Made with ❤️ for the PowerShell community
 
-[Report Bug](https://github.com/wangkanai/PSPredictor/issues) · [Request Feature](https://github.com/wangkanai/PSPredictor/issues) · [Contribute](CONTRIBUTING.md)
+[Report Bug](https://github.com/wangkanai/PSPredictor/issues) ·
+[Request Feature](https://github.com/wangkanai/PSPredictor/issues) ·
+[Contribute](CONTRIBUTING.md)

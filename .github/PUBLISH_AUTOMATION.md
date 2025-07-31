@@ -161,22 +161,22 @@ For additional security, set up a production environment:
 
 ### Common Issues & Solutions
 
-**❌ "Version already exists"**
+#### "Version already exists"
 
 - **Solution**: Increment version in `PSPredictor.psd1`
 - **Quick fix**: Use bump-version script
 
-**❌ "API Key invalid"**
+#### "API Key invalid"
 
 - **Solution**: Check `PSGALLERY_API_KEY` secret is set correctly
 - **Get new key**: <https://www.powershellgallery.com/account/apikeys>
 
-**❌ "Module validation failed"**
+#### "Module validation failed"
 
 - **Solution**: Run `./build.ps1 -Task Test` locally to debug
 - **Common causes**: Missing dependencies, syntax errors, manifest issues
 
-**❌ "Build failed"**
+#### "Build failed"
 
 - **Solution**: Check build script compatibility with GitHub Actions environment
 - **Debug**: Review workflow logs for specific error messages
@@ -197,7 +197,7 @@ For additional security, set up a production environment:
 
 ## 🎯 Best Practices
 
-### Version Management
+### Version Management Best Practices
 
 - ✅ Always increment version before merging to main
 - ✅ Use semantic versioning (MAJOR.MINOR.PATCH)
@@ -229,4 +229,5 @@ If you encounter issues with the automation:
 
 ---
 
-**🎉 Happy Publishing! Your PowerShell module will now be automatically published to the PowerShell Gallery whenever you merge changes to the main branch.**
+**🎉 Happy Publishing!** Your PowerShell module will now be automatically published to the PowerShell Gallery
+whenever you merge changes to the main branch.

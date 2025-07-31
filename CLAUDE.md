@@ -448,7 +448,7 @@ PSPredictor/
 - **Performance Monitoring**: Automated performance regression detection
 - **Package Publishing**: Automated NuGet publishing on tagged releases
 
-## Development Workflow
+## Development Workflow and Setup
 
 ### Initial Setup
 
@@ -764,7 +764,8 @@ ROADMAP.md, CLAUDE.md) have been cleaned up with major formatting issues resolve
 **🔄 Remaining Work**: Most remaining errors are in archived documentation (`docs/archives/`), third-party package  
 files (`packages/`), and generated content. These require targeted cleanup or exclusion from linting rules.
 
-**🎯 Next Steps**: 
+**🎯 Next Steps**:
+
 - Consider adding `docs/archives/` and `packages/` to `.markdownlint.json` ignore patterns
 - Focus quality efforts on active documentation and user-facing content
 - Maintain high standards for new documentation through automated CI/CD validation
@@ -776,13 +777,15 @@ The PSPredictor repository follows a structured branching model with automated r
 ### Branch Hierarchy
 
 **🌟 `main`** - Production Branch
+
 - **Purpose**: Stable, production-ready code for releases
 - **Protection**: Protected branch with required status checks
 - **Merge Requirements**: Pull request required, 1+ approval, all CI/CD checks must pass
 - **Direct Commits**: Disabled - all changes via pull requests only
 - **Auto-Deploy**: Triggers release pipeline for NuGet/PowerShell Gallery publishing
 
-**🔧 `dev`** - Development Integration Branch  
+**🔧 `dev`** - Development Integration Branch
+
 - **Purpose**: Integration branch for completed features and bug fixes
 - **Protection**: Protected branch with status checks
 - **Merge Requirements**: Pull request required, CI/CD checks must pass
@@ -790,6 +793,7 @@ The PSPredictor repository follows a structured branching model with automated r
 - **Target**: Periodically merged to `main` for releases
 
 **🚀 `feature/*`** - Feature Development Branches
+
 - **Naming**: `feature/description-of-feature` (e.g., `feature/git-completion-provider`)
 - **Purpose**: Individual feature development and experimentation
 - **Lifecycle**: Created from `dev`, merged back to `dev` when complete
@@ -797,6 +801,7 @@ The PSPredictor repository follows a structured branching model with automated r
 - **Examples**: `feature/ml-prediction-engine`, `feature/syntax-highlighting`, `feature/docker-completion`
 
 **📦 `release/*`** - Release Preparation Branches
+
 - **Naming**: `release/v2.0.0` or `release/v2.1.0-beta1`
 - **Purpose**: Release preparation, version bumping, final testing
 - **Lifecycle**: Created from `dev`, merged to both `main` and `dev`
@@ -833,14 +838,16 @@ dev:
 ```
 
 **Automated Workflows**:
+
 - **Feature Branches**: Run full CI/CD pipeline on every push
 - **Release Branches**: Additional release validation and package generation
 - **Main Branch**: Trigger production deployment and release publication
 - **All Branches**: Markdown linting, code formatting, security scanning
 
-### Development Workflow
+### Branch Development Workflow
 
 **Standard Feature Development**:
+
 1. Create `feature/your-feature-name` from latest `dev`
 2. Develop and commit changes with descriptive messages
 3. Push feature branch and create pull request to `dev`
@@ -848,6 +855,7 @@ dev:
 5. Merge to `dev` via pull request (squash and merge preferred)
 
 **Release Process**:
+
 1. Create `release/v2.x.x` from latest `dev`
 2. Update version numbers, changelog, and documentation
 3. Perform final integration testing and bug fixes
@@ -856,6 +864,7 @@ dev:
 6. Merge release branch back to `dev` to maintain synchronization
 
 **Hotfix Process**:
+
 1. Create `feature/hotfix-description` from `main`
 2. Implement critical fix with minimal scope
 3. Create pull request directly to `main` (emergency approval)

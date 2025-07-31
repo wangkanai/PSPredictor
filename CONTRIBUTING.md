@@ -1,6 +1,7 @@
 # Contributing to PSPredictor
 
-🎉 Thank you for your interest in contributing to PSPredictor! We welcome contributions from the community to make this PowerShell module even better.
+🎉 Thank you for your interest in contributing to PSPredictor! We welcome contributions from the community
+to make this PowerShell module even better.
 
 ## 🚀 Ways to Contribute
 
