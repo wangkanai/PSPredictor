@@ -1211,6 +1211,6 @@ function Test-SystemRequirements {
 ---
 
 **Specifications Version**: 2.0.0  
-**Effective Date**: 2025-01-31  
+**Effective Date**: 2025-08-01  
 **Review Cycle**: Per major release  
 **Compatibility**: .NET 9.0, PowerShell Core 7+

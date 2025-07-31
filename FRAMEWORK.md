@@ -1293,6 +1293,6 @@ public abstract class PSPredictorTestBase
 ---
 
 **Framework Version**: 2.0.0  
-**Effective Date**: 2025-01-31  
+**Effective Date**: 2025-08-01  
 **Architecture Review**: Per major release  
 **Cross-Platform Compatibility**: Windows, Linux, macOS (x64/ARM64)
