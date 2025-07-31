@@ -976,7 +976,7 @@ public class PSPredictorIntegrationTests
 public static class SecurityValidator
 {
     private static readonly Regex SafeCommandPattern = 
-        new(@"^[a-zA-Z0-9\-_.:/\\]+$", RegexOptions.Compiled);
+        new(@"^[a-zA-Z0-9\s\-_.:/\\]+$", RegexOptions.Compiled);
     
     /// <summary>
     /// Validate command input for security threats
