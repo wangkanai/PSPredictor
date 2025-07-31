@@ -410,21 +410,12 @@ RegisterProvider(new MyCliCompletion());
 
 ### PowerShell Enhancement Tools
 
-- [PSReadLine](https://github.com/PowerShell/PSReadLine) - Enhanced command line editing (PSPredictor v2.0 is
-  independent)
 - [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) - Beautiful prompt themes (compatible)
-- [PSFzf](https://github.com/kelleyma49/PSFzf) - Fuzzy finder integration (complementary)
 - [posh-git](https://github.com/dahlbyk/posh-git) - Git integration for PowerShell (enhanced by PSPredictor)
 
 ### AI & Machine Learning
 
 - [ML.NET](https://github.com/dotnet/machinelearning) - Core machine learning framework used in PSPredictor
-- [PowerShell AI](https://github.com/dfinke/PowerShellAI) - AI integration for PowerShell (complementary)
-
-### Development Tools
-
-- [PowerShell Extension for VS Code](https://github.com/PowerShell/vscode-powershell) - IDE integration
-- [Pester](https://github.com/pester/Pester) - PowerShell testing framework
 
 ## 📄 License
 
