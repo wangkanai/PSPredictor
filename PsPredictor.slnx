@@ -28,6 +28,7 @@
     <File Path=".editorconfig" />
     <File Path=".markdownlint.json" />
     <File Path=".markdownlintignore" />
+    <File Path=".markdownlint-cli2.jsonc" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests\AI\PSPredictor.AI.Tests.csproj" />
