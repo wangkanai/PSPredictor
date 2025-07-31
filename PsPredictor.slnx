@@ -4,6 +4,11 @@
     <File Path="PRD.md" />
     <File Path="repomix.config.json" />
     <File Path=".repomixignore" />
+    <File Path="FRAMEWORK.md" />
+    <File Path="PLANNING.md" />
+    <File Path="SPECIFICATIONS.md" />
+    <File Path="STANDARDS.md" />
+    <File Path="TASKS.md" />
   </Folder>
   <Folder Name="/.github/">
     <File Path=".github\FUNDING.yml" />
@@ -19,6 +24,7 @@
     <File Path="LICENSE" />
     <File Path="global.json" />
     <File Path=".gitignore" />
+    <File Path=".editorconfig" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests\AI\PSPredictor.AI.Tests.csproj" />
