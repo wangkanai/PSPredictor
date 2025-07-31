@@ -44,6 +44,14 @@ instructions.
 - **Memory Efficient**: <50MB memory footprint optimized for long-running sessions
 - **PSReadLine Independent**: Native input handling system with advanced editing capabilities
 
+### 🚀 PowerShell 7.5 Integration
+
+- **Latest PowerShell Features**: Leverages PowerShell 7.5 enhanced performance and new language features
+- **Improved Cmdlet APIs**: Utilizes enhanced PowerShell SDK 7.5 cmdlet development capabilities
+- **Better Cross-Platform Support**: Benefits from PowerShell 7.5 improved cross-platform compatibility
+- **Enhanced Debugging**: Integrates with PowerShell 7.5 advanced debugging and profiling features
+- **Performance Optimizations**: Takes advantage of PowerShell 7.5 runtime performance improvements
+
 ### 🎯 Advanced Editing Modes
 
 - **Multi-Modal Editing**: Cmd, Emacs, and Vi editing modes with full feature parity
@@ -349,7 +357,7 @@ tests/
 
 - **.NET 9.0**: High-performance C# 13.0 with the latest language features
 - **ML.NET 4.0**: Latest machine learning framework with enhanced performance and new model capabilities
-- **PowerShell SDK 7.4.6**: Native PowerShell cmdlet integration
+- **PowerShell SDK 7.5**: Latest PowerShell framework with enhanced performance and new language features
 - **xUnit v3 + FluentAssertions**: Next-generation testing framework with improved performance
 - **BenchmarkDotNet**: Performance regression testing
 
@@ -456,7 +464,7 @@ For detailed v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`
 ### v2.0 Development
 
 - **.NET Team**: For the powerful .NET 9.0 platform and ML.NET framework
-- **PowerShell Team**: For the excellent PowerShell SDK and System.Management.Automation
+- **PowerShell Team**: For the excellent PowerShell SDK 7.5 and System.Management.Automation framework
 - **ML.NET Team**: For local machine learning capabilities and AutoML
 - **Community Contributors**: For testing, feedback, and CLI tool expertise
 

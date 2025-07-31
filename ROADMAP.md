@@ -187,7 +187,7 @@ system administrators, and power users worldwide."
 **Core Technologies**:
 
 - **.NET 9.0**: Modern C# with high-performance, cross-platform runtime
-- **PowerShell SDK 7.4+**: Stable cmdlet development platform
+- **PowerShell SDK 7.5**: Latest PowerShell framework with enhanced cmdlet development capabilities and performance improvements
 - **ML.NET 4.0**: Latest machine learning framework with enhanced performance and new model architectures
 - **SQLite**: Lightweight command history and configuration storage
 

@@ -409,7 +409,7 @@ PSPredictor/
 ### Core Technologies
 
 - **.NET 9.0**: Latest .NET with C# 13.0 language features, performance improvements, and enhanced cross-platform support
-- **PowerShell SDK 7.4.6**: System.Management.Automation for cmdlet development with full PowerShell Core compatibility
+- **PowerShell SDK 7.5**: Latest PowerShell framework with enhanced performance, new language features, and improved cmdlet development APIs
 - **ML.NET 4.0**: Latest machine learning framework with enhanced performance, new model capabilities, and improved AutoML
 - **SQLite**: Lightweight database for command history and configuration storage
 - **xUnit v3 + FluentAssertions 7.0.0**: Next-generation testing framework with improved performance and fluent assertions
@@ -660,7 +660,7 @@ Import-PSPredictorConfig -Path "./my-config.json"
 
 ### Key Dependencies (.NET 9.0 Compatible)
 
-- **Microsoft.PowerShell.SDK 7.4.6**: Core PowerShell integration
+- **Microsoft.PowerShell.SDK 7.5**: Latest PowerShell integration with enhanced cmdlet APIs
 - **System.Management.Automation 7.4.6**: PowerShell cmdlet development
 - **Microsoft.ML 3.0.1**: Machine learning capabilities with AutoML support
 - **Microsoft.Extensions.*** 9.0.0**: Configuration, logging, dependency injection

@@ -456,7 +456,7 @@ Import-PSPredictorTeamConfig -ConfigPath "./team-completions.json"
 - **Code Coverage**: 90%+ test coverage for all new features
 - **Performance**: <50ms average completion response time
 - **Memory Usage**: <100MB maximum memory footprint
-- **Compatibility**: PowerShell 7.0+ on Windows, Linux, macOS
+- **Compatibility**: PowerShell 7.5+ on Windows, Linux, macOS (latest with enhanced performance)
 
 ### Security Considerations
 

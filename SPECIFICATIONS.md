@@ -14,7 +14,7 @@
 **Minimum Requirements**:
 
 - **.NET Runtime**: .NET 9.0+ with C# 13.0 language support
-- **PowerShell**: PowerShell Core 7.0+ (recommended 7.4+)
+- **PowerShell**: PowerShell Core 7.5+ (latest with enhanced performance and language features)
 - **Memory**: 512MB available RAM (20MB base + 50MB runtime)
 - **Storage**: 100MB available disk space
 - **Network**: Optional for enhanced model downloads
@@ -123,7 +123,7 @@ cache_limits:
     CompanyName = 'Wangkanai'
     Copyright = '(c) 2025 Wangkanai. All rights reserved.'
     Description = 'AI-powered PowerShell command prediction and completion'
-    PowerShellVersion = '7.0'
+    PowerShellVersion = '7.5'
     DotNetFrameworkVersion = '9.0'
     CLRVersion = '9.0'
     RequiredModules = @()
@@ -1126,7 +1126,7 @@ PSPredictor.2.0.0.nupkg
     GUID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
     
     # Requirements
-    PowerShellVersion = '7.0'
+    PowerShellVersion = '7.5'
     DotNetFrameworkVersion = '9.0'
     RequiredModules = @()
     
@@ -1163,7 +1163,7 @@ param(
 
 # Validate system requirements
 $requirements = @{
-    PowerShellVersion = [version]'7.0'
+    PowerShellVersion = [version]'7.5'
     DotNetVersion = [version]'9.0'
     MinimumMemoryMB = 512
     MinimumDiskSpaceMB = 100

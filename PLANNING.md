@@ -342,7 +342,7 @@
 **Primary Dependencies**:
 
 - **.NET 9.0 SDK**: Long-term support through November 2026
-- **PowerShell 7.4+**: Stable API surface for cmdlet development
+- **PowerShell 7.5**: Latest PowerShell with enhanced performance and improved cmdlet development APIs
 - **ML.NET 4.0**: Latest machine learning framework with enhanced performance (x64 platforms)
 - **SQLite**: Embedded database for command history
 
@@ -369,7 +369,7 @@
 2. **PowerShell API Stability**
    - **Risk**: Breaking changes in PowerShell SDK affecting binary modules
    - **Mitigation**: Target stable LTS versions, comprehensive compatibility testing
-   - **Status**: Low risk with PowerShell 7.4 LTS
+   - **Status**: Low risk with PowerShell 7.5 stable release and enhanced compatibility
 
 3. **Cross-Platform Console Rendering**
    - **Risk**: Inconsistent ANSI support across terminal emulators

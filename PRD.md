@@ -3,7 +3,7 @@
 **Document Version**: 1.0  
 **Created**: 2025-07-30  
 **Project**: PSPredictor v2.0  
-**Technology Stack**: C# .NET 8.0+, PowerShell SDK  
+**Technology Stack**: C# .NET 9.0, PowerShell SDK 7.5, ML.NET 4.0  
 
 ---
 
@@ -80,7 +80,7 @@ through C# binary module architecture."
 
 **Requirements**:
 
-- .NET 8.0+ class library targeting PowerShell 7.4+
+- .NET 9.0 class library targeting PowerShell 7.5+
 - PowerShell SDK integration for cmdlet development
 - Single assembly deployment (.dll + .psd1 manifest)
 - Cross-platform compatibility (Windows, Linux, macOS)
@@ -1031,7 +1031,7 @@ public class DynamicHelpSystem
 
 **Requirements**:
 
-- PowerShell 7.4+ support (Windows PowerShell 5.1 deprecated)
+- PowerShell 7.5+ support (optimized for latest PowerShell features)
 - Cross-platform support: Windows 10+, Linux, macOS 12+
 - .NET 8.0+ runtime dependency
 - Backward compatibility with v1.x PowerShell Gallery packages
@@ -1388,7 +1388,7 @@ public class DynamicHelpSystem
 
 **Success Criteria**:
 
-- Module loads successfully in PowerShell 7.4+
+- Module loads successfully in PowerShell 7.5+
 - Basic cmdlet API responds to PowerShell commands
 - Configuration system persists settings across sessions
 - History system stores and retrieves command history
