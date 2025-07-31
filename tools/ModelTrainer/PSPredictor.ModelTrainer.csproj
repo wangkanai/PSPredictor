@@ -7,8 +7,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <!-- ML.NET Dependencies -->
-  <ItemGroup>
+  <!-- ML.NET Dependencies (x64 only) -->
+  <ItemGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)' != 'Arm64'">
     <PackageReference Include="Microsoft.ML" />
     <PackageReference Include="Microsoft.ML.AutoML" />
     <PackageReference Include="Microsoft.ML.FastTree" />

@@ -7,9 +7,9 @@
     <RootNamespace>PSPredictor</RootNamespace>
   </PropertyGroup>
 
-  <!-- Additional ML.NET Dependencies -->
+  <!-- Additional ML.NET Dependencies (x64 only) -->
   <!-- (Core ML packages are included via Directory.Build.targets) -->
-  <ItemGroup>
+  <ItemGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)' != 'Arm64'">
     <PackageReference Include="Microsoft.ML.FastTree" />
     <PackageReference Include="Microsoft.ML.LightGbm" />
   </ItemGroup>

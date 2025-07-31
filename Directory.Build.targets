@@ -26,8 +26,8 @@
         <PackageReference Include="System.Management.Automation"/>
     </ItemGroup>
 
-    <!-- ML.NET Dependencies (AI-related Projects) -->
-    <ItemGroup Condition="'$(IsTestProject)' != 'true' AND ($(AssemblyName.Contains('AI')) OR $(AssemblyName.Contains('ML')))">
+    <!-- ML.NET Dependencies (AI-related Projects, x64 only) -->
+    <ItemGroup Condition="'$(IsTestProject)' != 'true' AND ($(AssemblyName.Contains('AI')) OR $(AssemblyName.Contains('ML'))) AND '$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)' != 'Arm64'">
         <PackageReference Include="Microsoft.ML"/>
         <PackageReference Include="Microsoft.ML.AutoML"/>
     </ItemGroup>

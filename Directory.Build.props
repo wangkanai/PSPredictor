@@ -111,7 +111,7 @@
         <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
         <Deterministic>true</Deterministic>
         <ProduceOnlyReferenceAssembly>false</ProduceOnlyReferenceAssembly>
-        <PlatformTarget>x64</PlatformTarget>
+        <PlatformTarget>AnyCPU</PlatformTarget>
         <Prefer32Bit>false</Prefer32Bit>
         <Features>strict</Features>
         
@@ -210,6 +210,19 @@
         <IncludeBuildOutput>true</IncludeBuildOutput>
         <IncludeSymbols>true</IncludeSymbols>
         <ContentTargetFolders>content</ContentTargetFolders>
+    </PropertyGroup>
+    
+    <!-- ML.NET Project Settings - Architecture Requirements -->
+    <PropertyGroup Condition="$(MSBuildProjectName.Contains('AI')) OR $(MSBuildProjectName.Contains('ModelTrainer')) OR $(MSBuildProjectName.Contains('Performance'))">
+        <!-- Check if we're on ARM64 platform -->
+        <IsARM64 Condition="'$(PROCESSOR_ARCHITECTURE)' == 'ARM64' OR '$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)' == 'Arm64'">true</IsARM64>
+        
+        <!-- Set platform target based on architecture -->
+        <PlatformTarget Condition="'$(IsARM64)' == 'true'">AnyCPU</PlatformTarget>
+        <PlatformTarget Condition="'$(IsARM64)' != 'true'">x64</PlatformTarget>
+        
+        <!-- Define conditional compilation symbol for ARM64 platforms -->
+        <DefineConstants Condition="'$(IsARM64)' == 'true'">$(DefineConstants);NO_MLNET</DefineConstants>
     </PropertyGroup>
 
     <!-- Package Files -->
