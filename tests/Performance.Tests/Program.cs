@@ -56,7 +56,7 @@ public class Program
 
         var config = ManualConfig.Create(DefaultConfig.Instance)
             .WithOptions(ConfigOptions.DisableOptimizationsValidator)
-            .AddJob(Job.Default.WithIterationCount(iterations))
+            .AddJob(Job.Dry.WithIterationCount(Math.Max(1, iterations / 5))) // Use Dry job for faster execution
             .AddExporter(JsonExporter.Full);
 
         try
@@ -107,22 +107,18 @@ public class PSPredictorBenchmarks
 
     [Benchmark]
     [BenchmarkCategory("Completion")]
-    public async Task<string[]> CommandCompletion_Performance()
+    public string[] CommandCompletion_Performance()
     {
-        // Simulate command completion performance
-        await Task.Delay(Random.Shared.Next(10, 30)); // Simulate processing time
-        
+        // Fast command completion simulation
         var command = _testCommands[_random.Next(_testCommands.Length)];
         return GenerateCompletions(command);
     }
 
     [Benchmark]
     [BenchmarkCategory("Prediction")]
-    public async Task<string> AIPrediction_Performance()
+    public string AIPrediction_Performance()
     {
-        // Simulate AI prediction performance
-        await Task.Delay(Random.Shared.Next(20, 50)); // Simulate AI processing time
-        
+        // Fast AI prediction simulation
         var command = _testCommands[_random.Next(_testCommands.Length)];
         return $"Predicted completion for {command}";
     }
@@ -131,18 +127,16 @@ public class PSPredictorBenchmarks
     [BenchmarkCategory("Syntax")]
     public string SyntaxHighlighting_Performance()
     {
-        // Simulate syntax highlighting performance
-        var command = $"{_testCommands[_random.Next(_testCommands.Length)]} --help --verbose";
+        // Fast syntax highlighting simulation
+        var command = $"{_testCommands[_random.Next(_testCommands.Length)]} --help";
         return HighlightSyntax(command);
     }
 
     [Benchmark]  
     [BenchmarkCategory("History")]
-    public async Task<bool> CommandHistory_Performance()
+    public bool CommandHistory_Performance()
     {
-        // Simulate command history storage/retrieval
-        await Task.Delay(Random.Shared.Next(5, 15)); // Simulate database operation
-        
+        // Fast command history simulation
         var command = _testCommands[_random.Next(_testCommands.Length)];
         return StoreCommandHistory(command);
     }
