@@ -25,6 +25,7 @@
     <File Path="global.json" />
     <File Path=".gitignore" />
     <File Path=".editorconfig" />
+    <File Path=".markdownlint.json" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests\AI\PSPredictor.AI.Tests.csproj" />
