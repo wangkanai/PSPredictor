@@ -12,6 +12,7 @@ mcp-output/
 mcp-cache/
 
 ## Build Artifacts
+#artifacts/
 build/
 dist/
 packages/
