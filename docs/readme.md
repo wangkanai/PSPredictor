@@ -19,10 +19,6 @@
   - [Development Installation](#development-installation)
   - [Verification](#verification)
 - [Configuration](#-configuration)
-  - [Basic Configuration](#basic-configuration)
-  - [Advanced Settings](#advanced-settings)
-  - [Profile Management](#profile-management)
-  - [Customization](#customization)
 - [Features](#-features)
   - [AI-Powered Intelligence](#-ai-powered-intelligence)
   - [IDE-Like Terminal Experience](#-ide-like-terminal-experience)
@@ -289,9 +285,12 @@ Test-PSPredictorDependencies
 
 ## ⚙️ Configuration
 
-### Basic Configuration
+PSPredictor v2.0 offers comprehensive configuration options to customize your terminal experience. 
 
-**Quick Setup:**
+**📋 [Complete Configuration Guide →](configuration.md)**
+
+### Quick Configuration
+
 ```powershell
 # Enable PSPredictor with default settings
 Enable-PSPredictor
@@ -302,201 +301,22 @@ Set-PSPredictorMode -EditingMode Emacs  # Options: Cmd, Emacs, Vi
 # Configure completion behavior
 Set-PSPredictorCompletion -MaxSuggestions 10 -EnableFuzzyMatching $true
 
-# Enable syntax highlighting
-Enable-PSPredictorSyntaxHighlighting
+# View current configuration
+Get-PSPredictorConfig
 ```
 
-**Essential Settings:**
-```powershell
-# AI prediction settings
-Set-PSPredictorAI -EnableLocalModels $true -PredictionAccuracy "Balanced"
+### Configuration Areas
 
-# History management
-Set-PSPredictorHistory -MaxEntries 10000 -EnablePersistence $true
+The [configuration guide](configuration.md) covers:
 
-# Performance tuning
-Set-PSPredictorPerformance -ResponseTimeout 100 -CacheSize 1000
-```
+- **⚡ Basic Configuration**: Quick setup and essential settings
+- **🔧 Advanced Settings**: AI configuration, provider settings, performance tuning
+- **📋 Profile Management**: Creating, managing, and sharing configuration profiles
+- **🎨 Customization**: Key bindings, themes, and environment-specific configurations
+- **📚 Configuration Reference**: Complete schema, file locations, and environment variables
+- **🛠️ Troubleshooting**: Common issues and debugging techniques
 
-### Advanced Settings
-
-**AI and Machine Learning:**
-```powershell
-# Configure AI prediction engine
-Set-PSPredictorAI -Settings @{
-    EnableLocalModels = $true
-    EnableCloudModels = $false
-    PredictionAccuracy = "High"        # Low, Balanced, High
-    ModelUpdateFrequency = "Weekly"    # Never, Daily, Weekly, Monthly
-    ContextWindowSize = 50             # Number of recent commands to consider
-    MinConfidenceThreshold = 0.7       # Minimum prediction confidence (0.0-1.0)
-}
-
-# Model management
-Update-PSPredictorModels -Force
-Get-PSPredictorModelInfo | Format-Table
-```
-
-**Completion Provider Configuration:**
-```powershell
-# Configure specific tools
-Set-PSPredictorProvider -Name "Git" -Settings @{
-    EnableBranchCompletion = $true
-    EnableFileCompletion = $true
-    MaxHistoryItems = 100
-    CacheTimeout = "5m"
-}
-
-Set-PSPredictorProvider -Name "Docker" -Settings @{
-    EnableImageCompletion = $true
-    EnableContainerCompletion = $true
-    RegistryEndpoints = @("docker.io", "gcr.io")
-}
-
-# Disable specific providers
-Disable-PSPredictorProvider -Name "Kubernetes"
-
-# Custom provider registration
-Register-PSPredictorProvider -Path "./MyCustomProvider.dll"
-```
-
-**Rendering and Display:**
-```powershell
-# Syntax highlighting configuration
-Set-PSPredictorSyntaxHighlighting -Settings @{
-    EnableRealTimeHighlighting = $true
-    ColorScheme = "VSCode"             # VSCode, Monokai, Solarized, Custom
-    HighlightErrors = $true
-    HighlightWarnings = $true
-    CustomColors = @{
-        Command = "Cyan"
-        Parameter = "Yellow"
-        String = "Green"
-        Variable = "Magenta"
-        Error = "Red"
-    }
-}
-
-# IntelliSense display settings
-Set-PSPredictorIntelliSense -Settings @{
-    MaxVisibleItems = 10
-    ShowDescriptions = $true
-    ShowKeyBindings = $true
-    AutoSelectFirst = $false
-    TriggerCharacters = @(".", "-", " ")
-}
-```
-
-### Profile Management
-
-**Creating Profiles:**
-```powershell
-# Create profile from current settings
-New-PSPredictorProfile -Name "MyProfile" -Description "Custom development setup"
-
-# Create profile with specific settings
-New-PSPredictorProfile -Name "MinimalSetup" -Settings @{
-    EditingMode = "Cmd"
-    EnableAI = $false
-    EnableSyntaxHighlighting = $false
-    MaxCompletions = 5
-}
-
-# Clone existing profile
-Copy-PSPredictorProfile -Source "Default" -Destination "MyCustomProfile"
-```
-
-**Managing Profiles:**
-```powershell
-# List available profiles
-Get-PSPredictorProfile | Format-Table
-
-# Switch to profile
-Set-PSPredictorProfile -Name "MyProfile"
-
-# Import/export profiles
-Export-PSPredictorProfile -Name "MyProfile" -Path "./my-profile.json"
-Import-PSPredictorProfile -Path "./my-profile.json"
-
-# Set profile as default
-Set-PSPredictorProfile -Name "MyProfile" -SetAsDefault
-```
-
-**Team Configuration:**
-```powershell
-# Export team configuration
-Export-PSPredictorConfig -Path "./team-config.json" -IncludeProfiles
-
-# Import team configuration
-Import-PSPredictorConfig -Path "./team-config.json" -Merge
-
-# Lock configuration for consistency
-Lock-PSPredictorConfig -Settings @("EditingMode", "SyntaxHighlighting")
-```
-
-### Customization
-
-**Key Bindings:**
-```powershell
-# Set custom key bindings
-Set-PSPredictorKeyBinding -Key "Ctrl+Space" -Function "TriggerIntelliSense"
-Set-PSPredictorKeyBinding -Key "Alt+?" -Function "ShowDynamicHelp"
-Set-PSPredictorKeyBinding -Key "Ctrl+Shift+P" -Function "ShowProviders"
-
-# Create custom macros
-New-PSPredictorMacro -Name "GitStatus" -Keys "g", "s" -Command "git status"
-New-PSPredictorMacro -Name "DockerPS" -Keys "d", "p" -Command "docker ps"
-
-# Emacs-style bindings
-Set-PSPredictorKeyBinding -Key "Ctrl+A" -Function "BeginningOfLine"
-Set-PSPredictorKeyBinding -Key "Ctrl+E" -Function "EndOfLine"
-Set-PSPredictorKeyBinding -Key "Alt+F" -Function "ForwardWord"
-Set-PSPredictorKeyBinding -Key "Alt+B" -Function "BackwardWord"
-```
-
-**Custom Themes:**
-```powershell
-# Create custom color theme
-New-PSPredictorTheme -Name "MyTheme" -Colors @{
-    Command = "#569CD6"
-    Parameter = "#DCDCAA"
-    String = "#CE9178"
-    Variable = "#9CDCFE"
-    Comment = "#6A9955"
-    Error = "#F44747"
-    Warning = "#FFCC02"
-}
-
-# Apply custom theme
-Set-PSPredictorTheme -Name "MyTheme"
-
-# Export/import themes
-Export-PSPredictorTheme -Name "MyTheme" -Path "./my-theme.json"
-Import-PSPredictorTheme -Path "./my-theme.json"
-```
-
-**Environment-Specific Configuration:**
-```powershell
-# Development environment
-Set-PSPredictorEnvironment -Name "Development" -Settings @{
-    EnableDebugLogging = $true
-    ResponseTimeout = 200
-    EnableAllProviders = $true
-}
-
-# Production environment
-Set-PSPredictorEnvironment -Name "Production" -Settings @{
-    EnableDebugLogging = $false
-    ResponseTimeout = 50
-    DisableCloudFeatures = $true
-}
-
-# Automatic environment detection
-Enable-PSPredictorAutoEnvironment -Rules @{
-    Development = { (Get-Location).Path -like "*\dev\*" }
-    Production = { $env:COMPUTERNAME -like "PROD-*" }
-}
-```
+**For detailed configuration options and examples, see the [Configuration Guide](configuration.md).**
 
 ---
 
