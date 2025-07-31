@@ -3,7 +3,7 @@
 **Document Version**: 1.0  
 **Created**: 2025-07-30  
 **Project**: PSPredictor v2.0  
-**Technology Stack**: C# .NET 8.0+, PowerShell SDK  
+**Technology Stack**: C# .NET 9.0, PowerShell SDK 7.5, ML.NET 4.0  
 
 ---
 
@@ -80,7 +80,7 @@ through C# binary module architecture."
 
 **Requirements**:
 
-- .NET 8.0+ class library targeting PowerShell 7.4+
+- .NET 9.0 class library targeting PowerShell 7.5+
 - PowerShell SDK integration for cmdlet development
 - Single assembly deployment (.dll + .psd1 manifest)
 - Cross-platform compatibility (Windows, Linux, macOS)
@@ -108,7 +108,7 @@ through C# binary module architecture."
 
 **Supported Tools** (Minimum 26+):
 
-- **Version Control**: Git, SVN, Mercurial
+- **Version Control**: Git (with superior 3-8x performance vs posh-git - targeting <50ms vs 150-400ms), SVN, Mercurial
 - **Cloud Platforms**: Azure CLI, AWS CLI, Google Cloud CLI
 - **Container/Orchestration**: Docker, kubectl, Helm, Terraform
 - **Package Managers**: NPM, Yarn, NuGet, Chocolatey, pip
@@ -1031,7 +1031,7 @@ public class DynamicHelpSystem
 
 **Requirements**:
 
-- PowerShell 7.4+ support (Windows PowerShell 5.1 deprecated)
+- PowerShell 7.5+ support (optimized for latest PowerShell features)
 - Cross-platform support: Windows 10+, Linux, macOS 12+
 - .NET 8.0+ runtime dependency
 - Backward compatibility with v1.x PowerShell Gallery packages
@@ -1373,7 +1373,7 @@ public class DynamicHelpSystem
 
 ## Implementation Strategy
 
-### Phase 1: Foundation & Core Architecture (Weeks 1-8)
+### Phase 1: Foundation & Core Architecture (Weeks 1-8, Aug 1-Sep 26, 2025)
 
 **Deliverables**:
 
@@ -1388,14 +1388,14 @@ public class DynamicHelpSystem
 
 **Success Criteria**:
 
-- Module loads successfully in PowerShell 7.4+
+- Module loads successfully in PowerShell 7.5+
 - Basic cmdlet API responds to PowerShell commands
 - Configuration system persists settings across sessions
 - History system stores and retrieves command history
 - Native input handling captures keystrokes across platforms
 - Build and test pipeline operational
 
-### Phase 2: Advanced Editing Foundation (Weeks 9-16)
+### Phase 2: Advanced Editing Foundation (Weeks 9-16, Sep 27-Nov 21, 2025)
 
 **Deliverables**:
 
@@ -1417,7 +1417,7 @@ public class DynamicHelpSystem
 - Buffer operations maintain <20ms response time
 - All editing features work seamlessly together
 
-### Phase 3: CLI Tool Migration & IntelliSense (Weeks 17-24)
+### Phase 3: CLI Tool Migration & IntelliSense (Weeks 17-24, Nov 22, 2025-Jan 16, 2026)
 
 **Deliverables**:
 
@@ -1439,7 +1439,7 @@ public class DynamicHelpSystem
 - Integration tests pass for all supported CLI tools
 - Advanced completion modes (Bash/PowerShell style) operational
 
-### Phase 4: Advanced Editing Modes & Navigation (Weeks 25-32)
+### Phase 4: Advanced Editing Modes & Navigation (Weeks 25-32, Jan 17-Mar 12, 2026)
 
 **Deliverables**:
 
@@ -1461,7 +1461,7 @@ public class DynamicHelpSystem
 - Custom key bindings work without conflicts
 - All navigation and text manipulation operations <10ms response
 
-### Phase 5: Intelligence & Prediction System (Weeks 33-40)
+### Phase 5: Intelligence & Prediction System (Weeks 33-40, Mar 13-May 7, 2026)
 
 **Deliverables**:
 
@@ -1483,7 +1483,7 @@ public class DynamicHelpSystem
 - Learning system improves accuracy over time
 - ML models embedded efficiently in binary module
 
-### Phase 6: Dynamic Help & Advanced Features (Weeks 41-48)
+### Phase 6: Dynamic Help & Advanced Features (Weeks 41-48, May 8-Jul 2, 2026)
 
 **Deliverables**:
 
@@ -1505,7 +1505,7 @@ public class DynamicHelpSystem
 - Visual macro editor provides intuitive workflow creation
 - Team collaboration features enable configuration sharing
 
-### Phase 7: Advanced Configuration & Completion Modes (Weeks 49-56)
+### Phase 7: Advanced Configuration & Completion Modes (Weeks 49-56, Jul 3-Aug 27, 2026)
 
 **Deliverables**:
 
@@ -1527,7 +1527,7 @@ public class DynamicHelpSystem
 - Security review completed with no critical findings
 - Performance monitoring provides actionable insights
 
-### Phase 8: Cross-Platform Optimization & Polish (Weeks 57-64)
+### Phase 8: Cross-Platform Optimization & Polish (Weeks 57-64, Aug 28-Oct 22, 2026)
 
 **Deliverables**:
 
@@ -1549,7 +1549,7 @@ public class DynamicHelpSystem
 - Error handling provides graceful degradation
 - All platforms achieve feature parity
 
-### Phase 9: Testing, Documentation & Release (Weeks 65-72)
+### Phase 9: Testing, Documentation & Release (Weeks 65-72, Oct 23-Dec 17, 2026)
 
 **Deliverables**:
 
@@ -1571,7 +1571,7 @@ public class DynamicHelpSystem
 - Comprehensive documentation covers all features
 - v2.0 released with full feature set operational
 
-### Phase 10: Community, Ecosystem & Enterprise (Weeks 73-80)
+### Phase 10: Community, Ecosystem & Enterprise (Weeks 73-80, Dec 18, 2026-Feb 11, 2027)
 
 **Deliverables**:
 

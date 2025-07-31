@@ -2,52 +2,157 @@
 
 ## PowerShell Universal CLI Predictor
 
-🚀 **Comprehensive auto-completion and intelligent prediction for popular command-line tools in PowerShell**
+🚀 **Revolutionary PowerShell Binary Module transforming your terminal into a comprehensive IDE experience**
 
+[![Build Status](https://github.com/wangkanai/PSPredictor/actions/workflows/dotnet.yml/badge.svg)](https://github.com/wangkanai/PSPredictor/actions/workflows/dotnet.yml)
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PSPredictor?style=flat-square)](https://www.powershellgallery.com/packages/PSPredictor)
 [![License](https://img.shields.io/github/license/wangkanai/PSPredictor?style=flat-square)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/wangkanai/PSPredictor?style=flat-square)](https://github.com/wangkanai/PSPredictor/stargazers)
 
-## ✨ Features
+> **⚠️ MAJOR VERSION TRANSITION**: PSPredictor v2.0 is a complete rewrite from PowerShell scripts to a high-performance
+> C# .NET 9.0 binary module with AI-powered intelligence and IDE-like features.
 
-- **🎯 Universal CLI Prediction**: Intelligent auto-completion for 26+ popular command-line tools
-- **⚡ Fast & Lightweight**: Optimized for performance with minimal startup overhead
-- **🔧 Easy Installation**: Single command installation from PowerShell Gallery
-- **🎨 Enhanced UI**: Beautiful tab completion with syntax highlighting
-- **🔄 Auto-Updates**: Keep completions up-to-date automatically
-- **🛠️ Extensible**: Easy to add custom completions for your tools
+## 📚 Legacy Version Reference
+
+**Looking for PSPredictor v1.x?** The previous PowerShell script-based version is available at:
+[📖 PSPredictor v1.x Documentation](https://github.com/wangkanai/PSPredictor/blob/release/1.3/README.md)
+
+**Migration Path**: v1.x users can upgrade to v2.0 for significantly improved performance, AI-powered intelligence, and
+native cross-platform support. See our [migration guide](docs/archives/2025-07-30-PROJECT.md) for detailed transition
+instructions.
+
+## ✨ Revolutionary Features
+
+### 🧠 AI-Powered Intelligence
+
+- **ML.NET Integration**: Local machine learning with embedded models for intelligent predictions
+- **Context-Aware Suggestions**: Understands your workflow and environment for smarter completions
+- **Predictive IntelliSense**: IDE-like IntelliSense experience directly in your terminal
+- **Command History Learning**: Learn from your patterns to provide personalized suggestions
+
+### 🎨 IDE-Like Terminal Experience
+
+- **Real-Time Syntax Highlighting**: Live syntax coloring for PowerShell and CLI tools
+- **Visual Error Indication**: Instant error detection and contextual error messages
+- **Multi-Line Editing**: Advanced multi-line command editing with proper indentation
+- **Dynamic Help Display**: Real-time help without losing your command-line position
+
+### ⚡ Native Performance
+
+- **C# Binary Module**: High-performance .NET 9.0 implementation with <100ms response times
+- **Cross-Platform Support**: Full compatibility across Windows, Linux, and macOS (x64 and ARM64)
+- **Memory Efficient**: <50MB memory footprint optimized for long-running sessions
+- **PSReadLine Independent**: Native input handling system with advanced editing capabilities
+
+### 🚀 PowerShell 7.5 Integration
+
+- **Latest PowerShell Features**: Leverages PowerShell 7.5 enhanced performance and new language features
+- **Improved Cmdlet APIs**: Utilizes enhanced PowerShell SDK 7.5 cmdlet development capabilities
+- **Better Cross-Platform Support**: Benefits from PowerShell 7.5 improved cross-platform compatibility
+- **Enhanced Debugging**: Integrates with PowerShell 7.5 advanced debugging and profiling features
+- **Performance Optimizations**: Takes advantage of PowerShell 7.5 runtime performance improvements
+
+### 🎯 Advanced Editing Modes
+
+- **Multi-Modal Editing**: Cmd, Emacs, and Vi editing modes with full feature parity
+- **Custom Key Bindings**: Fully customizable keyboard shortcuts and macro support
+- **Kill-Ring System**: Emacs-style advanced clipboard functionality
+- **Token-Based Navigation**: PowerShell syntax-aware cursor movement and selection
+
+### 🛠️ Comprehensive CLI Tool Support
+
+- **26+ CLI Tools**: Intelligent completion for Git, Docker, Azure, AWS, Kubernetes, and more
+- **Plugin Architecture**: Easily extensible system for adding new tools
+- **Context Awareness**: Tool-specific intelligence (Git branches, Docker containers, etc.)
+- **Performance Optimized**: Intelligent caching and lazy loading for instant responses
 
 ## 🚀 Quick Start
 
 ### Installation
 
+#### Production Release (Coming Soon)
+
 ```powershell
 # Install from PowerShell Gallery
-Install-Module -Name PSPredictor -Scope CurrentUser
+Install-Module -Name PSPredictor -RequiredVersion 2.0.0 -Scope CurrentUser
 
-# Import the module
+# Import the binary module
 Import-Module PSPredictor
 
 # Add to your PowerShell profile for automatic loading
 Add-Content $PROFILE "Import-Module PSPredictor"
 ```
 
-### Usage
-
-Once installed, PSPredictor automatically provides intelligent completions for supported CLI tools:
+#### Development Build (Current)
 
 ```powershell
-# Git commands with intelligent completion
-git che<TAB>  # → git checkout
-git checkout ma<TAB>  # → git checkout main
+# Clone and build from source
+git clone https://github.com/wangkanai/PSPredictor.git
+cd PSPredictor
 
-# Docker commands
-docker ru<TAB>  # → docker run
-docker run -p 80<TAB>  # → docker run -p 8080:80
+# Build the C# binary module (.NET 9.0 required)
+dotnet build --configuration Release
 
-# NPM commands
-npm inst<TAB>  # → npm install
-npm install --save-d<TAB>  # → npm install --save-dev
+# Import development build
+$ModulePath = Join-Path -Path (Get-Location) -ChildPath "src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
+Import-Module $ModulePath -Force
+```
+
+### Usage
+
+PSPredictor v2.0 transforms your PowerShell terminal into an intelligent IDE-like experience:
+
+#### Basic Intelligent Completion
+
+```powershell
+# AI-powered Git completion with context awareness
+git che<TAB>                    # → git checkout (with branch suggestions)
+git checkout <TAB>              # Shows: main, develop, feature/xyz, origin/main
+git commit -m "<TAB>            # Suggests commit message templates
+
+# Docker completion with container context
+docker exec -it <TAB>          # Shows running container names
+docker logs <TAB>              # Shows containers with log output
+docker ps --filter <TAB>       # Shows available filter options
+
+# Kubernetes completion with cluster context
+kubectl get <TAB>              # Shows: pods, services, deployments, etc.
+kubectl describe pod <TAB>     # Shows actual pod names from current namespace
+```
+
+#### Advanced IDE Features
+
+```powershell
+# Enable enhanced editing mode with AI predictions
+Set-PSPredictorMode -Mode Enhanced
+
+# Configure advanced editing modes
+Set-PSPredictorMode -EditingMode Emacs    # Emacs-style key bindings
+Set-PSPredictorMode -EditingMode Vi       # Vi/Vim-style editing
+
+# Customize key bindings
+Set-PSPredictorKeyBinding -Key "Ctrl+Space" -Function "TriggerIntelliSense"
+Set-PSPredictorKeyBinding -Key "F1" -Function "ShowDynamicHelp"
+
+# Check module status and performance
+Get-PSPredictorStatus                     # Shows AI model status, performance metrics
+```
+
+#### Real-Time Syntax and Error Detection
+
+```powershell
+# Real-time syntax highlighting (automatically active)
+git status --invalid-flag                # Shows error highlighting
+docker run --memory=invalid              # Visual error indication with suggestions
+
+# Multi-line editing with proper indentation
+if ($condition)
+{
+  Get-Process | Where-Object {
+    # Automatic indentation
+    $_.CPU -gt 100                    # Syntax highlighting
+  }
+}                                         # Bracket matching
 ```
 
 ## 📦 Supported CLI Tools
@@ -100,12 +205,12 @@ npm install --save-d<TAB>  # → npm install --save-dev
 
 ### vs. Manual Setup
 
-| Feature | PSPredictor | Manual Setup |
-|---------|-------------|--------------|
-| **Coverage** | 26+ tools | Limited |
-| **Maintenance** | Auto-updates | Manual effort |
-| **Consistency** | Unified experience | Varies by tool |
-| **Installation** | Single command | Complex setup |
+| Feature          | PSPredictor        | Manual Setup   |
+|------------------|--------------------|----------------|
+| **Coverage**     | 26+ tools          | Limited        |
+| **Maintenance**  | Auto-updates       | Manual effort  |
+| **Consistency**  | Unified experience | Varies by tool |
+| **Installation** | Single command     | Complex setup  |
 
 ### vs. Other Solutions
 
@@ -208,15 +313,53 @@ bash --rcfile <TAB>       # Shows available RC files: ~/.bashrc, ~/.bash_profile
 git clone https://github.com/wangkanai/PSPredictor.git
 cd PSPredictor
 
-# Build the module
-./build.ps1
+# Restore dependencies and build C# binary module
+dotnet restore
+dotnet build --configuration Release
 
-# Run tests
-./test.ps1
+# Run comprehensive test suite
+dotnet test                 # All tests (unit, integration, performance)
+dotnet test tests/Unit/     # Core module tests
+dotnet test tests/AI/       # AI/ML model tests
 
-# Install locally
-./install.ps1
+# Build NuGet package
+dotnet pack --configuration Release
+
+# Install development build locally
+$ModulePath = Join-Path -Path (Get-Location) -ChildPath "src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
+Import-Module $ModulePath -Force
 ```
+
+### Architecture Overview
+
+PSPredictor v2.0 follows a modern C# binary module architecture:
+
+```
+src/
+├── PSPredictor/                    # Main binary module (.NET 9.0)
+│   ├── Cmdlets/                   # PowerShell cmdlet implementations  
+│   ├── Core/                      # Prediction engine, completion provider
+│   ├── AI/                        # ML.NET integration with embedded models
+│   ├── Input/                     # Native input handling (Cmd/Emacs/Vi modes)
+│   ├── Rendering/                 # ANSI rendering, syntax highlighting
+│   └── Completions/               # 26+ CLI tool completion providers
+├── PSPredictor.Core/              # Shared core library
+└── PSPredictor.Shared/            # Common utilities
+
+tests/
+├── PSPredictor.Tests/             # Main module tests
+├── PSPredictor.AI.Tests/          # AI/ML prediction tests
+├── PSPredictor.Integration.Tests/ # End-to-end integration tests
+└── PSPredictor.Performance.Tests/ # Performance benchmarks
+```
+
+### Technology Stack
+
+- **.NET 9.0**: High-performance C# 13.0 with the latest language features
+- **ML.NET 4.0**: Latest machine learning framework with enhanced performance and new model capabilities
+- **PowerShell SDK 7.5**: Latest PowerShell framework with enhanced performance and new language features
+- **xUnit v3 + FluentAssertions**: Next-generation testing framework with improved performance
+- **BenchmarkDotNet**: Performance regression testing
 
 ### Contributing
 
@@ -228,46 +371,117 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 4. Write tests
 5. Submit a pull request
 
-### Adding New Completions
+### Adding New CLI Tool Support
 
-```powershell
-# Example: Adding support for a new CLI tool
-Register-PSPredictorCompletion -Command "mycli" -ScriptBlock {
-    param($wordToComplete, $commandAst, $cursorPosition)
+```csharp
+// Example: Adding support for a new CLI tool in C#
+public class MyCliCompletion : BaseCompletion
+{
+    public override string ToolName => "mycli";
     
-    # Your completion logic here
-    return @("option1", "option2", "option3")
+    public override IEnumerable<CompletionResult> GetCompletions(
+        string commandLine, int cursorPosition)
+    {
+        // AI-powered completion logic with context awareness
+        var context = AnalyzeContext(commandLine, cursorPosition);
+        var predictions = _aiEngine.PredictCompletions(context);
+        
+        return predictions.Select(p => new CompletionResult(
+            p.Text, p.DisplayText, p.Description, p.ResultType));
+    }
+    
+    protected override bool ShouldCache(string input) => true;
+    protected override TimeSpan CacheDuration => TimeSpan.FromMinutes(5);
 }
 ```
 
-## 📈 Performance
+Register the new completion provider:
 
-- **⚡ Startup Time**: < 100ms module load
-- **🎯 Completion Speed**: < 50ms average response
-- **💾 Memory Usage**: < 10MB runtime footprint
-- **📦 Size**: < 5MB total package size
+```csharp
+// In CompletionProvider.cs
+RegisterProvider(new MyCliCompletion());
+```
 
-## 🔗 Related Projects
+## 📈 Performance Specifications
 
-- [PSReadLine](https://github.com/PowerShell/PSReadLine) - Enhanced command line editing
-- [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) - Beautiful prompt themes
-- [PSFzf](https://github.com/kelleyma49/PSFzf) - Fuzzy finder integration
-- [posh-git](https://github.com/dahlbyk/posh-git) - Git integration for PowerShell
+### Response Time Targets (v2.0)
+
+- **⚡ Completion Generation**: < 50ms for standard completions
+- **🧠 AI Predictions**: < 100ms for ML-powered suggestions
+- **🎨 Syntax Highlighting**: < 20ms for real-time coloring
+- **📝 Multi-line Rendering**: < 30ms for complex command structures
+
+### Memory Efficiency
+
+- **🚀 Startup Footprint**: < 20MB initial memory usage
+- **💾 Runtime Footprint**: < 50MB for typical usage patterns
+- **🤖 Model Loading**: Lazy loading with < 5MB core embedded models
+- **📚 History Management**: SQLite with automatic cleanup and archiving
+
+### Architecture Performance
+
+- **🔧 C# Binary Module**: Native .NET 9.0 performance with JIT optimization
+- **🌐 Cross-Platform**: Consistent performance across Windows, Linux, macOS (x64/ARM64)
+- **💡 Intelligent Caching**: LRU cache with 1000-item capacity and 5-minute TTL
+- **⚙️ Resource Management**: Dynamic memory allocation with automatic garbage collection
+
+## 🔗 Related Projects & Ecosystem
+
+### PowerShell Enhancement Tools
+
+- [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) - Beautiful prompt themes (compatible)
+- [posh-git](https://github.com/dahlbyk/posh-git) - Git integration for PowerShell (enhanced by PSPredictor)
+
+### AI & Machine Learning
+
+- [ML.NET](https://github.com/dotnet/machinelearning) - Core machine learning framework used in PSPredictor
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🛣️ Roadmap & Version History
+
+### v2.0.0 (In Development) - The Revolutionary Rewrite
+
+- **Complete Architecture Rewrite**: PowerShell scripts → C# .NET 9.0 binary module
+- **AI-Powered Intelligence**: ML.NET integration with embedded models
+- **Native Input System**: PSReadLine-independent with advanced editing modes
+- **IDE-Like Features**: Real-time syntax highlighting, error indication, multi-line editing
+- **Cross-Platform Performance**: Full ARM64 support including Apple Silicon Macs
+
+### v1.x (Legacy) - PowerShell Script Foundation
+
+- PowerShell script-based completion system
+- Basic CLI tool support and tab completion
+- PSReadLine dependency for input handling
+- Community-driven completion definitions
+
+For detailed v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`
+
 ## 🙏 Acknowledgments
 
-- PowerShell team for the excellent PSReadLine module
-- All CLI tool maintainers for their fantastic tools
-- Community contributors for completions and feedback
+### v2.0 Development
+
+- **.NET Team**: For the powerful .NET 9.0 platform and ML.NET framework
+- **PowerShell Team**: For the excellent PowerShell SDK 7.5 and System.Management.Automation framework
+- **ML.NET Team**: For local machine learning capabilities and AutoML
+- **Community Contributors**: For testing, feedback, and CLI tool expertise
+
+### Legacy v1.x Foundation
+
+- **PowerShell Team**: For PSReadLine module that inspired v1.x architecture
+- **CLI Tool Maintainers**: For creating the fantastic tools we enhance
+- **Early Adopters**: For feedback and contributions to the PowerShell script foundation
 
 ---
 
-## Made with ❤️ for the PowerShell community
+## 🚀 Made with ❤️ and AI for the PowerShell community
 
-[Report Bug](https://github.com/wangkanai/PSPredictor/issues) ·
-[Request Feature](https://github.com/wangkanai/PSPredictor/issues) ·
-[Contribute](CONTRIBUTING.md)
+**Transform your terminal into an intelligent, IDE-like experience with PSPredictor v2.0**
+
+[📋 Report Bug](https://github.com/wangkanai/PSPredictor/issues) ·
+[💡 Request Feature](https://github.com/wangkanai/PSPredictor/issues) ·
+[🤝 Contribute](CONTRIBUTING.md) ·
+[📚 Documentation](docs/) ·
+[🏗️ Architecture](docs/FRAMEWORK.md)

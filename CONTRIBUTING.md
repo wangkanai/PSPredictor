@@ -15,7 +15,7 @@ to make this PowerShell module even better.
 
 ### Prerequisites
 
-- PowerShell 7.0 or later (required for cross-platform support)
+- PowerShell 7.5 or later (latest with enhanced performance and language features)
 - PSReadLine module
 - Pester module (for testing)
 - Git for version control

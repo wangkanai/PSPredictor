@@ -289,7 +289,7 @@ public Task<CompletionResult[]> GetGitStatusAsync(CancellationToken cancellation
 
 ### Unit Testing Framework
 
-**xUnit with FluentAssertions**:
+**xUnit v3 with FluentAssertions**:
 
 ```csharp
 [Fact]
@@ -568,6 +568,6 @@ public static class PlatformHelper
 ---
 
 **Standards Version**: 2.0.0  
-**Effective Date**: 2025-01-31  
+**Effective Date**: 2025-08-01  
 **Review Cycle**: Quarterly  
 **Owner**: PSPredictor Development Team
