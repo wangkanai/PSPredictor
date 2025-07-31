@@ -171,11 +171,11 @@ indent_size=2
 
 [*.md]
 # Markdown settings aligned with markdownlint configuration
-indent_size=2
-indent_style=space
-max_line_length=120
+indent_size             =2
+indent_style            =space
+max_line_length         =120
 trim_trailing_whitespace=true
-insert_final_newline=true
+insert_final_newline    =true
 # Allow trailing spaces for line breaks in markdown
 trim_trailing_whitespace=false
 
