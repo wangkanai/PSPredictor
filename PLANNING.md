@@ -343,7 +343,7 @@
 
 - **.NET 9.0 SDK**: Long-term support through November 2026
 - **PowerShell 7.4+**: Stable API surface for cmdlet development
-- **ML.NET 3.0.1**: Machine learning capabilities (x64 platforms)
+- **ML.NET 4.0**: Latest machine learning framework with enhanced performance (x64 platforms)
 - **SQLite**: Embedded database for command history
 
 **Development Dependencies**:

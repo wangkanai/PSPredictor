@@ -30,7 +30,7 @@ NuGet packages, and full cross-platform compatibility including ARM64 architectu
 
 - **Framework**: Successfully upgraded from .NET 8.0 to .NET 9.0 with C# 13.0 language support
 - **Package Management**: Central package management via Directory.Packages.props with latest .NET 9.0 compatible versions
-- **NuGet Packages**: Updated Microsoft.Extensions.* to 9.0.0, ML.NET to 3.0.1, testing frameworks to latest
+- **NuGet Packages**: Updated Microsoft.Extensions.* to 9.0.0, ML.NET to 4.0, testing frameworks to latest
 - **Build Configuration**: Dynamic platform targeting with ARM64 compatibility for Apple Silicon Macs
 - **CI/CD**: Updated GitHub Actions workflows for .NET 9.0 multi-platform builds and testing
 - **Cross-Platform Support**: ✅ Full ARM64 architecture compatibility with conditional ML.NET compilation
@@ -142,7 +142,8 @@ Import-Module $ModulePath -Force
 
 ```powershell
 # Install development build locally
-Install-PSPredictor -Development -Path "./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll"
+$ModulePath = Join-Path -Path (Get-Location) -ChildPath "src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll"
+Install-PSPredictor -Development -Path $ModulePath
 
 # Test core functionality
 Get-PSPredictorStatus
@@ -409,7 +410,7 @@ PSPredictor/
 
 - **.NET 9.0**: Latest .NET with C# 13.0 language features, performance improvements, and enhanced cross-platform support
 - **PowerShell SDK 7.4.6**: System.Management.Automation for cmdlet development with full PowerShell Core compatibility
-- **ML.NET 3.0.1**: Local machine learning with embedded model support and AutoML capabilities
+- **ML.NET 4.0**: Latest machine learning framework with enhanced performance, new model capabilities, and improved AutoML
 - **SQLite**: Lightweight database for command history and configuration storage
 - **xUnit v3 + FluentAssertions 7.0.0**: Next-generation testing framework with improved performance and fluent assertions
 - **BenchmarkDotNet 0.14.0**: Performance testing and regression detection with detailed metrics
@@ -622,7 +623,7 @@ Import-PSPredictorConfig -Path "./my-config.json"
 - **Cross-Platform**: Ensure consistent behavior across Windows, Linux, and macOS (x64 and ARM64 architectures)
 - **Backward Compatible**: Maintain API compatibility within major versions
 - **Extensible**: Design for easy addition of new CLI tools and features
-- **AI-Powered**: Leverage ML.NET 3.0.1 for intelligent prediction and learning (x64) with graceful degradation (ARM64)
+- **AI-Powered**: Leverage ML.NET 4.0 for intelligent prediction and learning (x64) with graceful degradation (ARM64)
 - **Native Experience**: Provide IDE-like features within the terminal environment
 - **Memory Efficient**: Optimize for long-running PowerShell sessions with <50MB footprint
 - **Architecture Agnostic**: Core functionality must work across all supported CPU architectures

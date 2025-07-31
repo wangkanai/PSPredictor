@@ -188,7 +188,7 @@ system administrators, and power users worldwide."
 
 - **.NET 9.0**: Modern C# with high-performance, cross-platform runtime
 - **PowerShell SDK 7.4+**: Stable cmdlet development platform
-- **ML.NET 3.0.1**: Local machine learning with embedded model support
+- **ML.NET 4.0**: Latest machine learning framework with enhanced performance and new model architectures
 - **SQLite**: Lightweight command history and configuration storage
 
 **Development Stack**:
@@ -211,7 +211,7 @@ system administrators, and power users worldwide."
 **2026 Technology Evolution**:
 
 - 🔮 **.NET 10.0 Adoption**: Latest runtime with performance improvements
-- 🔮 **ML.NET Advanced Models**: Transformer models for better context understanding
+- 🔮 **ML.NET 4.0+ Advanced Models**: Enhanced transformer models and improved context understanding capabilities
 - 🔮 **Cloud ML Integration**: Optional cloud-based model updates and training
 - 🔮 **WebAssembly Support**: Browser-based PowerShell terminal integration
 

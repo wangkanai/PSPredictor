@@ -348,7 +348,7 @@ tests/
 ### Technology Stack
 
 - **.NET 9.0**: High-performance C# 13.0 with the latest language features
-- **ML.NET 3.0.1**: Local machine learning with embedded models
+- **ML.NET 4.0**: Latest machine learning framework with enhanced performance and new model capabilities
 - **PowerShell SDK 7.4.6**: Native PowerShell cmdlet integration
 - **xUnit v3 + FluentAssertions**: Next-generation testing framework with improved performance
 - **BenchmarkDotNet**: Performance regression testing
