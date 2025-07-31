@@ -59,6 +59,12 @@ ai_prediction:
   maximum: 200ms
   measurement: P95 response time
 
+git_completion:
+  target: <50ms
+  maximum: 100ms
+  measurement: P95 response time
+  benchmark: 3-8x faster than posh-git (typical 150-400ms)
+
 syntax_highlighting:
   target: <20ms
   maximum: 50ms  

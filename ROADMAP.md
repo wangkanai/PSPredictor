@@ -162,6 +162,7 @@ system administrators, and power users worldwide."
 - **Cross-Platform**: Consistent experience across Windows, Linux, macOS with ARM64 support
 - **Offline-First**: Embedded ML models providing functionality without internet dependency
 - **Performance**: <100ms response times with intelligent caching and lazy loading
+- **Superior Git Integration**: 3-8x faster than posh-git with AI-powered repository intelligence
 
 **User Experience Advantages**:
 
@@ -205,6 +206,7 @@ system administrators, and power users worldwide."
 - 🔄 **ARM64 Optimization**: Native performance on Apple Silicon with ML fallbacks
 - 🎯 **SQLite Performance**: Advanced indexing for sub-10ms history queries
 - 🎯 **ANSI Rendering**: Consistent cross-platform console experience
+- 🎯 **Superior Git Performance**: 3-8x faster than posh-git with <50ms response times
 
 **2026 Technology Evolution**:
 
