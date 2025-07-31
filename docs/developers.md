@@ -155,9 +155,9 @@ For detailed architecture information, see **[FRAMEWORK.md](../FRAMEWORK.md)**.
 
 #### Platform Support
 
-- **Windows**: PowerShell 5.1+ and PowerShell Core 7+ (x64/ARM64)
-- **Linux**: PowerShell Core 7+ (x64/ARM64)
-- **macOS**: PowerShell Core 7+ (Intel x64 and Apple Silicon ARM64)
+- **Windows**: PowerShell 5.1+ and PowerShell Core 7.5+ (x64/ARM64)
+- **Linux**: PowerShell Core 7.5+ (x64/ARM64)
+- **macOS**: PowerShell Core 7.5+ (Intel x64 and Apple Silicon ARM64)
 
 ### Environment Setup
 
