@@ -4,6 +4,9 @@
 **Last Updated**: 2025-07-31  
 **Scope**: PSPredictor C# .NET 9.0 Binary Module
 
+> **⚠️ Implementation Status**: Code examples in this document represent planned implementations for PSPredictor v2.0.
+> These interfaces, classes, and methods are architectural specifications pending full implementation.
+
 ---
 
 ## Code Quality Standards

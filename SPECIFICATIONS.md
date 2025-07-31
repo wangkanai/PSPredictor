@@ -1025,7 +1025,7 @@ public static class SecureProcessExecutor
         TimeSpan timeout = default,
         CancellationToken cancellationToken = default)
     {
-        // Validate inputs
+        // Validate inputs (ThrowIfNullOrWhiteSpace available in .NET 7+, we target .NET 9.0)
         ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
         SecurityValidator.ValidateCommandInput(fileName).ThrowIfInvalid();
         SecurityValidator.ValidateCommandInput(arguments).ThrowIfInvalid();

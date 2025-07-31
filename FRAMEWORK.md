@@ -4,6 +4,10 @@
 **Last Updated**: 2025-07-31  
 **Architecture**: C# .NET 9.0 Binary Module with AI-Powered Prediction Engine
 
+> **⚠️ Implementation Status**: This document represents the target architecture for PSPredictor v2.0.
+> Interfaces and classes referenced (ISyntaxHighlighter, IPredictionEngine, etc.) are planned implementations.
+> Current source code contains placeholder implementations pending full v2.0 development.
+
 ---
 
 ## Architectural Overview
