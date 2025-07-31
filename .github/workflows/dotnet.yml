@@ -175,7 +175,7 @@ jobs:
         # Ensure we're in the correct directory
         Set-Location $env:GITHUB_WORKSPACE
         $currentDir = Get-Location
-        $modulePath = Join-Path $currentDir "src/PSPredictor/bin/Release/net8.0/PSPredictor.dll"
+        $modulePath = Join-Path $currentDir "src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
         Write-Host "GitHub workspace: $env:GITHUB_WORKSPACE"
         Write-Host "Current directory: $currentDir"
         Write-Host "Checking for module at: $modulePath"
