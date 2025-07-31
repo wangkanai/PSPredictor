@@ -160,6 +160,9 @@ docs/.sass-cache/
 config.local.json
 
 ## Package Manager Files
+# NuGet lock files
+packages.lock.json
+
 # Chocolatey
 *.chocolatey
 
