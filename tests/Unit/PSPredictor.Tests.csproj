@@ -1,14 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <LangVersion>12.0</LangVersion>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <IsPackable>false</IsPackable>
+    <!-- Project-Specific Properties -->
     <IsTestProject>true</IsTestProject>
     <AssemblyName>PSPredictor.Tests</AssemblyName>
     <RootNamespace>PSPredictor.Tests</RootNamespace>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 
   <!-- Additional Test Dependencies not in Directory.Build.props -->
@@ -19,10 +15,7 @@
   </ItemGroup>
 
   <!-- PowerShell Testing Dependencies -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.PowerShell.SDK" />
-    <PackageReference Include="System.Management.Automation" />
-  </ItemGroup>
+  <!-- (PowerShell packages are included via Directory.Build.targets) -->
 
   <!-- Additional Test Coverage Tools -->
   <ItemGroup>
