@@ -40,11 +40,6 @@
   - [Development](#development)
   - [Community](#community)
 
-## 📚 Legacy Version Reference
-
-**Looking for PSPredictor v1.x?** The previous PowerShell script-based version is available at:
-- **[v1.x Documentation](archives/2025-07-30-PROJECT.md)**: Complete v1.x reference and migration guide
-
 ---
 
 ## 🚀 Getting Started
