@@ -378,12 +378,12 @@
 
 **Medium Priority Risks**:
 
-4. **Performance Regression**
+1. **Performance Regression**
    - **Risk**: Response times exceeding 100ms targets
    - **Mitigation**: Continuous performance testing with BenchmarkDotNet
    - **Status**: Monitored with automated alerts
 
-5. **Memory Usage Growth**
+2. **Memory Usage Growth**
    - **Risk**: Runtime footprint exceeding 50MB target
    - **Mitigation**: Memory profiling, intelligent caching, lazy loading
    - **Status**: Preventable with proper architecture
