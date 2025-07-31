@@ -1,0 +1,219 @@
+---
+name: Auto-approve Copilot PRs
+
+"on":
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: read
+
+jobs:
+  auto-approve:
+    name: Auto-approve Copilot PRs
+    runs-on: ubuntu-latest
+    if: >
+      github.event.pull_request.user.login == 'github-actions[bot]' ||
+      github.event.pull_request.user.login == 'dependabot[bot]' ||
+      github.event.pull_request.user.login == 'copilot-autofix[bot]' ||
+      contains(github.event.pull_request.head.ref, 'copilot-autofix') ||
+      contains(github.event.pull_request.title, 'Copilot Autofix')
+
+    steps:
+      - name: Check PR author and content
+        id: check-pr
+        run: |
+          echo "PR Author: ${{ github.event.pull_request.user.login }}"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "PR Branch: ${{ github.event.pull_request.head.ref }}"
+          echo "Base Branch: ${{ github.event.pull_request.base.ref }}"
+
+          # Set approval flag
+          SHOULD_APPROVE="false"
+
+          # Check if this is a trusted bot
+          if [[ "${{ github.event.pull_request.user.login }}" == \
+                "github-actions[bot]" ]] || \
+             [[ "${{ github.event.pull_request.user.login }}" == \
+                "dependabot[bot]" ]] || \
+             [[ "${{ github.event.pull_request.user.login }}" == \
+                "copilot-autofix[bot]" ]]; then
+            SHOULD_APPROVE="true"
+          fi
+
+          # Check if this is a Copilot autofix branch
+          if [[ "${{ github.event.pull_request.head.ref }}" == \
+                *"copilot-autofix"* ]] || \
+             [[ "${{ github.event.pull_request.title }}" == \
+                *"Copilot Autofix"* ]]; then
+            SHOULD_APPROVE="true"
+          fi
+
+          echo "should_approve=$SHOULD_APPROVE" >> $GITHUB_OUTPUT
+          echo "Should approve: $SHOULD_APPROVE"
+
+      - name: Checkout PR
+        if: steps.check-pr.outputs.should_approve == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Validate PR changes
+        if: steps.check-pr.outputs.should_approve == 'true'
+        id: validate-changes
+        run: |
+          # Get list of changed files
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          CHANGED_FILES=$(git diff --name-only \
+            origin/${{ github.event.pull_request.base.ref }}...HEAD)
+
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
+          # Define safe file patterns for auto-approval
+          SAFE_PATTERNS=(
+            "\.md$"                    # Markdown files
+            "\.txt$"                   # Text files
+            "\.yml$"                   # YAML files (workflows, configs)
+            "\.yaml$"                  # YAML files
+            "\.json$"                  # JSON files
+            "\.cs$"                    # C# source files (for code fixes)
+            "\.csproj$"                # C# project files
+            "\.props$"                 # MSBuild property files
+            "\.targets$"               # MSBuild target files
+            "\.editorconfig$"          # Editor configuration
+            "\.gitignore$"             # Git ignore files
+            "packages\.lock\.json$"    # Package lock files
+          )
+
+          # Define unsafe patterns that should not be auto-approved
+          UNSAFE_PATTERNS=(
+            "\.ps1$"                   # PowerShell scripts
+            "\.psm1$"                  # PowerShell modules
+            "\.psd1$"                  # PowerShell data files
+            "\.exe$"                   # Executables
+            "\.dll$"                   # Libraries
+            "\.key$"                   # Key files
+            "\.pfx$"                   # Certificate files
+            "secrets"                  # Any file with 'secrets' in name
+          )
+
+          SAFE_FOR_AUTO_APPROVE="true"
+
+          # Check each changed file against patterns
+          while IFS= read -r file; do
+            if [[ -z "$file" ]]; then
+              continue
+            fi
+
+            echo "Checking file: $file"
+
+            # Check if file matches unsafe patterns
+            file_is_unsafe="false"
+            for pattern in "${UNSAFE_PATTERNS[@]}"; do
+              if [[ "$file" =~ $pattern ]]; then
+                echo "❌ File $file matches unsafe pattern: $pattern"
+                file_is_unsafe="true"
+                SAFE_FOR_AUTO_APPROVE="false"
+                break
+              fi
+            done
+
+            # If not unsafe, check if it matches safe patterns
+            if [[ "$file_is_unsafe" == "false" ]]; then
+              file_is_safe="false"
+              for pattern in "${SAFE_PATTERNS[@]}"; do
+                if [[ "$file" =~ $pattern ]]; then
+                  echo "✅ File $file matches safe pattern: $pattern"
+                  file_is_safe="true"
+                  break
+                fi
+              done
+
+              if [[ "$file_is_safe" == "false" ]]; then
+                echo "⚠️ File $file doesn't match any safe pattern"
+                SAFE_FOR_AUTO_APPROVE="false"
+              fi
+            fi
+          done <<< "$CHANGED_FILES"
+
+          echo "safe_for_auto_approve=$SAFE_FOR_AUTO_APPROVE" >> $GITHUB_OUTPUT
+          echo "Safe for auto-approve: $SAFE_FOR_AUTO_APPROVE"
+
+      - name: Auto-approve PR
+        if: >
+          steps.check-pr.outputs.should_approve == 'true' &&
+          steps.validate-changes.outputs.safe_for_auto_approve == 'true'
+        run: |
+          echo "🚀 Auto-approving Copilot PR #${{ github.event.pull_request.number }}"
+
+          # Create approval review
+          gh pr review "${{ github.event.pull_request.number }}" \
+            --approve \
+            --body "🤖 **Automatic approval for Copilot PR**
+
+          This pull request has been automatically approved because:
+          - ✅ Created by a trusted bot: ${{ github.event.pull_request.user.login }}
+          - ✅ Changes only affect safe file types
+          - ✅ No sensitive files modified
+
+          The PR still needs to pass all required status checks before it can be merged.
+
+          **Changed files validation passed:**
+          $(git diff --name-only \
+            origin/${{ github.event.pull_request.base.ref }}...HEAD | sed 's/^/- /')
+
+          ---
+          *This approval was generated automatically by the Copilot auto-approve workflow*"
+
+          echo "✅ PR approved successfully"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add auto-merge label
+        if: >
+          steps.check-pr.outputs.should_approve == 'true' &&
+          steps.validate-changes.outputs.safe_for_auto_approve == 'true'
+        run: |
+          echo "🏷️ Adding auto-merge label to PR #${{ github.event.pull_request.number }}"
+
+          # Add label to indicate this PR is eligible for auto-merge
+          gh pr edit "${{ github.event.pull_request.number }}" \
+            --add-label "auto-merge-eligible" \
+            --add-label "copilot-approved"
+
+          echo "✅ Labels added successfully"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on PR
+        if: >
+          steps.check-pr.outputs.should_approve == 'true' &&
+          steps.validate-changes.outputs.safe_for_auto_approve == 'false'
+        run: |
+          echo "💬 Adding comment explaining why PR was not auto-approved"
+
+          gh pr comment "${{ github.event.pull_request.number }}" \
+            --body "🤖 **Copilot PR Review**
+
+          This PR was created by a trusted bot \
+          (${{ github.event.pull_request.user.login }}) but \
+          **requires manual review** because:
+
+          ⚠️ **The changes include files that need manual validation**
+
+          Changed files:
+          $(git diff --name-only \
+            origin/${{ github.event.pull_request.base.ref }}...HEAD | sed 's/^/- /')
+
+          Please review the changes manually before approving.
+
+          ---
+          *This comment was generated automatically by the Copilot auto-approve workflow*"
+
+          echo "✅ Comment added successfully"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
