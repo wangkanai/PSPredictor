@@ -300,9 +300,9 @@ dotnet restore
 dotnet build --configuration Release
 
 # Run comprehensive test suite
-dotnet test                                    # All tests (unit, integration, performance)
-dotnet test tests/PSPredictor.Tests/          # Core module tests
-dotnet test tests/PSPredictor.AI.Tests/       # AI/ML model tests
+dotnet test                 # All tests (unit, integration, performance)
+dotnet test tests/Unit/     # Core module tests
+dotnet test tests/AI/       # AI/ML model tests
 
 # Build NuGet package
 dotnet pack --configuration Release
@@ -339,7 +339,7 @@ tests/
 - **.NET 9.0**: High-performance C# 13.0 with the latest language features
 - **ML.NET 3.0.1**: Local machine learning with embedded models
 - **PowerShell SDK 7.4.6**: Native PowerShell cmdlet integration
-- **xUnit + FluentAssertions**: Modern testing framework
+- **xUnit v3 + FluentAssertions**: Next-generation testing framework with improved performance
 - **BenchmarkDotNet**: Performance regression testing
 
 ### Contributing

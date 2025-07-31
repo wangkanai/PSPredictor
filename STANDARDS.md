@@ -289,7 +289,7 @@ public Task<CompletionResult[]> GetGitStatusAsync(CancellationToken cancellation
 
 ### Unit Testing Framework
 
-**xUnit with FluentAssertions**:
+**xUnit v3 with FluentAssertions**:
 
 ```csharp
 [Fact]

@@ -260,7 +260,7 @@ PSPredictor/
 │       ├── PSPredictor.Shared.csproj    # Shared utilities project
 │       ├── Constants/                     # Application constants
 │       └── Helpers/                       # Common helper methods
-├── tests/                                  # Test projects (xUnit + FluentAssertions)
+├── tests/                                  # Test projects (xUnit v3 + FluentAssertions)
 │   ├── PSPredictor.Tests/                # Main module tests
 │   │   ├── PSPredictor.Tests.csproj     # Test project file
 │   │   ├── Cmdlets/                       # Cmdlet testing
@@ -410,7 +410,7 @@ PSPredictor/
 - **PowerShell SDK 7.4.6**: System.Management.Automation for cmdlet development with full PowerShell Core compatibility
 - **ML.NET 3.0.1**: Local machine learning with embedded model support and AutoML capabilities
 - **SQLite**: Lightweight database for command history and configuration storage
-- **xUnit 2.9.2 + FluentAssertions 7.0.0**: Modern testing framework with fluent assertions
+- **xUnit v3 + FluentAssertions 7.0.0**: Next-generation testing framework with improved performance and fluent assertions
 - **BenchmarkDotNet 0.14.0**: Performance testing and regression detection with detailed metrics
 
 ### Platform Support
@@ -590,7 +590,7 @@ Import-PSPredictorConfig -Path "./my-config.json"
 
 - **Build System**: ✅ All 12 projects build successfully across Windows, Linux, and macOS
 - **Performance Tests**: ✅ Proper BenchmarkDotNet console application with JSON output for CI/CD integration
-- **Test Framework**: ✅ xUnit-based testing with comprehensive coverage tracking
+- **Test Framework**: ✅ xUnit v3-based testing with comprehensive coverage tracking
 - **Package Management**: ✅ Central package management working correctly with .NET 9.0 dependencies
 - **Markdownlint Integration**: ✅ Comprehensive quality control with `.markdownlint-cli2.jsonc` configuration
 - **GitHub Actions Workflows**: ✅ Both `dotnet.yml` and `markdownlint.yml` workflows properly configured

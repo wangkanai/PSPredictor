@@ -194,7 +194,7 @@ system administrators, and power users worldwide."
 **Development Stack**:
 
 - **GitHub**: Version control, project management, CI/CD automation
-- **xUnit + FluentAssertions**: Modern testing with readable assertions
+- **xUnit v3 + FluentAssertions**: Next-generation testing framework with enhanced performance and readable assertions
 - **BenchmarkDotNet**: Performance regression testing and optimization
 - **Multi-Platform CI/CD**: Windows, Linux, macOS build matrix
 

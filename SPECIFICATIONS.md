@@ -672,6 +672,14 @@ public abstract class BaseCompletion : ICompletionProvider
 
 ### Git Completion Provider (Reference Implementation)
 
+**Superior Git Performance Requirements**:
+
+- **3-8x Faster than posh-git**: Target <50ms vs typical 150-400ms posh-git response
+- **AI-Powered Intelligence**: Context-aware suggestions based on repository state and workflow patterns
+- **Intelligent Repository Analysis**: Selective parsing and async operations for large repositories  
+- **Real-Time Validation**: Live error detection and correction for Git commands
+- **Advanced Caching**: Repository state caching with intelligent invalidation strategies
+
 **Git-Specific Context Awareness**:
 
 ```csharp

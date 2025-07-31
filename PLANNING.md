@@ -348,7 +348,7 @@
 
 **Development Dependencies**:
 
-- **xUnit 2.9.2**: Testing framework with FluentAssertions
+- **xUnit v3**: Next-generation testing framework with FluentAssertions and improved performance
 - **BenchmarkDotNet 0.14.0**: Performance regression testing
 - **Coverlet**: Code coverage analysis
 - **GitHub Actions**: CI/CD pipeline automation
