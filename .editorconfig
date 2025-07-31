@@ -171,15 +171,11 @@ indent_size=2
 
 [*.md]
 # Markdown settings aligned with markdownlint configuration
-indent_size             =2
-indent_style            =space
-max_line_length         =120
-trim_trailing_whitespace=true
-insert_final_newline    =true
-# Allow trailing spaces for line breaks in markdown
-trim_trailing_whitespace=false
+indent_size              =2
+indent_style             =space
+max_line_length          =120
+ij_markdown_format_tables=true
 
 [*.{eslintrc, stylelintrc, jest.config, babelrc, bowerrc, jsb3, jsb2, json}]
-indent_size                   =4
 resharper_sort_members_by_kind=true
 
