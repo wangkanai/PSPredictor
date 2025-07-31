@@ -207,7 +207,7 @@ public static class ServiceCollectionExtensions
         // Core services
         services.AddSingleton<IPredictionEngine, PredictionEngine>();
         services.AddSingleton<ICompletionProvider, CompletionProvider>();
-        services.AddSingleton<ISyntaxHighlighter, SyntaxHighlighter>();
+        services.AddSingleton<ISyntaxHighlighter, SyntaxHighlighter>(); // TODO: Define interface in Core/Interfaces/
         
         // Completion providers
         services.AddTransient<GitCompletion>();
@@ -440,7 +440,7 @@ public sealed class GitCompletion : BaseCompletion
 ```csharp
 public static class InputValidator
 {
-    private static readonly Regex ValidCommandPattern = new(@"^[a-zA-Z0-9\-_.]+$", RegexOptions.Compiled);
+    private static readonly Regex ValidCommandPattern = new(@"^[a-zA-Z0-9\s\-_.:/\\]+$", RegexOptions.Compiled);
     
     public static bool IsValidCommand(string command)
     {
@@ -453,8 +453,9 @@ public static class InputValidator
     {
         ArgumentNullException.ThrowIfNull(input);
         
-        // Remove dangerous characters
-        return input.Replace(";", "").Replace("|", "").Replace("&", "");
+        // Use allowlist approach: only allow safe characters instead of removing dangerous ones
+        // This preserves legitimate commands while blocking potentially harmful input
+        return ValidCommandPattern.IsMatch(input) ? input : throw new ArgumentException("Invalid command format", nameof(input));
     }
 }
 ```

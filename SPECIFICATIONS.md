@@ -1174,10 +1174,20 @@ function Test-SystemRequirements {
         $errors += "Unable to determine .NET version"
     }
     
-    # Check memory
-    $memory = (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1MB
+    # Check memory (cross-platform)
+    $memory = if ($IsWindows) {
+        (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1MB
+    } elseif ($IsLinux) {
+        [math]::Round((Get-Content '/proc/meminfo' | Where-Object { $_ -match '^MemTotal:' } | ForEach-Object { ($_ -split '\s+')[1] }) / 1KB, 0)
+    } elseif ($IsMacOS) {
+        [math]::Round((sysctl -n hw.memsize) / 1MB, 0)
+    } else {
+        # Fallback to .NET method
+        [math]::Round([System.GC]::GetTotalMemory($false) / 1MB, 0)
+    }
+    
     if ($memory -lt $requirements.MinimumMemoryMB) {
-        $errors += "Minimum $($requirements.MinimumMemoryMB)MB RAM required"
+        $errors += "Minimum $($requirements.MinimumMemoryMB)MB RAM required (detected: ${memory}MB)"
     }
     
     return $errors
