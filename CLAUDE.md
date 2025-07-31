@@ -17,7 +17,7 @@ PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET 
 
 **⚠️ MAJOR VERSION TRANSITION**: This is v2.0 - a complete rewrite from PowerShell scripts to C# .NET 9.0 binary module. For v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`.
 
-**🚀 LATEST UPDATE**: Project upgraded to .NET 9.0 (July 2025) with C# 13.0 language features, updated NuGet packages, and cross-platform x64 targeting for optimal ML.NET compatibility.
+**🚀 LATEST UPDATE**: Project upgraded to .NET 9.0 (July 2025) with C# 13.0 language features, updated NuGet packages, and full cross-platform compatibility including ARM64 architecture support for Apple Silicon Macs.
 
 ## Current Project Status (July 2025)
 
@@ -25,8 +25,10 @@ PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET 
 - **Framework**: Successfully upgraded from .NET 8.0 to .NET 9.0 with C# 13.0 language support
 - **Package Management**: Central package management via Directory.Packages.props with latest .NET 9.0 compatible versions
 - **NuGet Packages**: Updated Microsoft.Extensions.* to 9.0.0, ML.NET to 3.0.1, testing frameworks to latest
-- **Build Configuration**: x64 platform targeting for ML.NET compatibility across Windows, Linux, and macOS
+- **Build Configuration**: Dynamic platform targeting with ARM64 compatibility for Apple Silicon Macs
 - **CI/CD**: Updated GitHub Actions workflows for .NET 9.0 multi-platform builds and testing
+- **Cross-Platform Support**: ✅ Full ARM64 architecture compatibility with conditional ML.NET compilation
+- **Architecture Compatibility**: ✅ Automatic platform detection and graceful ML.NET feature handling
 
 ### NuGet Configuration Requirements
 - **Central Package Management**: ✅ REQUIRED - `ManagePackageVersionsCentrally=true` must remain enabled
@@ -46,9 +48,46 @@ PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET 
 - **SDK Version**: ✅ .NET 9.0.100+ required (specified in global.json)
 - **Target Framework**: ✅ net9.0 for all projects
 - **Language Version**: ✅ C# 13.0 with latest language features
-- **Platform Target**: ✅ x64 for ML.NET and cross-platform compatibility
+- **Platform Target**: ✅ Dynamic targeting - AnyCPU with conditional x64 for ML.NET projects
+- **Architecture Support**: ✅ Full ARM64 compatibility with conditional ML.NET compilation
 - **Quality Gates**: ✅ Comprehensive static analysis with .NET analyzers enabled
-- **Build Status**: ✅ All 12 projects build successfully without errors
+- **Build Status**: ✅ All 12 projects build successfully on x64 and ARM64 architectures
+
+### ARM64 Architecture Compatibility
+
+**✅ APPLE SILICON SUPPORT**: Full compatibility with Apple Silicon (M1/M2/M3) Macs
+
+**Architecture Detection**:
+- Automatic runtime architecture detection using `System.Runtime.InteropServices.RuntimeInformation`
+- Dynamic platform targeting based on detected architecture
+- Conditional compilation symbols (`NO_MLNET`) for ARM64 platforms
+
+**ML.NET Conditional Compilation**:
+- ML.NET packages only referenced on x64 platforms where supported
+- Graceful feature degradation on ARM64 - core functionality preserved
+- Conditional package references in project files prevent build errors
+- AI prediction features disabled on unsupported architectures with fallback implementations
+
+**Build Commands for ARM64**:
+```bash
+# Build successfully on Apple Silicon Macs
+dotnet build                    # ✅ Works on ARM64
+dotnet test                     # ✅ Works on ARM64  
+dotnet run                      # ✅ Works on ARM64
+
+# Core projects build without ML.NET dependencies on ARM64
+dotnet build src/PSPredictor/PSPredictor.csproj
+dotnet test tests/Unit/PSPredictor.Tests.csproj
+
+# ML.NET projects skip ML packages on ARM64 automatically
+dotnet build tests/Performance.Tests/PSPredictor.Performance.Tests.csproj  # ✅ No errors
+```
+
+**Cross-Platform Testing**:
+- Unit tests: ✅ Pass on ARM64 with full coverage
+- Integration tests: ✅ Compatible with conditional compilation
+- Performance tests: ✅ BenchmarkDotNet works with fallback implementations
+- CI/CD: ✅ GitHub Actions supports all architectures including ARM64 runners
 
 ## Development Commands
 
@@ -342,10 +381,11 @@ PSPredictor/
 - **BenchmarkDotNet 0.14.0**: Performance testing and regression detection with detailed metrics
 
 ### Platform Support
-- **Windows**: PowerShell 5.1+ and PowerShell Core 7+ (x64 optimized)
-- **Linux**: PowerShell Core 7+ with full terminal integration (x64 optimized)
-- **macOS**: PowerShell Core 7+ with native Terminal.app support (x64 optimized)
-- **Cross-Platform**: Consistent ANSI rendering, input handling, and ML.NET compatibility
+- **Windows**: PowerShell 5.1+ and PowerShell Core 7+ (x64 and ARM64 supported)
+- **Linux**: PowerShell Core 7+ with full terminal integration (x64 and ARM64 supported)  
+- **macOS**: PowerShell Core 7+ with native Terminal.app support (Intel x64 and Apple Silicon ARM64)
+- **Cross-Platform**: Consistent ANSI rendering, input handling across all architectures
+- **ML.NET Features**: Available on x64 platforms, gracefully disabled on ARM64 with fallback implementations
 
 ### Development Tools
 - **Visual Studio 2022** or **Visual Studio Code**: Primary development environment with .NET 9.0 SDK
