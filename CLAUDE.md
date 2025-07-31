@@ -561,21 +561,23 @@ Import-PSPredictorConfig -Path "./my-config.json"
 
 ### Architecture Requirements
 - **Performance Critical**: All user-facing operations must meet <100ms response time
-- **Cross-Platform**: Ensure consistent behavior across Windows, Linux, and macOS (x64 architecture)
+- **Cross-Platform**: Ensure consistent behavior across Windows, Linux, and macOS (x64 and ARM64 architectures)
 - **Backward Compatible**: Maintain API compatibility within major versions
 - **Extensible**: Design for easy addition of new CLI tools and features
-- **AI-Powered**: Leverage ML.NET 3.0.1 for intelligent prediction and learning with x64 optimization
+- **AI-Powered**: Leverage ML.NET 3.0.1 for intelligent prediction and learning (x64) with graceful degradation (ARM64)
 - **Native Experience**: Provide IDE-like features within the terminal environment
 - **Memory Efficient**: Optimize for long-running PowerShell sessions with <50MB footprint
+- **Architecture Agnostic**: Core functionality must work across all supported CPU architectures
 
 ### Current Development State
 - **Framework**: ✅ Fully migrated to .NET 9.0 with C# 13.0 support
-- **Build Status**: ✅ All 12 projects building successfully with .NET 9.0
-- **Test Status**: ✅ Unit tests passing, placeholder tests in place for expansion
+- **Build Status**: ✅ All 12 projects building successfully with .NET 9.0 on both x64 and ARM64
+- **Test Status**: ✅ Unit tests passing on both x64 and ARM64 architectures
 - **Package Management**: ✅ Central package management implemented and working with native configuration
-- **CI/CD**: ✅ GitHub Actions updated for .NET 9.0 multi-platform builds
-- **Platform Targeting**: ✅ x64 targeting configured for ML.NET compatibility
+- **CI/CD**: ✅ GitHub Actions updated for .NET 9.0 multi-platform builds including ARM64 compatibility
+- **Platform Targeting**: ✅ Dynamic platform targeting with ARM64 compatibility and conditional ML.NET compilation
 - **NuGet Configuration**: ✅ Native solution implemented - no custom nuget.config required
+- **Cross-Platform Support**: ✅ Full ARM64 architecture support with graceful ML.NET feature degradation
 
 ### Known Issues & TODOs
 - **DevTools Project**: Contains placeholder "Hello, World!" - needs actual implementation or removal
@@ -603,9 +605,10 @@ Import-PSPredictorConfig -Path "./my-config.json"
 
 ### Build Environment Requirements
 - **.NET 9.0 SDK**: Minimum version 9.0.100 (specified in global.json)
-- **Platform**: x64 architecture required for ML.NET compatibility
+- **Platform**: x64 or ARM64 architecture supported - dynamic platform targeting
 - **PowerShell**: PowerShell Core 7+ recommended for testing
 - **IDE**: Visual Studio 2022 or VS Code with C# extension
 - **Git**: For version control and CI/CD integration
+- **Apple Silicon**: Full native support on M1/M2/M3 Macs with automatic ML.NET feature detection
 
 **Configuration Driven**: Support extensive customization without code changes
