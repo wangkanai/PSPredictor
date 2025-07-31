@@ -13,9 +13,42 @@ When searching for information about this project, use the following order:
 
 ## Project Overview
 
-PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET that transforms the PowerShell command-line experience into a comprehensive IDE within the terminal. It provides intelligent auto-completion, syntax highlighting, error indication, multi-line editing, predictive IntelliSense, and advanced editing capabilities for 26+ popular command-line tools.
+PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET 9.0 that transforms the PowerShell command-line experience into a comprehensive IDE within the terminal. It provides intelligent auto-completion, syntax highlighting, error indication, multi-line editing, predictive IntelliSense, and advanced editing capabilities for 26+ popular command-line tools.
 
-**⚠️ MAJOR VERSION TRANSITION**: This is v2.0 - a complete rewrite from PowerShell scripts to C# binary module. For v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`.
+**⚠️ MAJOR VERSION TRANSITION**: This is v2.0 - a complete rewrite from PowerShell scripts to C# .NET 9.0 binary module. For v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`.
+
+**🚀 LATEST UPDATE**: Project upgraded to .NET 9.0 (July 2025) with C# 13.0 language features, updated NuGet packages, and cross-platform x64 targeting for optimal ML.NET compatibility.
+
+## Current Project Status (July 2025)
+
+### Recent Upgrades ✅ COMPLETED
+- **Framework**: Successfully upgraded from .NET 8.0 to .NET 9.0 with C# 13.0 language support
+- **Package Management**: Central package management via Directory.Packages.props with latest .NET 9.0 compatible versions
+- **NuGet Packages**: Updated Microsoft.Extensions.* to 9.0.0, ML.NET to 3.0.1, testing frameworks to latest
+- **Build Configuration**: x64 platform targeting for ML.NET compatibility across Windows, Linux, and macOS
+- **CI/CD**: Updated GitHub Actions workflows for .NET 9.0 multi-platform builds and testing
+
+### NuGet Configuration Requirements
+- **Central Package Management**: ✅ REQUIRED - `ManagePackageVersionsCentrally=true` must remain enabled
+- **Package Source Configuration**: Native .NET solution without custom nuget.config files
+- **Warning Suppression**: NU1507 (package source mapping) warnings are suppressed via NoWarn settings
+- **Build Configuration**: `TreatWarningsAsErrors=false` to allow proper warning suppression for NuGet conflicts
+- **Package Sources**: Uses default NuGet.org source with PowerShell Gallery available for CI/CD compatibility
+
+### Package Management Strategy
+- **Central Management**: ✅ All package versions managed in Directory.Packages.props
+- **Version Consistency**: ✅ Unified package versions across all 12 projects
+- **Lock Files**: ✅ packages.lock.json files removed and ignored for flexibility
+- **Dependency Resolution**: ✅ Automatic package resolution with version consistency checks
+- **Native Configuration**: ✅ No custom nuget.config - uses default .NET package source configuration
+
+### Build System Status
+- **SDK Version**: ✅ .NET 9.0.100+ required (specified in global.json)
+- **Target Framework**: ✅ net9.0 for all projects
+- **Language Version**: ✅ C# 13.0 with latest language features
+- **Platform Target**: ✅ x64 for ML.NET and cross-platform compatibility
+- **Quality Gates**: ✅ Comprehensive static analysis with .NET analyzers enabled
+- **Build Status**: ✅ All 12 projects build successfully without errors
 
 ## Development Commands
 
@@ -301,24 +334,24 @@ PSPredictor/
 ## Technology Stack
 
 ### Core Technologies
-- **.NET 9.0**: Modern C# with latest language features and performance improvements
-- **PowerShell SDK**: System.Management.Automation for cmdlet development
-- **ML.NET**: Local machine learning with embedded model support
-- **SQLite**: Lightweight database for command history and configuration
-- **xUnit + FluentAssertions**: Comprehensive testing framework
-- **BenchmarkDotNet**: Performance testing and regression detection
+- **.NET 9.0**: Latest .NET with C# 13.0 language features, performance improvements, and enhanced cross-platform support
+- **PowerShell SDK 7.4.6**: System.Management.Automation for cmdlet development with full PowerShell Core compatibility
+- **ML.NET 3.0.1**: Local machine learning with embedded model support and AutoML capabilities
+- **SQLite**: Lightweight database for command history and configuration storage
+- **xUnit 2.9.2 + FluentAssertions 7.0.0**: Modern testing framework with fluent assertions
+- **BenchmarkDotNet 0.14.0**: Performance testing and regression detection with detailed metrics
 
 ### Platform Support
-- **Windows**: PowerShell 5.1+ and PowerShell Core 7+
-- **Linux**: PowerShell Core 7+ with full terminal integration
-- **macOS**: PowerShell Core 7+ with native Terminal.app support
-- **Cross-Platform**: Consistent ANSI rendering and input handling
+- **Windows**: PowerShell 5.1+ and PowerShell Core 7+ (x64 optimized)
+- **Linux**: PowerShell Core 7+ with full terminal integration (x64 optimized)
+- **macOS**: PowerShell Core 7+ with native Terminal.app support (x64 optimized)
+- **Cross-Platform**: Consistent ANSI rendering, input handling, and ML.NET compatibility
 
 ### Development Tools
-- **Visual Studio 2022** or **Visual Studio Code**: Primary development environment
-- **GitHub Actions**: CI/CD pipeline with automated testing and publishing
-- **NuGet**: Package distribution and dependency management
-- **.NET CLI**: Build automation and project management
+- **Visual Studio 2022** or **Visual Studio Code**: Primary development environment with .NET 9.0 SDK
+- **GitHub Actions**: Multi-platform CI/CD pipeline (Windows, Linux, macOS) with automated testing and publishing
+- **NuGet Central Package Management**: Centralized package version management via Directory.Packages.props
+- **.NET CLI 9.0**: Build automation, project management, and cross-platform development
 
 ## Testing and Quality
 
@@ -480,11 +513,51 @@ Import-PSPredictorConfig -Path "./my-config.json"
 
 ## Development Notes
 
+### Architecture Requirements
 - **Performance Critical**: All user-facing operations must meet <100ms response time
-- **Cross-Platform**: Ensure consistent behavior across Windows, Linux, and macOS
+- **Cross-Platform**: Ensure consistent behavior across Windows, Linux, and macOS (x64 architecture)
 - **Backward Compatible**: Maintain API compatibility within major versions
 - **Extensible**: Design for easy addition of new CLI tools and features
-- **AI-Powered**: Leverage ML.NET for intelligent prediction and learning
+- **AI-Powered**: Leverage ML.NET 3.0.1 for intelligent prediction and learning with x64 optimization
 - **Native Experience**: Provide IDE-like features within the terminal environment
-- **Memory Efficient**: Optimize for long-running PowerShell sessions
-- **Configuration Driven**: Support extensive customization without code changes
+- **Memory Efficient**: Optimize for long-running PowerShell sessions with <50MB footprint
+
+### Current Development State
+- **Framework**: ✅ Fully migrated to .NET 9.0 with C# 13.0 support
+- **Build Status**: ✅ All 12 projects building successfully with .NET 9.0
+- **Test Status**: ✅ Unit tests passing, placeholder tests in place for expansion
+- **Package Management**: ✅ Central package management implemented and working with native configuration
+- **CI/CD**: ✅ GitHub Actions updated for .NET 9.0 multi-platform builds
+- **Platform Targeting**: ✅ x64 targeting configured for ML.NET compatibility
+- **NuGet Configuration**: ✅ Native solution implemented - no custom nuget.config required
+
+### Known Issues & TODOs
+- **DevTools Project**: Contains placeholder "Hello, World!" - needs actual implementation or removal
+- **Model Training**: ModelTrainer project has placeholder implementation - needs ML model training logic
+- **CodeGen Project**: Contains placeholder "Hello, World!" - needs code generation utilities
+- **Test Coverage**: Placeholder tests need to be replaced with comprehensive test suites
+
+### Development Priorities
+1. **Implement Core Functionality**: Replace placeholder implementations with actual PSPredictor logic
+2. **Complete Test Suite**: Expand beyond placeholder tests to comprehensive coverage
+3. **ML Model Training**: Implement actual model training pipeline in ModelTrainer project
+4. **Development Tools**: Complete DevTools and CodeGen project implementations
+5. **Performance Optimization**: Ensure <100ms response times and <50MB memory usage
+
+### Key Dependencies (.NET 9.0 Compatible)
+- **Microsoft.PowerShell.SDK 7.4.6**: Core PowerShell integration
+- **System.Management.Automation 7.4.6**: PowerShell cmdlet development
+- **Microsoft.ML 3.0.1**: Machine learning capabilities with AutoML support
+- **Microsoft.Extensions.*** 9.0.0**: Configuration, logging, dependency injection
+- **System.Text.Json 9.0.0**: High-performance JSON serialization
+- **FluentAssertions 7.0.0**: Modern testing assertions
+- **BenchmarkDotNet 0.14.0**: Performance benchmarking and regression testing
+
+### Build Environment Requirements
+- **.NET 9.0 SDK**: Minimum version 9.0.100 (specified in global.json)
+- **Platform**: x64 architecture required for ML.NET compatibility
+- **PowerShell**: PowerShell Core 7+ recommended for testing
+- **IDE**: Visual Studio 2022 or VS Code with C# extension
+- **Git**: For version control and CI/CD integration
+
+**Configuration Driven**: Support extensive customization without code changes

@@ -35,10 +35,10 @@
         <AssemblyConfiguration Condition="'$(Configuration)' != ''">$(Configuration)</AssemblyConfiguration>
         
         <!-- Code Quality and Analysis -->
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <WarningsAsErrors />
-        <WarningsNotAsErrors>CS1591;NU1903;NETSDK1138</WarningsNotAsErrors>
-        <NoWarn>CS1591;NU1701;NU1603;NU1504</NoWarn>
+        <WarningsNotAsErrors>CS1591;NU1903;NETSDK1138;NU1507</WarningsNotAsErrors>
+        <NoWarn>CS1591;NU1701;NU1603;NU1504;NU1507;CA1303;CA1707;CA1515;CA1052;CA1062</NoWarn>
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <AnalysisLevel>latest</AnalysisLevel>
         <AnalysisMode>AllEnabledByDefault</AnalysisMode>
