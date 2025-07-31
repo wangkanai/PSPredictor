@@ -42,28 +42,32 @@
 
 ### Overview
 
-PSPredictor v2.0 is a revolutionary **C# .NET 9.0 binary module** that transforms PowerShell into an intelligent, 
+PSPredictor v2.0 is a revolutionary **C# .NET 9.0 binary module** that transforms PowerShell into an intelligent,
 IDE-like terminal experience. Unlike traditional command-line tools, PSPredictor provides:
 
 **🧠 AI-Powered Intelligence**
+
 - **ML.NET Integration**: Local machine learning models for intelligent command prediction
 - **Context-Aware Suggestions**: Understands your workflow and suggests relevant commands
 - **Predictive IntelliSense**: Non-intrusive completion suggestions that appear as you type
 - **Smart Parameter Detection**: Automatically suggests parameters based on command context
 
 **⚡ Native Performance**
+
 - **<50ms Response Time**: Lightning-fast completions powered by optimized C# code
 - **<20MB Memory Footprint**: Efficient resource usage for everyday productivity
 - **Lazy Loading**: Models and providers load on-demand for optimal startup performance
 - **Cross-Platform**: Full compatibility across Windows, Linux, and macOS (including ARM64)
 
 **🎨 IDE-Like Terminal Experience**
+
 - **Real-time Syntax Highlighting**: PowerShell and CLI tool syntax coloring as you type
 - **Visual Error Indication**: Immediate feedback on syntax errors and invalid commands
 - **Multi-line Editing**: Advanced editing capabilities with proper indentation and formatting
 - **Multiple Editing Modes**: Cmd, Emacs, and Vi modes with customizable key bindings
 
 **🔧 Comprehensive CLI Tool Support**
+
 - **26+ Popular Tools**: Git, Docker, Kubernetes, Azure CLI, AWS CLI, npm, and many more
 - **Context-Aware Completions**: Understanding of tool state (Git branch, Docker containers, etc.)
 - **Dynamic Help**: Real-time help and documentation without leaving the command line
@@ -85,6 +89,7 @@ Get-PSPredictorStatus
 ```
 
 **Immediate Benefits:**
+
 - ✅ Intelligent completions for Git, Docker, PowerShell, and more
 - ✅ Real-time syntax highlighting and error detection
 - ✅ AI-powered command suggestions based on your usage patterns
@@ -95,11 +100,13 @@ Get-PSPredictorStatus
 ### First Steps
 
 **1. Enable Enhanced Mode**
+
 ```powershell
 Set-PSPredictorMode -Mode Enhanced
 ```
 
 **2. Try Intelligent Completions**
+
 ```powershell
 git <TAB>           # See Git commands with descriptions
 docker run <TAB>    # Get container options and image suggestions
@@ -107,6 +114,7 @@ kubectl get <TAB>   # Explore Kubernetes resources
 ```
 
 **3. Experience Syntax Highlighting**
+
 ```powershell
 # Type these commands and see real-time syntax coloring:
 Get-Process | Where-Object CPU -gt 50
@@ -115,6 +123,7 @@ docker ps --filter "status=running"
 ```
 
 **4. Configure Your Preferences**
+
 ```powershell
 # Set your preferred editing mode
 Set-PSPredictorMode -EditingMode Emacs  # or Vi, Cmd
@@ -133,6 +142,7 @@ Get-PSPredictorConfig
 ### Basic Configuration
 
 **Quick Setup:**
+
 ```powershell
 # Enable PSPredictor with default settings
 Enable-PSPredictor
@@ -148,6 +158,7 @@ Enable-PSPredictorSyntaxHighlighting
 ```
 
 **Essential Settings:**
+
 ```powershell
 # AI prediction settings
 Set-PSPredictorAI -EnableLocalModels $true -PredictionAccuracy "Balanced"
@@ -162,15 +173,16 @@ Set-PSPredictorPerformance -ResponseTimeout 100 -CacheSize 1000
 ### Advanced Settings
 
 **AI and Machine Learning:**
+
 ```powershell
 # Configure AI prediction engine
 Set-PSPredictorAI -Settings @{
-    EnableLocalModels = $true
-    EnableCloudModels = $false
-    PredictionAccuracy = "High"        # Low, Balanced, High
-    ModelUpdateFrequency = "Weekly"    # Never, Daily, Weekly, Monthly
-    ContextWindowSize = 50             # Number of recent commands to consider
-    MinConfidenceThreshold = 0.7       # Minimum prediction confidence (0.0-1.0)
+  EnableLocalModels = $true
+  EnableCloudModels = $false
+  PredictionAccuracy = "High"        # Low, Balanced, High
+  ModelUpdateFrequency = "Weekly"    # Never, Daily, Weekly, Monthly
+  ContextWindowSize = 50             # Number of recent commands to consider
+  MinConfidenceThreshold = 0.7       # Minimum prediction confidence (0.0-1.0)
 }
 
 # Model management
@@ -179,19 +191,20 @@ Get-PSPredictorModelInfo | Format-Table
 ```
 
 **Completion Provider Configuration:**
+
 ```powershell
 # Configure specific tools
 Set-PSPredictorProvider -Name "Git" -Settings @{
-    EnableBranchCompletion = $true
-    EnableFileCompletion = $true
-    MaxHistoryItems = 100
-    CacheTimeout = "5m"
+  EnableBranchCompletion = $true
+  EnableFileCompletion = $true
+  MaxHistoryItems = 100
+  CacheTimeout = "5m"
 }
 
 Set-PSPredictorProvider -Name "Docker" -Settings @{
-    EnableImageCompletion = $true
-    EnableContainerCompletion = $true
-    RegistryEndpoints = @("docker.io", "gcr.io")
+  EnableImageCompletion = $true
+  EnableContainerCompletion = $true
+  RegistryEndpoints = @("docker.io", "gcr.io")
 }
 
 # Disable specific providers
@@ -202,45 +215,47 @@ Register-PSPredictorProvider -Path "./MyCustomProvider.dll"
 ```
 
 **Rendering and Display:**
+
 ```powershell
 # Syntax highlighting configuration
 Set-PSPredictorSyntaxHighlighting -Settings @{
-    EnableRealTimeHighlighting = $true
-    ColorScheme = "VSCode"             # VSCode, Monokai, Solarized, Custom
-    HighlightErrors = $true
-    HighlightWarnings = $true
-    CustomColors = @{
-        Command = "Cyan"
-        Parameter = "Yellow"
-        String = "Green"
-        Variable = "Magenta"
-        Error = "Red"
-    }
+  EnableRealTimeHighlighting = $true
+  ColorScheme = "VSCode"             # VSCode, Monokai, Solarized, Custom
+  HighlightErrors = $true
+  HighlightWarnings = $true
+  CustomColors = @{
+    Command = "Cyan"
+    Parameter = "Yellow"
+    String = "Green"
+    Variable = "Magenta"
+    Error = "Red"
+  }
 }
 
 # IntelliSense display settings
 Set-PSPredictorIntelliSense -Settings @{
-    MaxVisibleItems = 10
-    ShowDescriptions = $true
-    ShowKeyBindings = $true
-    AutoSelectFirst = $false
-    TriggerCharacters = @(".", "-", " ")
+  MaxVisibleItems = 10
+  ShowDescriptions = $true
+  ShowKeyBindings = $true
+  AutoSelectFirst = $false
+  TriggerCharacters = @(".", "-", " ")
 }
 ```
 
 ### Profile Management
 
 **Creating Profiles:**
+
 ```powershell
 # Create profile from current settings
 New-PSPredictorProfile -Name "MyProfile" -Description "Custom development setup"
 
 # Create profile with specific settings
 New-PSPredictorProfile -Name "MinimalSetup" -Settings @{
-    EditingMode = "Cmd"
-    EnableAI = $false
-    EnableSyntaxHighlighting = $false
-    MaxCompletions = 5
+  EditingMode = "Cmd"
+  EnableAI = $false
+  EnableSyntaxHighlighting = $false
+  MaxCompletions = 5
 }
 
 # Clone existing profile
@@ -248,6 +263,7 @@ Copy-PSPredictorProfile -Source "Default" -Destination "MyCustomProfile"
 ```
 
 **Managing Profiles:**
+
 ```powershell
 # List available profiles
 Get-PSPredictorProfile | Format-Table
@@ -264,6 +280,7 @@ Set-PSPredictorProfile -Name "MyProfile" -SetAsDefault
 ```
 
 **Team Configuration:**
+
 ```powershell
 # Export team configuration
 Export-PSPredictorConfig -Path "./team-config.json" -IncludeProfiles
@@ -278,6 +295,7 @@ Lock-PSPredictorConfig -Settings @("EditingMode", "SyntaxHighlighting")
 ### Customization
 
 **Key Bindings:**
+
 ```powershell
 # Set custom key bindings
 Set-PSPredictorKeyBinding -Key "Ctrl+Space" -Function "TriggerIntelliSense"
@@ -296,16 +314,17 @@ Set-PSPredictorKeyBinding -Key "Alt+B" -Function "BackwardWord"
 ```
 
 **Custom Themes:**
+
 ```powershell
 # Create custom color theme
 New-PSPredictorTheme -Name "MyTheme" -Colors @{
-    Command = "#569CD6"
-    Parameter = "#DCDCAA"
-    String = "#CE9178"
-    Variable = "#9CDCFE"
-    Comment = "#6A9955"
-    Error = "#F44747"
-    Warning = "#FFCC02"
+  Command = "#569CD6"
+  Parameter = "#DCDCAA"
+  String = "#CE9178"
+  Variable = "#9CDCFE"
+  Comment = "#6A9955"
+  Error = "#F44747"
+  Warning = "#FFCC02"
 }
 
 # Apply custom theme
@@ -317,25 +336,26 @@ Import-PSPredictorTheme -Path "./my-theme.json"
 ```
 
 **Environment-Specific Configuration:**
+
 ```powershell
 # Development environment
 Set-PSPredictorEnvironment -Name "Development" -Settings @{
-    EnableDebugLogging = $true
-    ResponseTimeout = 200
-    EnableAllProviders = $true
+  EnableDebugLogging = $true
+  ResponseTimeout = 200
+  EnableAllProviders = $true
 }
 
 # Production environment
 Set-PSPredictorEnvironment -Name "Production" -Settings @{
-    EnableDebugLogging = $false
-    ResponseTimeout = 50
-    DisableCloudFeatures = $true
+  EnableDebugLogging = $false
+  ResponseTimeout = 50
+  DisableCloudFeatures = $true
 }
 
 # Automatic environment detection
 Enable-PSPredictorAutoEnvironment -Rules @{
-    Development = { (Get-Location).Path -like "*\dev\*" }
-    Production = { $env:COMPUTERNAME -like "PROD-*" }
+  Development = { (Get-Location).Path -like "*\dev\*" }
+  Production = { $env:COMPUTERNAME -like "PROD-*" }
 }
 ```
 
@@ -346,12 +366,14 @@ Enable-PSPredictorAutoEnvironment -Rules @{
 ### 🧠 AI-Powered Intelligence
 
 **Local Machine Learning Models:**
+
 - **Embedded Core Models**: Ships with pre-trained models for instant functionality
 - **Command Prediction**: Suggests commands based on current context and history
 - **Parameter Intelligence**: Automatically suggests relevant parameters and values
 - **Context Awareness**: Understands project structure, Git state, Docker environment
 
 **Predictive IntelliSense:**
+
 ```powershell
 # As you type, PSPredictor learns and suggests:
 git ch<TAB>          # → git checkout, git cherry-pick, git check-ignore
@@ -360,12 +382,14 @@ kubectl get <TAB>    # → pods, services, deployments (based on cluster context
 ```
 
 **Smart Context Detection:**
+
 - **Git Repository**: Detects current branch, staged files, remote repositories
 - **Docker Environment**: Aware of running containers, available images, networks
 - **Kubernetes Cluster**: Understands current context, namespaces, resources
 - **PowerShell Session**: Tracks variables, functions, modules, command history
 
 **Continuous Learning:**
+
 ```powershell
 # PSPredictor learns from your usage patterns
 Enable-PSPredictorLearning
@@ -380,12 +404,14 @@ Export-PSPredictorLearning -Path "./team-patterns.json"
 ### 🎨 IDE-Like Terminal Experience
 
 **Real-time Syntax Highlighting:**
+
 - **PowerShell Syntax**: Variables, cmdlets, parameters, strings, comments
 - **CLI Tool Syntax**: Git commands, Docker syntax, Kubernetes YAML, JSON
 - **Error Detection**: Real-time validation with visual error indicators
 - **Custom Themes**: Multiple color schemes with customization options
 
 **Visual Error Indication:**
+
 ```powershell
 # Real-time feedback as you type:
 Get-Process -InvalidParameter   # Red underline on invalid parameter
@@ -394,25 +420,28 @@ docker run --invalid-option    # Immediate feedback with correction
 ```
 
 **Multi-line Editing:**
+
 ```powershell
 # Advanced multi-line editing with proper indentation:
 $complexCommand = Get-Process |
-    Where-Object { $_.CPU -gt 50 } |
-    Sort-Object CPU -Descending |
-    Select-Object -First 10
+  Where-Object { $_.CPU -gt 50 } |
+  Sort-Object CPU -Descending |
+  Select-Object -First 10
 
 # Automatic indentation and syntax preservation
-if ($condition) {
-    # Proper indentation maintained
-    Get-Content $file |
-        ForEach-Object {
-            # Nested indentation handled correctly
-            $_ -replace "old", "new"
-        }
+if ($condition)
+{
+  # Proper indentation maintained
+  Get-Content $file |
+    ForEach-Object {
+      # Nested indentation handled correctly
+      $_ -replace "old", "new"
+    }
 }
 ```
 
 **Dynamic Help System:**
+
 ```powershell
 # Non-intrusive help that appears as you navigate:
 git commit <Alt+?>           # Shows commit options and examples
@@ -423,25 +452,28 @@ kubectl apply <F1>           # Context-sensitive Kubernetes help
 ### ⚡ Native Performance
 
 **Response Time Specifications:**
+
 - **Completion Generation**: <50ms for standard completions
-- **AI Predictions**: <100ms for ML-powered suggestions  
+- **AI Predictions**: <100ms for ML-powered suggestions
 - **Syntax Highlighting**: <20ms for real-time coloring
 - **Multi-line Rendering**: <30ms for complex command structures
 
 **Memory Efficiency:**
+
 - **Startup Footprint**: <20MB initial memory usage
 - **Runtime Footprint**: <50MB for typical usage patterns
 - **Model Loading**: Lazy loading with <5MB core embedded models
 - **Cache Management**: Intelligent LRU caching with automatic cleanup
 
 **Performance Monitoring:**
+
 ```powershell
 # Real-time performance metrics
 Get-PSPredictorPerformance -RealTime
 
 # Detailed performance analysis
 Measure-PSPredictorOperation {
-    git log --oneline -10
+  git log --oneline -10
 } -Detailed
 
 # Performance optimization
@@ -452,11 +484,13 @@ Clear-PSPredictorCache -OlderThan "7d"
 ### 🔧 Advanced Editing Modes
 
 **Multiple Editing Modes:**
+
 - **Cmd Mode**: Windows Command Prompt style (default for Windows)
 - **Emacs Mode**: Emacs-style key bindings with kill ring support
 - **Vi Mode**: Vi/Vim-style modal editing with command/insert modes
 
 **Cmd Mode Features:**
+
 ```powershell
 # Windows-familiar key bindings
 Ctrl+A          # Select all
@@ -468,6 +502,7 @@ Tab             # Completion cycling
 ```
 
 **Emacs Mode Features:**
+
 ```powershell
 # Emacs-style navigation and editing
 Ctrl+A          # Beginning of line
@@ -480,6 +515,7 @@ Alt+D           # Kill word forward
 ```
 
 **Vi Mode Features:**
+
 ```powershell
 # Modal editing with Vi-style commands
 Esc             # Enter command mode
@@ -493,6 +529,7 @@ u               # Undo
 ```
 
 **Advanced Kill Ring (Emacs/Vi):**
+
 ```powershell
 # Sophisticated clipboard management
 Ctrl+W          # Kill region
@@ -509,41 +546,48 @@ Get-PSPredictorKillRing
 **Supported Tools (26+ and growing):**
 
 **Version Control:**
+
 - **Git**: Complete Git command completion with branch, file, and remote awareness
 - **SVN**: Subversion command completion
 - **Mercurial**: Hg command completion
 
 **Container & Orchestration:**
+
 - **Docker**: Container, image, network, volume completion
 - **Kubernetes**: kubectl with resource, namespace, and context awareness
 - **Podman**: Podman-specific completions
 - **Docker Compose**: Service and configuration completion
 
 **Cloud Platforms:**
+
 - **Azure CLI**: Complete az command completion with subscription context
 - **AWS CLI**: Comprehensive AWS service completion
 - **Google Cloud**: gcloud command completion
 - **Terraform**: Resource and provider completion
 
 **Package Managers:**
+
 - **npm/yarn**: Package and script completion
 - **pip**: Python package completion
 - **nuget**: .NET package completion
 - **chocolatey**: Windows package completion
 
 **Development Tools:**
+
 - **PowerShell Core**: Enhanced cmdlet and parameter completion
 - **Python**: Python REPL and script completion
 - **Node.js**: Node command and module completion
 - **dotnet CLI**: .NET SDK command completion
 
 **System Administration:**
+
 - **ssh**: Host and key completion
 - **systemctl**: Service management completion
 - **netstat**: Network command completion
 - **ps**: Process management completion
 
 **Advanced Tool Integration:**
+
 ```powershell
 # Context-aware completions understand tool state
 git checkout <TAB>              # Shows local branches, remotes, tags
@@ -563,6 +607,7 @@ kubectl apply -f <TAB>          # Shows YAML/JSON files in current directory
 ### Basic Usage
 
 **Getting Started with Completions:**
+
 ```powershell
 # Enable PSPredictor
 Enable-PSPredictor
@@ -577,6 +622,7 @@ git checkout <TAB>           # Shows branches and tags
 ```
 
 **Essential Key Bindings:**
+
 ```powershell
 Tab             # Accept completion / cycle through options
 Shift+Tab       # Cycle backwards through completions
@@ -588,6 +634,7 @@ F1              # Show help for current command
 ```
 
 **Working with History:**
+
 ```powershell
 # Enhanced history with AI assistance
 Get-PSPredictorHistory -Search "git commit"
@@ -603,6 +650,7 @@ Get-PSPredictorHistory -LastDays 7
 ### Advanced Workflows
 
 **Git Integration:**
+
 ```powershell
 # Intelligent Git workflow support
 git add <TAB>                    # Shows modified files only
@@ -621,6 +669,7 @@ git bisect good <TAB>            # Shows commit hashes for bisecting
 ```
 
 **Docker Workflow:**
+
 ```powershell
 # Container lifecycle management
 docker run <TAB>                 # Shows available images
@@ -639,6 +688,7 @@ docker-compose logs <TAB>        # Shows services with log output
 ```
 
 **Kubernetes Operations:**
+
 ```powershell
 # Resource management
 kubectl get <TAB>                # Shows available resource types
@@ -659,6 +709,7 @@ kubectl scale deployment <TAB>   # Shows deployments in current namespace
 ### Completion Examples
 
 **PowerShell Enhanced Completions:**
+
 ```powershell
 # Cmdlet parameter intelligence
 Get-Process -Name <TAB>          # Shows running process names
@@ -667,12 +718,13 @@ Get-ChildItem -Filter <TAB>      # Shows common filter patterns
 Set-Location -Path <TAB>         # Shows directories with enhanced navigation
 
 # Variable and function completion
-$env:<TAB>                       # Shows environment variables
+$env: <TAB>                       # Shows environment variables
 $PSVersionTable.<TAB>            # Shows PSVersionTable properties
 Get-<TAB>                        # Shows Get-* cmdlets with descriptions
 ```
 
 **Azure CLI Integration:**
+
 ```powershell
 # Subscription and resource awareness
 az account set --subscription <TAB>     # Shows available subscriptions
@@ -686,6 +738,7 @@ az webapp create --runtime <TAB>        # Shows supported runtimes
 ```
 
 **AWS CLI Integration:**
+
 ```powershell
 # Profile and region awareness
 aws configure --profile <TAB>           # Shows configured profiles
@@ -699,6 +752,7 @@ aws iam create-role --role-name <TAB>   # Shows role naming suggestions
 **Common Issues and Solutions:**
 
 **Issue: Completions not appearing**
+
 ```powershell
 # Check PSPredictor status
 Get-PSPredictorStatus
@@ -714,6 +768,7 @@ Restart-PSPredictor
 ```
 
 **Issue: Slow completion performance**
+
 ```powershell
 # Check performance metrics
 Get-PSPredictorPerformance
@@ -729,6 +784,7 @@ Disable-PSPredictorProvider -Name "Kubernetes"
 ```
 
 **Issue: Syntax highlighting not working**
+
 ```powershell
 # Verify syntax highlighting is enabled
 Get-PSPredictorSyntaxHighlighting
@@ -744,6 +800,7 @@ Set-PSPredictorSyntaxHighlighting -ColorScheme "Default"
 ```
 
 **Issue: AI predictions not accurate**
+
 ```powershell
 # Check AI model status
 Get-PSPredictorAIStatus
@@ -759,6 +816,7 @@ Set-PSPredictorAI -MinConfidenceThreshold 0.8
 ```
 
 **Issue: Memory usage high**
+
 ```powershell
 # Monitor memory usage
 Get-PSPredictorMemoryUsage -Detailed
@@ -774,6 +832,7 @@ Get-PSPredictorProviders | Where-Object Enabled | Disable-PSPredictorProvider
 ```
 
 **Getting Help:**
+
 ```powershell
 # Built-in help system
 Get-Help PSPredictor -Full
@@ -793,6 +852,7 @@ Get-PSPredictorSupportInfo
 ### Documentation
 
 #### Core Documentation
+
 - **[Product Requirements](../PRD.md)**: Comprehensive product specification and requirements
 - **[Architecture Guide](../FRAMEWORK.md)**: Technical architecture and design patterns
 - **[Development Standards](../STANDARDS.md)**: Coding guidelines and quality standards
@@ -801,6 +861,7 @@ Get-PSPredictorSupportInfo
 - **[Strategic Roadmap](../ROADMAP.md)**: Long-term vision and strategic direction
 
 #### User Documentation
+
 - **[Installation Guide](installation.md)**: Detailed installation instructions for all platforms
 - **[Configuration Reference](configuration.md)**: Complete configuration options and settings
 - **[User Manual](user-guide.md)**: Comprehensive user guide with examples and workflows
@@ -808,6 +869,7 @@ Get-PSPredictorSupportInfo
 - **[FAQ](faq.md)**: Frequently asked questions and answers
 
 #### Migration and Legacy
+
 - **[v1.x Documentation](archives/2025-07-30-PROJECT.md)**: Complete v1.x reference and migration guide
 - **[Migration Guide](migration.md)**: Step-by-step guide for migrating from v1.x to v2.0
 - **[Breaking Changes](breaking-changes.md)**: Comprehensive list of breaking changes in v2.0
@@ -815,18 +877,21 @@ Get-PSPredictorSupportInfo
 ### API Reference
 
 #### Core APIs
+
 - **[IPredictionEngine](api/IPredictionEngine.md)**: Core prediction engine interface
 - **[ICompletionProvider](api/ICompletionProvider.md)**: Completion provider interface
 - **[ISyntaxHighlighter](api/ISyntaxHighlighter.md)**: Syntax highlighting interface
 - **[IMLPredictionEngine](api/IMLPredictionEngine.md)**: Machine learning engine interface
 
 #### PowerShell Cmdlets
+
 - **[Get-PSPredictorStatus](api/Get-PSPredictorStatus.md)**: Module status and configuration
 - **[Set-PSPredictorMode](api/Set-PSPredictorMode.md)**: Configure editing and prediction modes
 - **[Enable-PSPredictor](api/Enable-PSPredictor.md)**: Enable PSPredictor functionality
 - **[Set-PSPredictorConfig](api/Set-PSPredictorConfig.md)**: Configuration management
 
 #### Extension APIs
+
 - **[Creating Custom Providers](api/custom-providers.md)**: Guide for building completion providers
 - **[Plugin Development](api/plugin-development.md)**: Extending PSPredictor with custom plugins
 - **[Theme Development](api/theme-development.md)**: Creating custom color themes
@@ -834,17 +899,20 @@ Get-PSPredictorSupportInfo
 ### Development
 
 #### Getting Started
+
 - **[Development Setup](development/setup.md)**: Setting up development environment
 - **[Building from Source](development/building.md)**: Building PSPredictor from source code
 - **[Testing Guide](development/testing.md)**: Running tests and validation
 - **[Debugging](development/debugging.md)**: Debugging PSPredictor issues
 
 #### Contributing
+
 - **[Contributing Guidelines](../CONTRIBUTING.md)**: How to contribute to PSPredictor
 - **[Code Review Process](development/code-review.md)**: Code review guidelines and process
 - **[Release Process](development/releases.md)**: How releases are created and published
 
 #### Architecture Deep Dive
+
 - **[ML.NET Integration](development/mlnet-integration.md)**: Machine learning implementation details
 - **[Performance Optimization](development/performance.md)**: Performance considerations and optimizations
 - **[Cross-Platform Support](development/cross-platform.md)**: Platform-specific implementation details
@@ -854,6 +922,7 @@ Get-PSPredictorSupportInfo
 #### Example: Creating a Custom CLI Tool Provider
 
 **Step 1: Create Provider Class**
+
 ```csharp
 public class MyToolCompletion : BaseCompletion
 {
@@ -879,12 +948,14 @@ public class MyToolCompletion : BaseCompletion
 ```
 
 **Step 2: Register Provider**
+
 ```csharp
 // In CompletionProvider.cs
 RegisterProvider(new MyToolCompletion());
 ```
 
 **Step 3: Add Tests**
+
 ```csharp
 [Fact]
 public void MyTool_ShouldProvideBasicCompletions()
@@ -900,17 +971,20 @@ public void MyTool_ShouldProvideBasicCompletions()
 ### Community
 
 #### Contributing
+
 - **[Contributing Guidelines](CONTRIBUTING.md)**: Detailed guide for contributors
 - **[Code of Conduct](https://github.com/wangkanai/PSPredictor/blob/main/CODE_OF_CONDUCT.md)**: Community guidelines
 - **[Issue Templates](https://github.com/wangkanai/PSPredictor/issues/new/choose)**: Report bugs or request features
 
 #### Support and Community
+
 - **[GitHub Issues](https://github.com/wangkanai/PSPredictor/issues)**: Bug reports and feature requests
 - **[GitHub Discussions](https://github.com/wangkanai/PSPredictor/discussions)**: Community discussions and Q&A
 - **[PowerShell Gallery](https://www.powershellgallery.com/packages/PSPredictor)**: Official package distribution
 - **[NuGet Gallery](https://www.nuget.org/packages/PSPredictor)**: Alternative package source
 
 #### Related Projects
+
 - **[oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh)**: Beautiful prompt themes (compatible)
 - **[posh-git](https://github.com/dahlbyk/posh-git)**: Git integration for PowerShell (enhanced by PSPredictor)
 - **[ML.NET](https://github.com/dotnet/machinelearning)**: Core machine learning framework
@@ -918,18 +992,21 @@ public void MyTool_ShouldProvideBasicCompletions()
 #### Performance Specifications
 
 **Response Time Targets**
+
 - ⚡ **Completion Generation**: <50ms for standard completions
 - 🧠 **AI Predictions**: <100ms for ML-powered suggestions
 - 🎨 **Syntax Highlighting**: <20ms for real-time coloring
 - 📝 **Multi-line Rendering**: <30ms for complex command structures
 
 **Memory Efficiency**
+
 - 🚀 **Startup Footprint**: <20MB initial memory usage
 - 💾 **Runtime Footprint**: <50MB for typical usage patterns
 - 🤖 **Model Loading**: Lazy loading with <5MB core embedded models
 - 📚 **History Management**: SQLite with automatic cleanup and archiving
 
 #### License and Legal
+
 - **License**: MIT License - see [LICENSE](LICENSE) file
 - **Copyright**: © 2024-2025 PSPredictor Contributors
 - **Trademark**: PSPredictor is a trademark of the project maintainers
