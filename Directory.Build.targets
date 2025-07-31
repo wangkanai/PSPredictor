@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <!-- PowerShell Dependencies (Main Module Projects) -->
-    <ItemGroup Condition="'$(IsTestProject)' != 'true' AND ('$(AssemblyName)' == 'PSPredictor' OR '$(AssemblyName)' == 'PSPredictor.Core' OR $(AssemblyName.StartsWith('PSPredictor.')))'">
+    <ItemGroup Condition="'$(IsTestProject)' != 'true' AND ('$(AssemblyName)' == 'PSPredictor' OR '$(AssemblyName)' == 'PSPredictor.Core' OR $(AssemblyName.StartsWith('PSPredictor.')))">
         <PackageReference Include="Microsoft.PowerShell.SDK"/>
         <PackageReference Include="System.Management.Automation"/>
     </ItemGroup>
