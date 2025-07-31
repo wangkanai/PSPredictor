@@ -4,6 +4,12 @@
         <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All"/>
         <PackageReference Include="Nerdbank.GitVersioning" PrivateAssets="All"/>
     </ItemGroup>
+    
+    <!-- Code Analysis Tools (Non-Test Projects) -->
+    <ItemGroup Condition="'$(IsTestProject)' != 'true'">
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="All"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All"/>
+    </ItemGroup>
 
     <!-- Core Dependencies (All Main Projects) -->
     <ItemGroup Condition="'$(IsTestProject)' != 'true'">
@@ -40,4 +46,56 @@
         <PackageReference Include="Microsoft.PowerShell.SDK"/>
         <PackageReference Include="System.Management.Automation"/>
     </ItemGroup>
+    
+    <!-- Custom Build Targets -->
+    
+    <!-- Ensure artifacts directory exists -->
+    <Target Name="EnsureArtifactsDirectory" BeforeTargets="Build">
+        <MakeDir Directories="$(MSBuildThisFileDirectory)artifacts" Condition="!Exists('$(MSBuildThisFileDirectory)artifacts')" />
+        <MakeDir Directories="$(MSBuildThisFileDirectory)artifacts\packages" Condition="!Exists('$(MSBuildThisFileDirectory)artifacts\packages')" />
+        <MakeDir Directories="$(MSBuildThisFileDirectory)artifacts\logs" Condition="!Exists('$(MSBuildThisFileDirectory)artifacts\logs')" />
+    </Target>
+    
+    <!-- Clean artifacts on solution clean -->
+    <Target Name="CleanArtifacts" AfterTargets="Clean">
+        <RemoveDir Directories="$(MSBuildThisFileDirectory)artifacts\packages" Condition="Exists('$(MSBuildThisFileDirectory)artifacts\packages')" />
+        <RemoveDir Directories="$(MSBuildThisFileDirectory)artifacts\logs" Condition="Exists('$(MSBuildThisFileDirectory)artifacts\logs')" />
+    </Target>
+    
+    <!-- Generate build info file for debugging -->
+    <Target Name="GenerateBuildInfo" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+        <PropertyGroup>
+            <BuildInfoContent>Build Information
+Project: $(MSBuildProjectName)
+Configuration: $(Configuration)
+Target Framework: $(TargetFramework)
+Build Date: $([System.DateTime]::UtcNow.ToString('yyyy-MM-ddTHH:mm:ss.fffZ'))
+Build Machine: $([System.Environment]::MachineName)
+Repository URL: $(RepositoryUrl)
+Repository Branch: $(RepositoryBranch)
+Repository Commit: $(RepositoryCommit)
+Version: $(Version)
+Assembly Version: $(AssemblyVersion)
+File Version: $(FileVersion)
+Package Version: $(PackageVersion)</BuildInfoContent>
+        </PropertyGroup>
+        <WriteLinesToFile File="$(OutputPath)BuildInfo.txt" Lines="$(BuildInfoContent)" Overwrite="true" />
+    </Target>
+    
+    <!-- Copy PowerShell module files for main PSPredictor project -->
+    <Target Name="CopyPowerShellModuleFiles" AfterTargets="Build" Condition="'$(MSBuildProjectName)' == 'PSPredictor'">
+        <ItemGroup>
+            <ModuleFiles Include="Module\*.psd1;Module\*.psm1" />
+        </ItemGroup>
+        <Copy SourceFiles="@(ModuleFiles)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    </Target>
+    
+    <!-- Validate package before publishing -->
+    <Target Name="ValidatePackage" BeforeTargets="GenerateNuspec" Condition="'$(IsPackable)' == 'true'">
+        <Error Condition="'$(PackageId)' == ''" Text="PackageId must be specified for packable projects" />
+        <Error Condition="'$(PackageVersion)' == ''" Text="PackageVersion must be specified for packable projects" />
+        <Error Condition="'$(Authors)' == ''" Text="Authors must be specified for packable projects" />
+        <Error Condition="'$(Description)' == ''" Text="Description must be specified for packable projects" />
+    </Target>
+    
 </Project>

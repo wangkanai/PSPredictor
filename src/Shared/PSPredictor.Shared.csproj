@@ -1,18 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <!-- Project-Specific Properties -->
-    <AssemblyName>PSPredictor.Shared</AssemblyName>
-    <RootNamespace>PSPredictor.Shared</RootNamespace>
-    
-    <!-- Assembly-Specific Metadata -->
-    <AssemblyTitle>PSPredictor.Shared - Shared Utilities</AssemblyTitle>
-    <AssemblyDescription>Shared utilities, constants, and helper methods for PSPredictor binary module</AssemblyDescription>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
-    <InformationalVersion>2.0.0</InformationalVersion>
-  </PropertyGroup>
-
   <!-- Additional Dependencies -->
   <!-- (Core packages are included via Directory.Build.targets) -->
   <ItemGroup>

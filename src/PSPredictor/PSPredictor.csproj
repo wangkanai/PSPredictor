@@ -1,22 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <!-- Project-Specific Properties -->
-    <AssemblyName>PSPredictor</AssemblyName>
-    <RootNamespace>PSPredictor</RootNamespace>
-    <!-- Assembly-Specific Metadata -->
-    <AssemblyTitle>PSPredictor - Advanced PowerShell Command Predictor</AssemblyTitle>
-    <AssemblyDescription>Revolutionary PowerShell Binary Module that transforms the command-line experience into a comprehensive IDE within the terminal</AssemblyDescription>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
-    <InformationalVersion>2.0.0</InformationalVersion>
-    
-    <!-- Package-Specific Properties -->
-    <PackageId>PSPredictor</PackageId>
-    <PackageVersion>2.0.0</PackageVersion>
-    <Authors>Wangkanai</Authors>
-  </PropertyGroup>
-
   <!-- Additional ML.NET Dependencies -->
   <!-- (Core ML packages are included via Directory.Build.targets) -->
   <ItemGroup>

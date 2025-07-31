@@ -1,18 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <!-- Project-Specific Properties -->
-        <AssemblyName>PSPredictor.Core</AssemblyName>
-        <RootNamespace>PSPredictor.Core</RootNamespace>
-
-        <!-- Assembly-Specific Metadata -->
-        <AssemblyTitle>PSPredictor.Core - Core Library Components</AssemblyTitle>
-        <AssemblyDescription>Core library components and shared interfaces for PSPredictor binary module</AssemblyDescription>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-        <FileVersion>2.0.0.0</FileVersion>
-        <InformationalVersion>2.0.0</InformationalVersion>
-    </PropertyGroup>
-
     <!-- Core Dependencies -->
     <!-- (Most core packages are included via Directory.Build.targets) -->
     <ItemGroup>
