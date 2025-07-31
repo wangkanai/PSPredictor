@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Search Context Priority
+
+When searching for information about this project, use the following order:
+
+1. **MCP Memory** - Check knowledge graph for cached project insights and patterns
+2. **MCP Repomix** - Use consolidated codebase analysis for comprehensive understanding
+3. **MCP Filesystem** - Direct file system access for specific file operations
+4. **Bash Commands** - Execute shell commands as the final option for system-level operations
+
 ## Project Overview
 
 PSPredictor v2.0 is a revolutionary PowerShell Binary Module written in C# .NET that transforms the PowerShell command-line experience into a comprehensive IDE within the terminal. It provides intelligent auto-completion, syntax highlighting, error indication, multi-line editing, predictive IntelliSense, and advanced editing capabilities for 26+ popular command-line tools.
@@ -36,13 +45,13 @@ dotnet pack --configuration Release
 
 # Install module locally for testing
 dotnet build --configuration Debug
-Import-Module ./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll -Force
+Import-Module ./src/PSPredictor/bin/Debug/net8.0/PSPredictor.dll -Force
 ```
 
 ### Module Installation and Testing
 ```powershell
 # Install development build locally
-Install-PSPredictor -Development -Path "./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll"
+Install-PSPredictor -Development -Path "./src/PSPredictor/bin/Debug/net8.0/PSPredictor.dll"
 
 # Test core functionality
 Get-PSPredictorStatus
@@ -90,7 +99,7 @@ dotnet run --project tools/PSPredictor.ModelTrainer/ -- --validate-models
 
 ```
 PSPredictor/
-├── src/                                    # Source code (C# .NET 9.0)
+├── src/                                    # Source code (C# .NET 8.0)
 │   ├── PSPredictor/                       # Main binary module project
 │   │   ├── PSPredictor.csproj            # Primary project file
 │   │   ├── Module/                        # PowerShell module definition
@@ -236,7 +245,7 @@ PSPredictor/
 
 ### Key Architecture Patterns
 
-**Binary Module Architecture**: C# .NET 9.0 PowerShell module with:
+**Binary Module Architecture**: C# .NET 8.0 PowerShell module with:
 - **Cmdlets/**: PowerShell cmdlet implementations for user interface
 - **Core/**: Core engine components (prediction, completion, syntax, history)
 - **AI/**: Machine learning integration with embedded models
@@ -292,7 +301,7 @@ PSPredictor/
 ## Technology Stack
 
 ### Core Technologies
-- **.NET 9.0**: Modern C# with latest language features and performance improvements
+- **.NET 8.0**: Modern C# with latest language features and performance improvements
 - **PowerShell SDK**: System.Management.Automation for cmdlet development
 - **ML.NET**: Local machine learning with embedded model support
 - **SQLite**: Lightweight database for command history and configuration
@@ -348,7 +357,7 @@ dotnet test
 
 # Install development build for testing
 dotnet build --configuration Debug
-Import-Module ./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll -Force
+Import-Module ./src/PSPredictor/bin/Debug/net8.0/PSPredictor.dll -Force
 ```
 
 ### Development Cycle

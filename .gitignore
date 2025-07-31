@@ -7,6 +7,10 @@ repomix-output.*
 .vercel/
 .claude/
 
+## MCP Server Generated Files
+mcp-output/
+mcp-cache/
+
 ## Build Artifacts
 build/
 dist/
@@ -201,9 +205,39 @@ temp_module/
 *.der
 
 ## Custom Project Specific
-# Add any project-specific patterns here
+# PSPredictor specific patterns
+
+# AI/ML Model files (large binary files)
+*.model
+*.onnx
+*.mlnet
+src/**/Models/*.zip
+ai-models/
+model-cache/
+
+# Performance testing outputs
+benchmark-results/
+perf-logs/
+*.benchmark
+
+# PowerShell debugging and profiling
+*.psprofile
+profile-*.json
+debug-*.log
 
 # Local testing directories
 test-output/
 sandbox/
 scratch/
+demo-output/
+
+# PSPredictor runtime files
+.pspredict-cache/
+completion-cache/
+prediction-models/
+user-data/
+
+# Development tools output
+codegen-output/
+model-training-data/
+training-results/

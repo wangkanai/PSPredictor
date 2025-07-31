@@ -3,6 +3,7 @@
     <File Path="CLAUDE.md" />
     <File Path="PRD.md" />
     <File Path="repomix.config.json" />
+    <File Path=".repomixignore" />
   </Folder>
   <Folder Name="/.github/">
     <File Path=".github\FUNDING.yml" />

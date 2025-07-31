@@ -4,7 +4,7 @@
         <Company>Wangkanai</Company>
         <Product>PSPredictor</Product>
         <Copyright>Copyright © Wangkanai $(CURRENT_YEAR)</Copyright>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <WarningsAsErrors/>
