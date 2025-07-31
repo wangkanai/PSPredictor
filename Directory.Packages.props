@@ -74,7 +74,44 @@
         <!-- Source Control and Versioning -->
         <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0"/>
         <PackageVersion Include="Nerdbank.GitVersioning" Version="3.6.133"/>
-        <!--wangkanai-->
+        
+        <!-- Wangkanai Ecosystem -->
         <PackageVersion Include="Wangkanai.System" Version="5.8.0"/>
+        
+        <!-- Additional Microsoft Extensions -->
+        <PackageVersion Include="Microsoft.Extensions.Options" Version="8.0.2"/>
+        <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="8.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.FileSystemGlobbing" Version="8.0.0"/>
+        
+        <!-- System Packages -->
+        <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0"/>
+        <PackageVersion Include="System.ComponentModel.DataAnnotations" Version="4.3.0"/>
+        <PackageVersion Include="System.Memory" Version="4.5.5"/>
+        <PackageVersion Include="System.Buffers" Version="4.5.1"/>
+        <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.5.4"/>
+        <PackageVersion Include="System.ValueTuple" Version="4.5.0"/>
+        <PackageVersion Include="System.Console" Version="4.3.1"/>
+        <PackageVersion Include="System.Text.Encodings.Web" Version="8.0.0"/>
+        <PackageVersion Include="System.Text.RegularExpressions" Version="4.3.1"/>
+        
+        <!-- PowerShell Specific -->
+        <PackageVersion Include="PowerShellStandard.Library" Version="5.1.1"/>
+        
+        <!-- Reflection and Emit -->
+        <PackageVersion Include="System.Reflection.Emit" Version="4.7.0"/>
+        <PackageVersion Include="System.Reflection.Emit.Lightweight" Version="4.7.0"/>
+        <PackageVersion Include="System.Reflection.Metadata" Version="8.0.0"/>
+        
+        <!-- Platform and Security -->
+        <PackageVersion Include="Microsoft.Win32.Primitives" Version="4.3.0"/>
+        <PackageVersion Include="Microsoft.Win32.Registry" Version="5.0.0"/>
+        <PackageVersion Include="System.Security.Cryptography.Primitives" Version="4.3.0"/>
+        <PackageVersion Include="System.Security.Principal.Windows" Version="5.0.0"/>
+        
+        <!-- Network -->
+        <PackageVersion Include="System.Net.Http" Version="4.3.4"/>
+        <PackageVersion Include="System.Net.Primitives" Version="4.3.1"/>
+        
     </ItemGroup>
 </Project>
