@@ -1,0 +1,231 @@
+---
+name: Auto-merge Copilot PRs
+
+"on":
+  pull_request_target:
+    types: [labeled, synchronize]
+  check_suite:
+    types: [completed]
+  status: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
+jobs:
+  auto-merge:
+    name: Auto-merge approved Copilot PRs
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'pull_request_target' ||
+      (github.event_name == 'check_suite' &&
+       github.event.check_suite.conclusion == 'success') ||
+      (github.event_name == 'status' && github.event.state == 'success')
+
+    steps:
+      - name: Get PR information
+        id: get-pr
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request_target" ]]; then
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+          elif [[ "${{ github.event_name }}" == "check_suite" ]]; then
+            # Extract PR number from check suite
+            PR_NUMBER=$(echo "${{ github.event.check_suite.pull_requests[0].number }}" 2>/dev/null || echo "")
+          elif [[ "${{ github.event_name }}" == "status" ]]; then
+            # Extract PR number from commit status
+            PR_NUMBER=$(gh pr list --state open --json number,headRefOid \
+              --jq ".[] | select(.headRefOid==\"${{ github.event.commit.sha }}\") | .number")
+          fi
+
+          if [[ -z "$PR_NUMBER" || "$PR_NUMBER" == "null" ]]; then
+            echo "No PR found for this event"
+            echo "pr_number=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "Found PR number: $PR_NUMBER"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check PR eligibility
+        if: steps.get-pr.outputs.pr_number != ''
+        id: check-eligibility
+        run: |
+          PR_NUMBER="${{ steps.get-pr.outputs.pr_number }}"
+
+          # Get PR details
+          PR_DATA=$(gh pr view "$PR_NUMBER" \
+            --json author,labels,reviewDecision,mergeable,state)
+
+          AUTHOR=$(echo "$PR_DATA" | jq -r '.author.login')
+          LABELS=$(echo "$PR_DATA" | jq -r '.labels[].name' | tr '\n' ' ')
+          REVIEW_DECISION=$(echo "$PR_DATA" | jq -r '.reviewDecision')
+          MERGEABLE=$(echo "$PR_DATA" | jq -r '.mergeable')
+          STATE=$(echo "$PR_DATA" | jq -r '.state')
+
+          echo "PR Author: $AUTHOR"
+          echo "PR Labels: $LABELS"
+          echo "Review Decision: $REVIEW_DECISION"
+          echo "Mergeable: $MERGEABLE"
+          echo "State: $STATE"
+
+          # Check if this PR is eligible for auto-merge
+          ELIGIBLE="false"
+
+          # Must be open and mergeable
+          if [[ "$STATE" == "OPEN" && "$MERGEABLE" == "MERGEABLE" ]]; then
+            # Must have auto-merge-eligible label
+            if [[ "$LABELS" == *"auto-merge-eligible"* ]]; then
+              # Must be approved
+              if [[ "$REVIEW_DECISION" == "APPROVED" ]]; then
+                # Must be from a trusted bot
+                if [[ "$AUTHOR" == "github-actions[bot]" ]] || \
+                   [[ "$AUTHOR" == "dependabot[bot]" ]] || \
+                   [[ "$AUTHOR" == "copilot-autofix[bot]" ]]; then
+                  ELIGIBLE="true"
+                fi
+              fi
+            fi
+          fi
+
+          echo "eligible=$ELIGIBLE" >> $GITHUB_OUTPUT
+          echo "PR eligible for auto-merge: $ELIGIBLE"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check required status checks
+        if: steps.check-eligibility.outputs.eligible == 'true'
+        id: check-status
+        run: |
+          PR_NUMBER="${{ steps.get-pr.outputs.pr_number }}"
+
+          # Get the PR's head SHA
+          HEAD_SHA=$(gh pr view "$PR_NUMBER" --json headRefOid --jq '.headRefOid')
+          echo "Head SHA: $HEAD_SHA"
+
+          # Get status checks for the commit
+          CHECKS_DATA=$(gh api "repos/${{ github.repository }}/commits/$HEAD_SHA/status" \
+            --jq '.statuses[]')
+          CHECK_RUNS_DATA=$(gh api "repos/${{ github.repository }}/commits/$HEAD_SHA/check-runs" \
+            --jq '.check_runs[]')
+
+          echo "Status checks:"
+          echo "$CHECKS_DATA" | jq -r 'select(.state != null) | "\(.context): \(.state)"'
+
+          echo "Check runs:"
+          echo "$CHECK_RUNS_DATA" | jq -r 'select(.conclusion != null) | "\(.name): \(.conclusion)"'
+
+          # Check if all required checks are passing
+          ALL_CHECKS_PASSED="true"
+
+          # Check status checks (legacy)
+          if [[ -n "$CHECKS_DATA" ]]; then
+            while IFS= read -r check; do
+              STATE=$(echo "$check" | jq -r '.state')
+              CONTEXT=$(echo "$check" | jq -r '.context')
+
+              if [[ "$STATE" != "success" ]]; then
+                echo "❌ Status check '$CONTEXT' is not successful: $STATE"
+                ALL_CHECKS_PASSED="false"
+              else
+                echo "✅ Status check '$CONTEXT' passed"
+              fi
+            done <<< "$(echo "$CHECKS_DATA" | jq -c 'select(.state != null)')"
+          fi
+
+          # Check GitHub Actions check runs
+          if [[ -n "$CHECK_RUNS_DATA" ]]; then
+            while IFS= read -r check; do
+              CONCLUSION=$(echo "$check" | jq -r '.conclusion')
+              NAME=$(echo "$check" | jq -r '.name')
+              STATUS=$(echo "$check" | jq -r '.status')
+
+              # Skip in-progress checks
+              if [[ "$STATUS" != "completed" ]]; then
+                echo "⏳ Check run '$NAME' is still in progress"
+                ALL_CHECKS_PASSED="false"
+                continue
+              fi
+
+              if [[ "$CONCLUSION" != "success" ]]; then
+                echo "❌ Check run '$NAME' did not succeed: $CONCLUSION"
+                ALL_CHECKS_PASSED="false"
+              else
+                echo "✅ Check run '$NAME' passed"
+              fi
+            done <<< "$(echo "$CHECK_RUNS_DATA" | jq -c 'select(.conclusion != null)')"
+          fi
+
+          echo "all_checks_passed=$ALL_CHECKS_PASSED" >> $GITHUB_OUTPUT
+          echo "All checks passed: $ALL_CHECKS_PASSED"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto-merge PR
+        if: >
+          steps.check-eligibility.outputs.eligible == 'true' &&
+          steps.check-status.outputs.all_checks_passed == 'true'
+        run: |
+          PR_NUMBER="${{ steps.get-pr.outputs.pr_number }}"
+
+          echo "🚀 Auto-merging Copilot PR #$PR_NUMBER"
+
+          # Comment before merging
+          gh pr comment "$PR_NUMBER" \
+            --body "🤖 **Auto-merging Copilot PR**
+
+          This PR is being automatically merged because:
+          - ✅ Created by a trusted bot
+          - ✅ Automatically approved after validation
+          - ✅ All required status checks passed
+          - ✅ Labeled as auto-merge eligible
+
+          **Merge strategy**: Squash and merge
+
+          ---
+          *This merge was performed automatically by the Copilot auto-merge workflow*"
+
+          # Perform the merge with squash strategy
+          gh pr merge "$PR_NUMBER" \
+            --squash \
+            --auto \
+            --delete-branch \
+            --body "Auto-merged Copilot PR: $(gh pr view "$PR_NUMBER" --json title --jq '.title')
+
+          Automatically merged after passing all required checks and validation.
+
+          Co-authored-by: GitHub Copilot <copilot@github.com>"
+
+          echo "✅ PR merged successfully"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Handle merge failure
+        if: failure() && steps.check-eligibility.outputs.eligible == 'true'
+        run: |
+          PR_NUMBER="${{ steps.get-pr.outputs.pr_number }}"
+
+          echo "❌ Auto-merge failed for PR #$PR_NUMBER"
+
+          # Comment about the failure
+          gh pr comment "$PR_NUMBER" \
+            --body "⚠️ **Auto-merge failed**
+
+          The automatic merge attempt failed. This could be due to:
+          - Merge conflicts that need manual resolution
+          - Branch protection rules requiring additional checks
+          - Temporary GitHub API issues
+
+          **Next steps**:
+          - Check for merge conflicts and resolve them if needed
+          - Verify all branch protection requirements are met
+          - Try merging manually if the issue persists
+
+          ---
+          *This comment was generated automatically by the Copilot auto-merge workflow*"
+
+          echo "✅ Failure comment added"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
