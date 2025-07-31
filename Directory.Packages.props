@@ -5,25 +5,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- .NET 8.0 Runtime and Core Packages -->
+        <!-- .NET 9.0 Runtime and Core Packages -->
         <PackageVersion Include="Microsoft.PowerShell.SDK" Version="7.4.6"/>
         <PackageVersion Include="System.Management.Automation" Version="7.4.6"/>
 
-        <!-- Microsoft Extensions (Updated for .NET 8.0) -->
-        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="8.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="8.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.1"/>
-        <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="8.0.1"/>
-        <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2"/>
-        <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1"/>
-        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2"/>
-        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.1"/>
-        <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1"/>
+        <!-- Microsoft Extensions (Updated for .NET 9.0) -->
+        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0"/>
 
-        <!-- JSON Serialization (Updated for .NET 8.0) -->
-        <PackageVersion Include="System.Text.Json" Version="8.0.5"/>
+        <!-- JSON Serialization (Updated for .NET 9.0) -->
+        <PackageVersion Include="System.Text.Json" Version="9.0.0"/>
         <PackageVersion Include="Newtonsoft.Json" Version="13.0.3"/>
 
         <!-- ML.NET Packages -->
@@ -32,21 +32,21 @@
         <PackageVersion Include="Microsoft.ML.FastTree" Version="3.0.1"/>
         <PackageVersion Include="Microsoft.ML.LightGbm" Version="3.0.1"/>
 
-        <!-- Database Packages (Updated for .NET 8.0) -->
-        <PackageVersion Include="Microsoft.Data.Sqlite" Version="8.0.10"/>
-        <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10"/>
+        <!-- Database Packages (Updated for .NET 9.0) -->
+        <PackageVersion Include="Microsoft.Data.Sqlite" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0"/>
         <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.118"/>
 
-        <!-- Performance and Diagnostics (Updated for .NET 8.0) -->
-        <PackageVersion Include="System.Diagnostics.PerformanceCounter" Version="8.0.1"/>
+        <!-- Performance and Diagnostics (Updated for .NET 9.0) -->
+        <PackageVersion Include="System.Diagnostics.PerformanceCounter" Version="9.0.0"/>
         <PackageVersion Include="System.Diagnostics.Process" Version="4.3.0"/>
         <PackageVersion Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.1.8"/>
 
         <!-- Testing Framework Packages -->
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.1"/>
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
         <PackageVersion Include="xunit" Version="2.9.2"/>
         <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2"/>
-        <PackageVersion Include="FluentAssertions" Version="6.12.1"/>
+        <PackageVersion Include="FluentAssertions" Version="6.13.0"/>
         <PackageVersion Include="AutoFixture" Version="4.18.1"/>
         <PackageVersion Include="AutoFixture.Xunit2" Version="4.18.1"/>
         <PackageVersion Include="Moq" Version="4.20.72"/>
@@ -79,10 +79,10 @@
         <PackageVersion Include="Wangkanai.System" Version="5.8.0"/>
         
         <!-- Additional Microsoft Extensions -->
-        <PackageVersion Include="Microsoft.Extensions.Options" Version="8.0.2"/>
-        <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="8.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.FileSystemGlobbing" Version="8.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.FileSystemGlobbing" Version="9.0.0"/>
         
         <!-- System Packages -->
         <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0"/>
@@ -92,7 +92,7 @@
         <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.5.4"/>
         <PackageVersion Include="System.ValueTuple" Version="4.5.0"/>
         <PackageVersion Include="System.Console" Version="4.3.1"/>
-        <PackageVersion Include="System.Text.Encodings.Web" Version="8.0.0"/>
+        <PackageVersion Include="System.Text.Encodings.Web" Version="9.0.0"/>
         <PackageVersion Include="System.Text.RegularExpressions" Version="4.3.1"/>
         
         <!-- PowerShell Specific -->
@@ -101,7 +101,7 @@
         <!-- Reflection and Emit -->
         <PackageVersion Include="System.Reflection.Emit" Version="4.7.0"/>
         <PackageVersion Include="System.Reflection.Emit.Lightweight" Version="4.7.0"/>
-        <PackageVersion Include="System.Reflection.Metadata" Version="8.0.0"/>
+        <PackageVersion Include="System.Reflection.Metadata" Version="9.0.0"/>
         
         <!-- Platform and Security -->
         <PackageVersion Include="Microsoft.Win32.Primitives" Version="4.3.0"/>

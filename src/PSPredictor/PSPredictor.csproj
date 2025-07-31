@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Project-Specific Properties -->
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>PSPredictor</AssemblyName>
     <RootNamespace>PSPredictor</RootNamespace>
   </PropertyGroup>

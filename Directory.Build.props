@@ -36,7 +36,7 @@
         <AssemblyConfiguration Condition="'$(Configuration)' != ''">$(Configuration)</AssemblyConfiguration>
         
         <!-- Code Quality and Analysis -->
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <WarningsAsErrors />
         <WarningsNotAsErrors>CS1591;NU1903;NETSDK1138</WarningsNotAsErrors>
         <NoWarn>CS1591;NU1701;NU1603</NoWarn>

@@ -207,7 +207,7 @@ jobs:
 
     - name: Real-world performance test
       run: |
-        $modulePath = "./src/PSPredictor/bin/Release/net8.0/PSPredictor.dll"
+        $modulePath = "./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
         
         if (Test-Path $modulePath) {
           Write-Host "🧪 Running real-world performance tests..."
@@ -286,7 +286,7 @@ jobs:
         Write-Host "🧠 Memory Usage Analysis"
         Write-Host "========================"
         
-        $modulePath = "./src/PSPredictor/bin/Release/net8.0/PSPredictor.dll"
+        $modulePath = "./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
         
         if (Test-Path $modulePath) {
           try {
