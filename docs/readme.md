@@ -4,11 +4,6 @@
 
 🚀 **Revolutionary PowerShell Binary Module transforming your terminal into a comprehensive IDE experience**
 
-[![Build Status](https://github.com/wangkanai/PSPredictor/actions/workflows/dotnet.yml/badge.svg)](https://github.com/wangkanai/PSPredictor/actions/workflows/dotnet.yml)
-[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PSPredictor?style=flat-square)](https://www.powershellgallery.com/packages/PSPredictor)
-[![License](https://img.shields.io/github/license/wangkanai/PSPredictor?style=flat-square)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/wangkanai/PSPredictor?style=flat-square)](https://github.com/wangkanai/PSPredictor/stargazers)
-
 > **⚠️ MAJOR VERSION TRANSITION**: PSPredictor v2.0 is a complete rewrite from PowerShell scripts to a high-performance
 > C# .NET 9.0 binary module with AI-powered intelligence and IDE-like features.
 
