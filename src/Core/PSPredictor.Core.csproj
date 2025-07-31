@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- Core Dependencies -->
+    <!-- (Most core packages are included via Directory.Build.targets) -->
+    <ItemGroup>
+        <!-- Additional core packages not covered by Directory.Build.targets -->
+    </ItemGroup>
+
+    <!-- Project References -->
+    <ItemGroup>
+        <ProjectReference Include="../Shared/PSPredictor.Shared.csproj"/>
+    </ItemGroup>
+
+    <!-- Build configurations are handled by Directory.Build.props -->
+
+</Project>

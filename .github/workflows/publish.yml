@@ -2,199 +2,333 @@ name: Publish to PowerShell Gallery
 
 on:
   push:
-    branches: [ main ]
-    paths:
-      - 'src/PSPredictor.psd1'
-      - 'src/PSPredictor.psm1'
-      - 'tests/**'
-      - '.github/workflows/publish.yml'
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'src/PSPredictor.psd1'
-      - 'src/PSPredictor.psm1'
-      - 'tests/**'
-      - '.github/workflows/publish.yml'
+    tags:
+      - 'v*.*.*'
+      - 'v*.*.*-*'
   workflow_dispatch:
     inputs:
-      force_publish:
-        description: 'Force publish even if version exists'
-        required: false
-        default: false
-        type: boolean
+      version:
+        description: 'Version to publish (e.g., 2.0.0-alpha.1)'
+        required: true
+        type: string
 
 permissions:
-  contents: write  # Required for creating releases
-  packages: read
+  contents: write
+  releases: write
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
 jobs:
-  test:
+  validate-version:
+    name: Validate Version
     runs-on: ubuntu-latest
-    name: Test Module
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Check PowerShell version
-      shell: pwsh
-      run: |
-        Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)"
-        Write-Host "Platform: $($PSVersionTable.Platform)"
-
-    - name: Install required modules
-      shell: pwsh
-      run: |
-        Write-Host "Installing required PowerShell modules..."
-        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber -WarningAction SilentlyContinue
-        Install-Module -Name Pester -Force -Scope CurrentUser -SkipPublisherCheck -AllowClobber -WarningAction SilentlyContinue
-        Write-Host "✅ Required modules installed"
-
-    - name: Test module manifest
-      shell: pwsh
-      run: |
-        Write-Host "🔍 Testing module manifest..."
-        $manifest = Test-ModuleManifest -Path './src/PSPredictor.psd1'
-        Write-Host "✅ Module manifest is valid"
-        Write-Host "  Name: $($manifest.Name)"
-        Write-Host "  Version: $($manifest.Version)"
-        Write-Host "  Author: $($manifest.Author)"
-        Write-Host "  PowerShell Version: $($manifest.PowerShellVersion)"
-
-    - name: Test module import
-      shell: pwsh
-      run: |
-        Write-Host "🔍 Testing module import..."
-        Import-Module './src/PSPredictor.psm1' -Force -WarningAction SilentlyContinue
-        Write-Host "✅ Module imported successfully"
-        
-        $functions = Get-Command -Module PSPredictor
-        Write-Host "✅ Found $($functions.Count) exported functions"
-
-    - name: Run build and test
-      shell: pwsh
-      run: |
-        Write-Host "🔨 Running build and test..."
-        ./build.ps1 -Task Test
-        Write-Host "✅ Build and test completed successfully"
-
-  publish:
-    needs: test
-    runs-on: ubuntu-latest
-    name: Publish to PowerShell Gallery
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    # NOTE: The "production" environment must be configured in GitHub repository settings
-    # Go to: Settings → Environments → New environment → "production"
-    # Add protection rules: required reviewers, deployment branches (main only)
-    # Add the PSGALLERY_API_KEY secret to this environment
-    environment: production
+    outputs:
+      version: ${{ steps.extract-version.outputs.version }}
+      is-prerelease: ${{ steps.extract-version.outputs.is-prerelease }}
     
     steps:
-    - name: Checkout repository
+    - name: Extract version from tag or input
+      id: extract-version
+      run: |
+        if [ "${{ github.event_name }}" == "push" ]; then
+          # Extract version from tag (remove 'v' prefix)
+          VERSION="${GITHUB_REF#refs/tags/v}"
+        else
+          # Use manual input
+          VERSION="${{ github.event.inputs.version }}"
+        fi
+        
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        
+        # Check if it's a prerelease (contains -, alpha, beta, rc, etc.)
+        if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-.*)?$ ]]; then
+          if [[ "$VERSION" =~ - ]]; then
+            echo "is-prerelease=true" >> $GITHUB_OUTPUT
+          else
+            echo "is-prerelease=false" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "❌ Invalid version format: $VERSION"
+          exit 1
+        fi
+        
+        echo "📦 Publishing version: $VERSION"
+        echo "🏷️ Is prerelease: $([ "$VERSION" =~ - ] && echo "true" || echo "false")"
+
+  build-and-package:
+    name: Build and Package
+    runs-on: windows-latest
+    needs: validate-version
+    environment: 
+      name: ${{ needs.validate-version.outputs.is-prerelease == 'true' && 'prerelease' || 'production' }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        global-json-file: global.json
+
+    - name: Update version in Directory.Build.props
+      run: |
+        $version = "${{ needs.validate-version.outputs.version }}"
+        $buildPropsPath = "Directory.Build.props"
+        $content = Get-Content $buildPropsPath -Raw
+        $updatedContent = $content -replace '<Version>.*</Version>', "<Version>$version</Version>"
+        Set-Content $buildPropsPath $updatedContent -NoNewline
+        Write-Host "✅ Updated version to: $version"
+      shell: pwsh
+
+    - name: Restore dependencies
+      run: dotnet restore --verbosity minimal
+
+    - name: Build solution (Release)
+      run: dotnet build --configuration Release --no-restore --verbosity minimal
+
+    - name: Run core tests
+      run: |
+        dotnet test tests/Unit/PSPredictor.Tests.csproj `
+          --configuration Release `
+          --no-build `
+          --verbosity minimal `
+          --logger "console;verbosity=minimal"
+
+        dotnet test tests/Core.Tests/PSPredictor.Core.Tests.csproj `
+          --configuration Release `
+          --no-build `
+          --verbosity minimal `
+          --logger "console;verbosity=minimal"
+      shell: pwsh
+
+    - name: Test module loading
+      run: |
+        $modulePath = "./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
+        if (Test-Path $modulePath) {
+          Write-Host "✅ Module found at: $modulePath"
+          try {
+            Import-Module $modulePath -Force -ErrorAction Stop
+            Write-Host "✅ Module loaded successfully"
+            
+            # Test basic cmdlets exist
+            $commands = @(
+              'Get-PSPredictorStatus',
+              'Set-PSPredictorMode',
+              'Install-PSPredictor'
+            )
+            
+            foreach ($cmd in $commands) {
+              $cmdlet = Get-Command $cmd -ErrorAction SilentlyContinue
+              if ($cmdlet) {
+                Write-Host "✅ $cmd cmdlet available"
+              } else {
+                Write-Host "❌ $cmd cmdlet not found"
+                throw "$cmd cmdlet not found"
+              }
+            }
+          } catch {
+            Write-Host "❌ Failed to load or test module: $_"
+            exit 1
+          }
+        } else {
+          Write-Host "❌ Module not found at expected path: $modulePath"
+          exit 1
+        }
+      shell: pwsh
+
+    - name: Create packages
+      run: |
+        dotnet pack src/PSPredictor/PSPredictor.csproj `
+          --configuration Release `
+          --no-build `
+          --verbosity minimal `
+          --output ./packages `
+          -p:IncludeSymbols=true `
+          -p:SymbolPackageFormat=snupkg
+      shell: pwsh
+
+
+    - name: Create GitHub Release
+      if: github.event_name == 'push'
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ github.ref_name }}
+        name: PSPredictor ${{ needs.validate-version.outputs.version }}
+        body: |
+          ## PSPredictor ${{ needs.validate-version.outputs.version }}
+          
+          🚀 **C# Binary Module - Advanced PowerShell Command-Line Enhancement**
+          
+          ### 📦 Installation
+          ```powershell
+          Install-Module PSPredictor -RequiredVersion ${{ needs.validate-version.outputs.version }}
+          ```
+          
+          ### ✨ Key Features
+          - **AI-Powered Predictions**: ML.NET integration with embedded models
+          - **Advanced Editing**: Cmd/Emacs/Vi editing modes with customizable key bindings
+          - **Real-time Syntax Highlighting**: PowerShell and CLI tool syntax coloring
+          - **Intelligent Auto-completion**: 26+ CLI tools with context-aware suggestions
+          - **Cross-platform Support**: Windows, Linux, and macOS compatibility
+          - **Performance Optimized**: <100ms response time for predictions
+          
+          ### 🔄 Migration from v1.x
+          This is a major version update with breaking changes. See migration guide in documentation.
+          
+          ### 📋 Full Changelog
+          See [CHANGELOG.md](https://github.com/wangkanai/PSPredictor/blob/main/CHANGELOG.md) for detailed changes.
+          
+          ### 📖 Documentation
+          - [User Guide](https://github.com/wangkanai/PSPredictor/blob/main/docs/user-guide/)
+          - [Architecture Documentation](https://github.com/wangkanai/PSPredictor/blob/main/docs/architecture/)
+          - [API Reference](https://github.com/wangkanai/PSPredictor/blob/main/docs/api/)
+        draft: false
+        prerelease: ${{ needs.validate-version.outputs.is-prerelease == 'true' }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload packages as artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: packages-${{ needs.validate-version.outputs.version }}
+        path: ./packages/*.nupkg
+        retention-days: 90
+
+  publish-to-powershell-gallery:
+    name: Publish to PowerShell Gallery
+    runs-on: windows-latest
+    needs: [validate-version, build-and-package]
+    if: success()
+    environment: 
+      name: ${{ needs.validate-version.outputs.is-prerelease == 'true' && 'prerelease' || 'production' }}
+    
+    steps:
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Check PowerShell version
-      shell: pwsh
-      run: |
-        Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)"
-
-    - name: Install required modules
-      shell: pwsh
-      run: |
-        Write-Host "Installing PowerShellGet..."
-        Install-Module -Name PowerShellGet -Force -Scope CurrentUser -SkipPublisherCheck -WarningAction SilentlyContinue
-        Install-Module -Name PSReadLine -Force -Scope CurrentUser -SkipPublisherCheck -WarningAction SilentlyContinue
-
-    - name: Get module version
-      id: version
-      shell: pwsh
-      run: |
-        $manifest = Import-PowerShellDataFile -Path './src/PSPredictor.psd1'
-        $version = $manifest.ModuleVersion
-        Write-Host "Module version: $version"
-        Write-Output "MODULE_VERSION=$version" >> $env:GITHUB_OUTPUT
-
-    - name: Check if version exists
-      id: version_check
-      shell: pwsh
-      run: |
-        try {
-          $existing = Find-Module -Name PSPredictor -RequiredVersion ${{ steps.version.outputs.MODULE_VERSION }} -Repository PSGallery -ErrorAction SilentlyContinue
-          if ($existing) {
-            Write-Host "⚠️ Version ${{ steps.version.outputs.MODULE_VERSION }} already exists in PowerShell Gallery"
-            Write-Output "VERSION_EXISTS=true" >> $env:GITHUB_OUTPUT
-          } else {
-            Write-Host "✅ Version ${{ steps.version.outputs.MODULE_VERSION }} is new"
-            Write-Output "VERSION_EXISTS=false" >> $env:GITHUB_OUTPUT
-          }
-        } catch {
-          Write-Host "✅ Version ${{ steps.version.outputs.MODULE_VERSION }} is new (module not found)"
-          Write-Output "VERSION_EXISTS=false" >> $env:GITHUB_OUTPUT
-        }
-
-    - name: Build module
-      shell: pwsh
-      run: |
-        Write-Host "🔨 Building module..."
-        ./build.ps1 -Task Build
-        Write-Host "✅ Module built successfully"
+    - name: Download packages
+      uses: actions/download-artifact@v4
+      with:
+        name: packages-${{ needs.validate-version.outputs.version }}
+        path: ./packages
 
     - name: Publish to PowerShell Gallery
-      if: steps.version_check.outputs.VERSION_EXISTS == 'false' || github.event.inputs.force_publish == 'true'
+      run: |
+        $ErrorActionPreference = "Stop"
+        $apiKey = "${{ secrets.PSGALLERY_API_KEY }}"
+        
+        # Validate API key
+        if ([string]::IsNullOrEmpty($apiKey)) {
+          Write-Host "⚠️ PSGALLERY_API_KEY not found, skipping PowerShell Gallery publish"
+          exit 0
+        }
+        
+        if ($apiKey.Length -lt 32) {
+          Write-Host "❌ PSGALLERY_API_KEY appears to be invalid (too short)"
+          exit 1
+        }
+        
+        Write-Host "🚀 Publishing to PowerShell Gallery"
+        
+        # Validate packages directory exists
+        if (-not (Test-Path "./packages")) {
+          Write-Host "❌ Packages directory not found"
+          exit 1
+        }
+        
+        # Find the main package (not symbols)
+        $packages = Get-ChildItem ./packages -Filter "PSPredictor.*.nupkg" | Where-Object { $_.Name -notlike "*symbols*" }
+        
+        if ($packages.Count -eq 0) {
+          Write-Host "❌ No PSPredictor packages found in ./packages"
+          Write-Host "Available files:"
+          Get-ChildItem ./packages | ForEach-Object { Write-Host "  - $($_.Name)" }
+          exit 1
+        }
+        
+        if ($packages.Count -gt 1) {
+          Write-Host "⚠️ Multiple packages found, using the first one:"
+          $packages | ForEach-Object { Write-Host "  - $($_.Name)" }
+        }
+        
+        $package = $packages[0]
+        Write-Host "📦 Publishing package: $($package.Name)"
+        Write-Host "📂 Package path: $($package.FullName)"
+        Write-Host "📊 Package size: $([math]::Round($package.Length / 1MB, 2)) MB"
+        
+        try {
+          # Validate the package before publishing
+          Write-Host "🔍 Validating package structure..."
+          
+          # Check if it's a valid NuGet package by attempting to read it
+          $tempDir = Join-Path $env:TEMP "package-validation-$(Get-Random)"
+          New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
+          
+          try {
+            # Extract and validate package contents
+            Add-Type -AssemblyName System.IO.Compression.FileSystem
+            [System.IO.Compression.ZipFile]::ExtractToDirectory($package.FullName, $tempDir)
+            
+            # Check for required files
+            $requiredFiles = @("PSPredictor.psd1", "PSPredictor.dll")
+            $missingFiles = @()
+            
+            foreach ($file in $requiredFiles) {
+              if (-not (Get-ChildItem -Path $tempDir -Recurse -Name $file -ErrorAction SilentlyContinue)) {
+                $missingFiles += $file
+              }
+            }
+            
+            if ($missingFiles.Count -gt 0) {
+              Write-Host "❌ Package validation failed - missing required files:"
+              $missingFiles | ForEach-Object { Write-Host "  - $_" }
+              exit 1
+            }
+            
+            Write-Host "✅ Package validation passed"
+            
+          } finally {
+            # Clean up temporary directory
+            if (Test-Path $tempDir) {
+              Remove-Item -Path $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+            }
+          }
+          
+          # Publish to PowerShell Gallery with retry logic
+          $maxRetries = 3
+          $retryCount = 0
+          $published = $false
+          
+          while (-not $published -and $retryCount -lt $maxRetries) {
+            try {
+              $retryCount++
+              if ($retryCount -gt 1) {
+                Write-Host "🔄 Retry attempt $retryCount of $maxRetries..."
+                Start-Sleep -Seconds (5 * $retryCount)  # Exponential backoff
+              }
+              
+              Publish-Module -Path $package.FullName -NuGetApiKey $apiKey -Repository PSGallery -Force -Verbose
+              $published = $true
+              Write-Host "✅ Successfully published to PowerShell Gallery"
+              
+            } catch {
+              Write-Host "❌ Publish attempt $retryCount failed: $($_.Exception.Message)"
+              if ($retryCount -eq $maxRetries) {
+                throw
+              }
+            }
+          }
+          
+        } catch {
+          Write-Host "❌ Failed to publish to PowerShell Gallery: $($_.Exception.Message)"
+          Write-Host "Exception details: $($_.Exception.ToString())"
+          exit 1
+        }
       shell: pwsh
       env:
         PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
-      run: |
-        if ([string]::IsNullOrEmpty($env:PSGALLERY_API_KEY)) {
-          Write-Error "❌ PSGALLERY_API_KEY secret is not set"
-          exit 1
-        }
-        
-        Write-Host "📤 Publishing PSPredictor v${{ steps.version.outputs.MODULE_VERSION }} to PowerShell Gallery..."
-        
-        try {
-          ./build.ps1 -Task Publish -ApiKey $env:PSGALLERY_API_KEY
-          Write-Host "✅ Successfully published PSPredictor v${{ steps.version.outputs.MODULE_VERSION }}"
-          Write-Host "🔗 Module available at: https://www.powershellgallery.com/packages/PSPredictor/${{ steps.version.outputs.MODULE_VERSION }}"
-        } catch {
-          Write-Error "❌ Failed to publish module: $_"
-          exit 1
-        }
-
-    - name: Create GitHub Release
-      if: steps.version_check.outputs.VERSION_EXISTS == 'false' || github.event.inputs.force_publish == 'true'
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: "v${{ steps.version.outputs.MODULE_VERSION }}"
-        name: "PSPredictor v${{ steps.version.outputs.MODULE_VERSION }}"
-        body: |
-          ## PSPredictor v${{ steps.version.outputs.MODULE_VERSION }}
-          
-          🚀 **Auto-published to PowerShell Gallery**
-          
-          ### Installation
-          ```powershell
-          Install-Module -Name PSPredictor -Scope CurrentUser
-          Import-Module PSPredictor
-          Install-PSPredictor
-          ```
-          
-          ### Links
-          - 📦 [PowerShell Gallery](https://www.powershellgallery.com/packages/PSPredictor/${{ steps.version.outputs.MODULE_VERSION }})
-          - 📚 [Documentation](https://github.com/wangkanai/PSPredictor#readme)
-          - 🐛 [Report Issues](https://github.com/wangkanai/PSPredictor/issues)
-          
-          ### What's Changed
-          - Enhanced PowerShell CLI completions
-          - Cross-platform compatibility improvements
-          - Performance optimizations
-          
-          **Full Changelog**: https://github.com/wangkanai/PSPredictor/commits/v${{ steps.version.outputs.MODULE_VERSION }}
-        draft: false
-        prerelease: false
-        generate_release_notes: true
-
-    - name: Skip publishing (version exists)
-      if: steps.version_check.outputs.VERSION_EXISTS == 'true' && github.event.inputs.force_publish != 'true'
-      run: |
-        echo "⏭️ Skipping publish - version ${{ steps.version.outputs.MODULE_VERSION }} already exists"
-        echo "💡 To force publish, increment the version in PSPredictor.psd1 or use workflow_dispatch with force_publish=true"

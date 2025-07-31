@@ -1,0 +1,59 @@
+{
+  "$schema": "https://repomix.com/schemas/latest/schema.json",
+  "input": {
+    "maxFileSize": 10485760,
+    "ignoreFile": ".repomixignore"
+  },
+  "output": {
+    "filePath": "repomix-output.xml",
+    "style": "xml",
+    "parsableStyle": true,
+    "fileSummary": true,
+    "directoryStructure": true,
+    "files": true,
+    "removeComments": false,
+    "removeEmptyLines": true,
+    "compress": false,
+    "topFilesLength": 15,
+    "showLineNumbers": true,
+    "truncateBase64": true,
+    "copyToClipboard": false,
+    "git": {
+      "sortByChanges": true,
+      "sortByChangesMaxCommits": 25,
+      "includeDiffs": false
+    }
+  },
+  "include": [
+    "src/**/*.cs",
+    "tests/**/*.cs",
+    "tools/**/*.cs",
+    "**/*.csproj",
+    "**/*.sln*",
+    "**/*.props",
+    "**/*.targets",
+    "**/*.config",
+    "scripts/**/*.ps1",
+    "scripts/**/*.psd1",
+    "scripts/**/*.psm1",
+    "CLAUDE.md",
+    "PRD.md",
+    "README.md",
+    "CONTRIBUTING.md",
+    "TASKS.md",
+    "global.json",
+    "nuget.config",
+    "Directory.*"
+  ],
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": []
+  },
+  "security": {
+    "enableSecurityCheck": true
+  },
+  "tokenCount": {
+    "encoding": "o200k_base"
+  }
+}

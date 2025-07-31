@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Project-Specific Properties -->
+    <IsTestProject>true</IsTestProject>
+    <AssemblyName>PSPredictor.Tests</AssemblyName>
+    <RootNamespace>PSPredictor.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Additional Test Dependencies not in Directory.Build.props -->
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" />
+    <PackageReference Include="AutoFixture.Xunit2" />
+    <PackageReference Include="NSubstitute" />
+  </ItemGroup>
+
+  <!-- PowerShell Testing Dependencies -->
+  <!-- (PowerShell packages are included via Directory.Build.targets) -->
+
+  <!-- Additional Test Coverage Tools -->
+  <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" PrivateAssets="all"/>
+  </ItemGroup>
+
+  <!-- Project References -->
+  <ItemGroup>
+    <ProjectReference Include="../../src/PSPredictor/PSPredictor.csproj" />
+    <ProjectReference Include="../../src/Core/PSPredictor.Core.csproj" />
+    <ProjectReference Include="../../src/Shared/PSPredictor.Shared.csproj" />
+  </ItemGroup>
+
+  <!-- Test Data Files -->
+  <ItemGroup>
+    <Content Include="TestData/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,242 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop, 'feature/*', 'release/*' ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+jobs:
+  build-and-test:
+    name: Build and Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+          - os: windows-latest
+            runtime: win-x64
+          - os: ubuntu-latest
+            runtime: linux-x64
+          - os: macos-latest
+            runtime: osx-x64
+
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        global-json-file: global.json
+
+    - name: Verify .NET installation
+      run: dotnet --info
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json', '**/*.csproj', '**/Directory.Packages.props') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Restore dependencies
+      run: dotnet restore --verbosity minimal
+
+    - name: Build solution (Debug)
+      run: dotnet build --configuration Debug --no-restore --verbosity minimal
+
+    - name: Build solution (Release)
+      run: dotnet build --configuration Release --no-restore --verbosity minimal
+
+    - name: List build outputs
+      run: |
+        Write-Host "Build outputs for Release configuration:"
+        Get-ChildItem -Path "./src/PSPredictor/bin/Release/" -Recurse -ErrorAction SilentlyContinue | Format-Table Name, FullName -AutoSize
+        Write-Host "\nBuild outputs for all test projects:"
+        Get-ChildItem -Path "./tests/*/bin/Release/" -Recurse -ErrorAction SilentlyContinue | Format-Table Name, FullName -AutoSize
+
+    - name: Run unit tests
+      run: |
+        dotnet test tests/Unit/PSPredictor.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Unit --collect:"XPlat Code Coverage"
+      continue-on-error: false
+
+    - name: Run core tests
+      run: |
+        dotnet test tests/Core.Tests/PSPredictor.Core.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Core --collect:"XPlat Code Coverage"
+      continue-on-error: false
+
+    - name: Run completion tests
+      run: |
+        dotnet test tests/Completion.Tests/PSPredictor.Completion.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Completion --collect:"XPlat Code Coverage"
+      continue-on-error: false
+
+    - name: Run AI tests
+      run: |
+        dotnet test tests/AI.Tests/PSPredictor.AI.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/AI --collect:"XPlat Code Coverage"
+      continue-on-error: false
+
+    - name: Run integration tests
+      run: |
+        dotnet test tests/Integration.Tests/PSPredictor.Integration.Tests.csproj --configuration Release --no-build --verbosity minimal --logger trx --results-directory TestResults/Integration --collect:"XPlat Code Coverage"
+      continue-on-error: false
+
+    - name: Install PowerShell (Linux/macOS)
+      if: runner.os != 'Windows'
+      run: |
+        set -euo pipefail
+        
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          # Install PowerShell on Ubuntu using the official method with error handling
+          echo "Installing PowerShell on Linux..."
+          
+          # Get Ubuntu version dynamically and validate
+          UBUNTU_VERSION=$(lsb_release -rs)
+          echo "Detected Ubuntu version: $UBUNTU_VERSION"
+          
+          # Download Microsoft package configuration with timeout and verification
+          TEMP_DEB="/tmp/packages-microsoft-prod.deb"
+          if ! wget --timeout=30 --tries=3 -q "https://packages.microsoft.com/config/ubuntu/$UBUNTU_VERSION/packages-microsoft-prod.deb" -O "$TEMP_DEB"; then
+            echo "Failed to download Microsoft package configuration"
+            exit 1
+          fi
+          
+          # Verify the downloaded file exists and has reasonable size
+          if [ ! -f "$TEMP_DEB" ] || [ ! -s "$TEMP_DEB" ]; then
+            echo "Downloaded file is invalid or empty"
+            exit 1
+          fi
+          
+          # Install with proper error handling
+          if ! sudo dpkg -i "$TEMP_DEB"; then
+            echo "Failed to install Microsoft package configuration"
+            exit 1
+          fi
+          
+          # Clean up temporary file
+          rm -f "$TEMP_DEB"
+          
+          # Update package list and install PowerShell
+          if ! sudo apt-get update; then
+            echo "Failed to update package list"
+            exit 1
+          fi
+          
+          if ! sudo apt-get install -y powershell; then
+            echo "Failed to install PowerShell"
+            exit 1
+          fi
+          
+          echo "PowerShell installed successfully on Linux"
+          
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          # Install PowerShell on macOS with error handling
+          echo "Installing PowerShell on macOS..."
+          
+          if ! brew install --cask powershell; then
+            echo "Failed to install PowerShell via Homebrew"
+            exit 1
+          fi
+          
+          echo "PowerShell installed successfully on macOS"
+        fi
+        
+        # Verify PowerShell installation
+        if command -v pwsh >/dev/null 2>&1; then
+          echo "✅ PowerShell installation verified"
+          pwsh --version
+        else
+          echo "❌ PowerShell installation failed - pwsh command not found"
+          exit 1
+        fi
+      shell: bash
+
+    - name: Test module loading
+      run: |
+        # Ensure we're in the correct directory
+        Set-Location $env:GITHUB_WORKSPACE
+        $currentDir = Get-Location
+        $modulePath = Join-Path $currentDir "src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
+        Write-Host "GitHub workspace: $env:GITHUB_WORKSPACE"
+        Write-Host "Current directory: $currentDir"
+        Write-Host "Checking for module at: $modulePath"
+        
+        if (Test-Path $modulePath) {
+          Write-Host "✅ Module found at: $modulePath"
+          try {
+            Import-Module $modulePath -Force -ErrorAction Stop
+            Write-Host "✅ Module loaded successfully"
+            
+            # Test basic cmdlets
+            $commands = Get-Command -Module PSPredictor -ErrorAction SilentlyContinue
+            if ($commands) {
+              Write-Host "✅ Found $($commands.Count) commands exported from PSPredictor module"
+              $commands | ForEach-Object { Write-Host "  - $($_.Name)" }
+            } else {
+              Write-Host "⚠️ No commands found in PSPredictor module"
+            }
+          } catch {
+            Write-Host "❌ Failed to load module: $($_.Exception.Message)"
+            Write-Host "Exception details: $($_.Exception.ToString())"
+            exit 1
+          }
+        } else {
+          Write-Host "❌ Module not found at expected path: $modulePath"
+          Write-Host "Listing contents of src directory:"
+          if (Test-Path "./src/") {
+            Get-ChildItem -Path "./src/" -Recurse -Name | Where-Object { $_ -like "*.dll" } | Sort-Object
+          }
+          Write-Host "Listing contents of build directory:"
+          if (Test-Path "./src/PSPredictor/bin/Release/") {
+            Get-ChildItem -Path "./src/PSPredictor/bin/Release/" -Recurse -Name | Sort-Object
+          } else {
+            Write-Host "Build directory does not exist"
+          }
+          exit 1
+        }
+
+    - name: Create NuGet packages
+      run: dotnet pack --configuration Release --no-build --verbosity minimal --output ./packages
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ matrix.os }}
+        path: TestResults/
+        retention-days: 7
+
+    - name: Upload packages
+      uses: actions/upload-artifact@v4
+      if: matrix.os == 'windows-latest'
+      with:
+        name: nuget-packages
+        path: ./packages/*.nupkg
+        retention-days: 30
+
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v4
+      if: matrix.os == 'windows-latest'
+      with:
+        name: coverage-reports
+        path: TestResults/**/coverage.cobertura.xml
+        retention-days: 7

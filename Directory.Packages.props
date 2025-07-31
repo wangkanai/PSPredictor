@@ -1,0 +1,118 @@
+<Project>
+    <PropertyGroup>
+        <!-- Enable central package management -->
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- .NET 9.0 Runtime and Core Packages -->
+        <PackageVersion Include="Microsoft.PowerShell.SDK" Version="7.4.6"/>
+        <PackageVersion Include="System.Management.Automation" Version="7.4.6"/>
+
+        <!-- Microsoft Extensions (Updated for .NET 9.0) -->
+        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0"/>
+
+        <!-- JSON Serialization (Updated for .NET 9.0) -->
+        <PackageVersion Include="System.Text.Json" Version="9.0.0"/>
+        <PackageVersion Include="Newtonsoft.Json" Version="13.0.3"/>
+
+        <!-- ML.NET Packages -->
+        <PackageVersion Include="Microsoft.ML" Version="3.0.1"/>
+        <PackageVersion Include="Microsoft.ML.AutoML" Version="0.21.1"/>
+        <PackageVersion Include="Microsoft.ML.FastTree" Version="3.0.1"/>
+        <PackageVersion Include="Microsoft.ML.LightGbm" Version="3.0.1"/>
+
+        <!-- Database Packages (Updated for .NET 9.0) -->
+        <PackageVersion Include="Microsoft.Data.Sqlite" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0"/>
+        <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.118"/>
+
+        <!-- Performance and Diagnostics (Updated for .NET 9.0) -->
+        <PackageVersion Include="System.Diagnostics.PerformanceCounter" Version="9.0.0"/>
+        <PackageVersion Include="System.Diagnostics.Process" Version="4.3.0"/>
+        <PackageVersion Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.1.8"/>
+
+        <!-- Testing Framework Packages -->
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
+        <PackageVersion Include="xunit" Version="2.9.2"/>
+        <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2"/>
+        <PackageVersion Include="FluentAssertions" Version="7.0.0"/>
+        <PackageVersion Include="AutoFixture" Version="4.18.1"/>
+        <PackageVersion Include="AutoFixture.Xunit2" Version="4.18.1"/>
+        <PackageVersion Include="Moq" Version="4.20.72"/>
+        <PackageVersion Include="NSubstitute" Version="5.1.0"/>
+
+        <!-- Test Coverage -->
+        <PackageVersion Include="coverlet.collector" Version="6.0.2"/>
+        <PackageVersion Include="coverlet.msbuild" Version="6.0.2"/>
+
+        <!-- Performance Testing -->
+        <PackageVersion Include="BenchmarkDotNet" Version="0.14.0"/>
+        <PackageVersion Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.14.0"/>
+        <PackageVersion Include="BenchmarkDotNet.Annotations" Version="0.14.0"/>
+
+        <!-- Code Analysis -->
+        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0"/>
+        <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4"/>
+
+        <!-- Utilities -->
+        <PackageVersion Include="Scriban" Version="5.10.0"/>
+        <PackageVersion Include="CsvHelper" Version="33.0.1"/>
+        <PackageVersion Include="CliWrap" Version="3.6.6"/>
+        <PackageVersion Include="System.IO.Abstractions" Version="21.1.3"/>
+        <PackageVersion Include="System.CommandLine" Version="2.0.0-beta4.22272.1"/>
+
+        <!-- Source Control and Versioning -->
+        <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0"/>
+        <PackageVersion Include="Nerdbank.GitVersioning" Version="3.6.133"/>
+        
+        <!-- Wangkanai Ecosystem -->
+        <PackageVersion Include="Wangkanai.System" Version="5.8.0"/>
+        
+        <!-- Additional Microsoft Extensions -->
+        <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.FileSystemGlobbing" Version="9.0.0"/>
+        
+        <!-- System Packages -->
+        <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0"/>
+        <PackageVersion Include="System.ComponentModel.DataAnnotations" Version="4.3.0"/>
+        <PackageVersion Include="System.Memory" Version="4.5.5"/>
+        <PackageVersion Include="System.Buffers" Version="4.5.1"/>
+        <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.5.4"/>
+        <PackageVersion Include="System.ValueTuple" Version="4.5.0"/>
+        <PackageVersion Include="System.Console" Version="4.3.1"/>
+        <PackageVersion Include="System.Text.Encodings.Web" Version="9.0.0"/>
+        <PackageVersion Include="System.Text.RegularExpressions" Version="4.3.1"/>
+        
+        <!-- PowerShell Specific -->
+        <PackageVersion Include="PowerShellStandard.Library" Version="5.1.1"/>
+        
+        <!-- Reflection and Emit -->
+        <PackageVersion Include="System.Reflection.Emit" Version="4.7.0"/>
+        <PackageVersion Include="System.Reflection.Emit.Lightweight" Version="4.7.0"/>
+        <PackageVersion Include="System.Reflection.Metadata" Version="9.0.0"/>
+        
+        <!-- Platform and Security -->
+        <PackageVersion Include="Microsoft.Win32.Primitives" Version="4.3.0"/>
+        <PackageVersion Include="Microsoft.Win32.Registry" Version="5.0.0"/>
+        <PackageVersion Include="System.Security.Cryptography.Primitives" Version="4.3.0"/>
+        <PackageVersion Include="System.Security.Principal.Windows" Version="5.0.0"/>
+        
+        <!-- Network -->
+        <PackageVersion Include="System.Net.Http" Version="4.3.4"/>
+        <PackageVersion Include="System.Net.Primitives" Version="4.3.1"/>
+        
+    </ItemGroup>
+</Project>

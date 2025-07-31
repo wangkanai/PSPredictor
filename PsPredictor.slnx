@@ -1,0 +1,39 @@
+<Solution>
+  <Folder Name="/.claude/">
+    <File Path="CLAUDE.md" />
+    <File Path="PRD.md" />
+    <File Path="repomix.config.json" />
+    <File Path=".repomixignore" />
+  </Folder>
+  <Folder Name="/.github/">
+    <File Path=".github\FUNDING.yml" />
+    <File Path=".github\workflows\dotnet.yml" />
+    <File Path=".github\workflows\performance.yml" />
+    <File Path=".github\workflows\publish.yml" />
+  </Folder>
+  <Folder Name="/.solutions/">
+    <File Path="Directory.Packages.props" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="README.md" />
+    <File Path="LICENSE" />
+    <File Path="global.json" />
+    <File Path=".gitignore" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests\AI.Tests\PSPredictor.AI.Tests.csproj" />
+    <Project Path="tests\Completion.Tests\PSPredictor.Completion.Tests.csproj" />
+    <Project Path="tests\Core.Tests\PSPredictor.Core.Tests.csproj" />
+    <Project Path="tests\Integration.Tests\PSPredictor.Integration.Tests.csproj" />
+    <Project Path="tests\Performance.Tests\PSPredictor.Performance.Tests.csproj" />
+    <Project Path="tests\Unit\PSPredictor.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools\CodeGen\PSPredictor.CodeGen.csproj" />
+    <Project Path="tools\DevTools\PSPredictor.DevTools.csproj" />
+    <Project Path="tools\ModelTrainer\PSPredictor.ModelTrainer.csproj" />
+  </Folder>
+  <Project Path="src\Core\PSPredictor.Core.csproj" />
+  <Project Path="src\PSPredictor\PSPredictor.csproj" />
+  <Project Path="src\Shared\PSPredictor.Shared.csproj" />
+</Solution>

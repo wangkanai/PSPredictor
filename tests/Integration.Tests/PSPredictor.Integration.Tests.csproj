@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <AssemblyName>PSPredictor.Integration.Tests</AssemblyName>
+    <RootNamespace>PSPredictor.Integration.Tests</RootNamespace>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- Test-specific Dependencies (common test dependencies provided by Directory.Build.targets) -->
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" />
+    <PackageReference Include="AutoFixture.Xunit2" />
+    <PackageReference Include="NSubstitute" />
+  </ItemGroup>
+
+  <!-- Integration Testing Dependencies -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+  </ItemGroup>
+
+  <!-- PowerShell Integration Dependencies -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.PowerShell.SDK" />
+    <PackageReference Include="System.Management.Automation" />
+  </ItemGroup>
+
+  <!-- CLI Tool Integration -->
+  <ItemGroup>
+    <PackageReference Include="CliWrap" />
+    <PackageReference Include="System.Diagnostics.Process" />
+  </ItemGroup>
+
+  <!-- Database Testing -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
+  </ItemGroup>
+
+  <!-- Project References -->
+  <ItemGroup>
+    <ProjectReference Include="../../src/PSPredictor/PSPredictor.csproj" />
+    <ProjectReference Include="../../src/Core/PSPredictor.Core.csproj" />
+    <ProjectReference Include="../../src/Shared/PSPredictor.Shared.csproj" />
+  </ItemGroup>
+
+  <!-- Integration Test Configuration -->
+  <ItemGroup>
+    <Content Include="TestData/**/*" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Configuration/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

@@ -1,16 +1,30 @@
 # PowerShell Module .gitignore
 
+## AI Generated Files
+repomix-output.*
+.idea/
+.continue/
+.vercel/
+.claude/
+
+## MCP Server Generated Files
+mcp-output/
+mcp-cache/
+
 ## Build Artifacts
+artifacts/
 build/
 dist/
+packages/
+bin/
+obj/
+*.xml
 *.zip
 *.nupkg
 
 ## PowerShell Module Directories
 # User installed modules
-Documents/PowerShell/Modules/
-Documents/WindowsPowerShell/Modules/
-.local/share/powershell/Modules/
+
 
 # Module cache and temporary files
 *.tmp
@@ -148,6 +162,9 @@ docs/.sass-cache/
 config.local.json
 
 ## Package Manager Files
+# NuGet lock files
+packages.lock.json
+
 # Chocolatey
 *.chocolatey
 
@@ -193,9 +210,39 @@ temp_module/
 *.der
 
 ## Custom Project Specific
-# Add any project-specific patterns here
+# PSPredictor specific patterns
+
+# AI/ML Model files (large binary files)
+*.model
+*.onnx
+*.mlnet
+src/**/Models/*.zip
+ai-models/
+model-cache/
+
+# Performance testing outputs
+benchmark-results/
+perf-logs/
+*.benchmark
+
+# PowerShell debugging and profiling
+*.psprofile
+profile-*.json
+debug-*.log
 
 # Local testing directories
 test-output/
 sandbox/
 scratch/
+demo-output/
+
+# PSPredictor runtime files
+.pspredict-cache/
+completion-cache/
+prediction-models/
+user-data/
+
+# Development tools output
+codegen-output/
+model-training-data/
+training-results/

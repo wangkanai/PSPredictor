@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Additional Dependencies -->
+  <!-- (Core packages are included via Directory.Build.targets) -->
+  <ItemGroup>
+    <!-- No additional packages needed -->
+  </ItemGroup>
+
+  <!-- Build configurations are handled by Directory.Build.props -->
+
+</Project>
