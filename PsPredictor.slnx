@@ -6,7 +6,8 @@
   </Folder>
   <Folder Name="/.github/">
     <File Path=".github\FUNDING.yml" />
-    <File Path=".github\workflows\test.yml" />
+    <File Path=".github\workflows\dotnet.yml" />
+    <File Path=".github\workflows\performance.yml" />
     <File Path=".github\workflows\publish.yml" />
   </Folder>
   <Folder Name="/.solutions/">
