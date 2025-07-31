@@ -38,7 +38,7 @@
 
 ### System Architecture Layers
 
-```
+```text
 ┌────────────────────────────────────────────────────────────────┐
 │                    PowerShell Host Layer                       │
 │  ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐   │
@@ -1185,7 +1185,7 @@ public sealed class PSPredictorConfigurationManager : IPSPredictorConfiguration
 
 **Test Organization**:
 
-```
+```text
 tests/
 ├── PSPredictor.Tests/                 # Main unit tests
 │   ├── Core/                          # Core engine tests

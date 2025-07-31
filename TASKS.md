@@ -1,6 +1,7 @@
 # TASKS.md - PSPredictor Development Tasks
 
-Comprehensive task list for improving and extending PSPredictor CLI completions based on lessons learned from implementing `dotnet` and `claude` completions.
+Comprehensive task list for improving and extending PSPredictor CLI completions based on lessons learned
+from implementing `dotnet` and `claude` completions.
 
 ---
 
