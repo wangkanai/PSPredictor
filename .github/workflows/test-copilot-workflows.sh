@@ -61,7 +61,7 @@ fi
 
 # Test 4: Check for trusted bot patterns
 echo "🤖 Checking trusted bot configurations..."
-TRUSTED_BOTS=("github-actions\[bot\]" "dependabot\[bot\]" "copilot-autofix\[bot\]")
+TRUSTED_BOTS=("github-actions[bot]" "dependabot[bot]" "copilot-autofix[bot]")
 
 for bot in "${TRUSTED_BOTS[@]}"; do
     if grep -q "$bot" "$APPROVE_WORKFLOW" && grep -q "$bot" "$MERGE_WORKFLOW"; then
