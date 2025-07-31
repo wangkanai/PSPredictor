@@ -26,7 +26,6 @@
     <File Path="global.json" />
     <File Path=".gitignore" />
     <File Path=".editorconfig" />
-    <File Path=".markdownlint.json" />
     <File Path=".markdownlintignore" />
     <File Path=".markdownlint-cli2.jsonc" />
   </Folder>
