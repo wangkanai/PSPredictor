@@ -11,10 +11,12 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <!-- Benchmark Dependencies (common test dependencies provided by Directory.Build.targets) -->
+  <!-- Benchmark Dependencies -->
   <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" />
     <PackageReference Include="BenchmarkDotNet.Annotations" />
+    <PackageReference Include="System.CommandLine" />
   </ItemGroup>
 
   <!-- Memory and Performance Analysis -->
