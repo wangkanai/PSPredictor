@@ -31,7 +31,7 @@ jobs:
             PR_NUMBER="${{ github.event.pull_request.number }}"
           elif [[ "${{ github.event_name }}" == "check_suite" ]]; then
             # Extract PR number from check suite
-            PR_NUMBER=$(echo "${{ github.event.check_suite.pull_requests[0].number }}")
+            PR_NUMBER=$(echo "${{ github.event.check_suite.pull_requests[0].number }}" 2>/dev/null || echo "")
           elif [[ "${{ github.event_name }}" == "status" ]]; then
             # Extract PR number from commit status
             PR_NUMBER=$(gh pr list --state open --json number,headRefOid \
