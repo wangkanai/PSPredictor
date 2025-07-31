@@ -15,9 +15,9 @@ jobs:
     name: Auto-approve Copilot PRs
     runs-on: ubuntu-latest
     if: >
-      github.event.pull_request.user.login == 'github-actions[bot]' ||
-      github.event.pull_request.user.login == 'dependabot[bot]' ||
-      github.event.pull_request.user.login == 'copilot-autofix[bot]' ||
+      github.actor == 'github-actions[bot]' ||
+      github.actor == 'dependabot[bot]' ||
+      github.actor == 'copilot-autofix[bot]' ||
       contains(github.event.pull_request.head.ref, 'copilot-autofix') ||
       contains(github.event.pull_request.title, 'Copilot Autofix')
 
