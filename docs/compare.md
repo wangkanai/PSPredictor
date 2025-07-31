@@ -54,8 +54,8 @@ dependencies
 
 ## 2. Input Handling & Editing Capabilities
 
-| Feature                | PSReadLine     | posh-git               | PSPredictor v2.0                    |
-|------------------------|----------------|------------------------|-------------------------------------|
+| Feature                | PSReadLine      | posh-git                | PSPredictor v2.0                    |
+|------------------------|------------ ----|------------ ------------|-------------------------------------|
 | **Multi-line Editing** | ✅ Basic        | ❌ No                   | ✅ Advanced with IDE features        |
 | **Editing Modes**      | ✅ Vi, Emacs    | ❌ Relies on PSReadLine | ✅ Cmd, Vi, Emacs (enhanced)         |
 | **Key Bindings**       | ✅ Customizable | ❌ Limited              | ✅ Fully customizable with macros    |
