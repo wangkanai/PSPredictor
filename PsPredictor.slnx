@@ -18,7 +18,6 @@
     <File Path="README.md" />
     <File Path="LICENSE" />
     <File Path="global.json" />
-    <File Path="nuget.config" />
     <File Path=".gitignore" />
   </Folder>
   <Folder Name="/tests/">
