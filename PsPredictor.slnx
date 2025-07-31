@@ -15,7 +15,6 @@
     <File Path=".github\workflows\dotnet.yml" />
     <File Path=".github\workflows\performance.yml" />
     <File Path=".github\workflows\publish.yml" />
-    <File Path=".github\workflows\markdownlint.yml" />
   </Folder>
   <Folder Name="/.solutions/">
     <File Path="Directory.Packages.props" />
