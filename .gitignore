@@ -12,14 +12,15 @@ mcp-output/
 mcp-cache/
 
 ## Build Artifacts
-#artifacts/
+artifacts/
 build/
 dist/
 packages/
-*.zip
-*.nupkg
 bin/
 obj/
+*.xml
+*.zip
+*.nupkg
 
 ## PowerShell Module Directories
 # User installed modules

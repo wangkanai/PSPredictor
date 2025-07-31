@@ -3,7 +3,6 @@
     <PropertyGroup>
         <!-- Framework and Language Settings -->
         <TargetFramework>net9.0</TargetFramework>
-        <LangVersion>13.0</LangVersion>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -36,10 +35,10 @@
         <AssemblyConfiguration Condition="'$(Configuration)' != ''">$(Configuration)</AssemblyConfiguration>
         
         <!-- Code Quality and Analysis -->
-        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <WarningsAsErrors />
         <WarningsNotAsErrors>CS1591;NU1903;NETSDK1138</WarningsNotAsErrors>
-        <NoWarn>CS1591;NU1701;NU1603</NoWarn>
+        <NoWarn>CS1591;NU1701;NU1603;NU1504</NoWarn>
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <AnalysisLevel>latest</AnalysisLevel>
         <AnalysisMode>AllEnabledByDefault</AnalysisMode>
@@ -112,7 +111,7 @@
         <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
         <Deterministic>true</Deterministic>
         <ProduceOnlyReferenceAssembly>false</ProduceOnlyReferenceAssembly>
-        <PlatformTarget>AnyCPU</PlatformTarget>
+        <PlatformTarget>x64</PlatformTarget>
         <Prefer32Bit>false</Prefer32Bit>
         <Features>strict</Features>
         
