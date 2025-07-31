@@ -19,7 +19,7 @@
 - **ML.NET Integration**: Local machine learning with embedded models for intelligent predictions
 - **Context-Aware Suggestions**: Understands your workflow and environment for smarter completions
 - **Predictive IntelliSense**: IDE-like IntelliSense experience directly in your terminal
-- **Command History Learning**: Learns from your patterns to provide personalized suggestions
+- **Command History Learning**: Learn from your patterns to provide personalized suggestions
 
 ### 🎨 IDE-Like Terminal Experience
 

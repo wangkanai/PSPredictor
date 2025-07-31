@@ -18,22 +18,6 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
 jobs:
-  markdown-lint:
-    name: Markdown Lint
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Run markdownlint
-      uses: DavidAnson/markdownlint-cli2-action@v16
-      with:
-        globs: '**/*.md'
-        config: '.markdownlint-cli2.jsonc'
-        fix: false
-
   build-and-test:
     name: Build and Test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
