@@ -12,6 +12,10 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: write
+  releases: write
+
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
@@ -152,12 +156,10 @@ jobs:
 
     - name: Create GitHub Release
       if: github.event_name == 'push'
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: ncipollo/release-action@v1
       with:
-        tag_name: ${{ github.ref }}
-        release_name: PSPredictor ${{ needs.validate-version.outputs.version }}
+        tag: ${{ github.ref_name }}
+        name: PSPredictor ${{ needs.validate-version.outputs.version }}
         body: |
           ## PSPredictor ${{ needs.validate-version.outputs.version }}
           
@@ -188,6 +190,7 @@ jobs:
           - [API Reference](https://github.com/wangkanai/PSPredictor/blob/main/docs/api/)
         draft: false
         prerelease: ${{ needs.validate-version.outputs.is-prerelease == 'true' }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload packages as artifacts
       uses: actions/upload-artifact@v4
@@ -216,23 +219,114 @@ jobs:
 
     - name: Publish to PowerShell Gallery
       run: |
+        $ErrorActionPreference = "Stop"
         $apiKey = "${{ secrets.PSGALLERY_API_KEY }}"
         
+        # Validate API key
         if ([string]::IsNullOrEmpty($apiKey)) {
           Write-Host "⚠️ PSGALLERY_API_KEY not found, skipping PowerShell Gallery publish"
           exit 0
         }
         
+        if ($apiKey.Length -lt 32) {
+          Write-Host "❌ PSGALLERY_API_KEY appears to be invalid (too short)"
+          exit 1
+        }
+        
         Write-Host "🚀 Publishing to PowerShell Gallery"
         
-        # Find the main package (not symbols)
-        $package = Get-ChildItem ./packages -Filter "PSPredictor.*.nupkg" | Where-Object { $_.Name -notlike "*symbols*" } | Select-Object -First 1
+        # Validate packages directory exists
+        if (-not (Test-Path "./packages")) {
+          Write-Host "❌ Packages directory not found"
+          exit 1
+        }
         
-        if ($package) {
-          Write-Host "📦 Publishing: $($package.Name)"
-          Publish-Module -Path $package.FullName -NuGetApiKey $apiKey -Repository PSGallery -Force
-        } else {
-          Write-Host "❌ No package found to publish to PowerShell Gallery"
+        # Find the main package (not symbols)
+        $packages = Get-ChildItem ./packages -Filter "PSPredictor.*.nupkg" | Where-Object { $_.Name -notlike "*symbols*" }
+        
+        if ($packages.Count -eq 0) {
+          Write-Host "❌ No PSPredictor packages found in ./packages"
+          Write-Host "Available files:"
+          Get-ChildItem ./packages | ForEach-Object { Write-Host "  - $($_.Name)" }
+          exit 1
+        }
+        
+        if ($packages.Count -gt 1) {
+          Write-Host "⚠️ Multiple packages found, using the first one:"
+          $packages | ForEach-Object { Write-Host "  - $($_.Name)" }
+        }
+        
+        $package = $packages[0]
+        Write-Host "📦 Publishing package: $($package.Name)"
+        Write-Host "📂 Package path: $($package.FullName)"
+        Write-Host "📊 Package size: $([math]::Round($package.Length / 1MB, 2)) MB"
+        
+        try {
+          # Validate the package before publishing
+          Write-Host "🔍 Validating package structure..."
+          
+          # Check if it's a valid NuGet package by attempting to read it
+          $tempDir = Join-Path $env:TEMP "package-validation-$(Get-Random)"
+          New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
+          
+          try {
+            # Extract and validate package contents
+            Add-Type -AssemblyName System.IO.Compression.FileSystem
+            [System.IO.Compression.ZipFile]::ExtractToDirectory($package.FullName, $tempDir)
+            
+            # Check for required files
+            $requiredFiles = @("PSPredictor.psd1", "PSPredictor.dll")
+            $missingFiles = @()
+            
+            foreach ($file in $requiredFiles) {
+              if (-not (Get-ChildItem -Path $tempDir -Recurse -Name $file -ErrorAction SilentlyContinue)) {
+                $missingFiles += $file
+              }
+            }
+            
+            if ($missingFiles.Count -gt 0) {
+              Write-Host "❌ Package validation failed - missing required files:"
+              $missingFiles | ForEach-Object { Write-Host "  - $_" }
+              exit 1
+            }
+            
+            Write-Host "✅ Package validation passed"
+            
+          } finally {
+            # Clean up temporary directory
+            if (Test-Path $tempDir) {
+              Remove-Item -Path $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+            }
+          }
+          
+          # Publish to PowerShell Gallery with retry logic
+          $maxRetries = 3
+          $retryCount = 0
+          $published = $false
+          
+          while (-not $published -and $retryCount -lt $maxRetries) {
+            try {
+              $retryCount++
+              if ($retryCount -gt 1) {
+                Write-Host "🔄 Retry attempt $retryCount of $maxRetries..."
+                Start-Sleep -Seconds (5 * $retryCount)  # Exponential backoff
+              }
+              
+              Publish-Module -Path $package.FullName -NuGetApiKey $apiKey -Repository PSGallery -Force -Verbose
+              $published = $true
+              Write-Host "✅ Successfully published to PowerShell Gallery"
+              
+            } catch {
+              Write-Host "❌ Publish attempt $retryCount failed: $($_.Exception.Message)"
+              if ($retryCount -eq $maxRetries) {
+                throw
+              }
+            }
+          }
+          
+        } catch {
+          Write-Host "❌ Failed to publish to PowerShell Gallery: $($_.Exception.Message)"
+          Write-Host "Exception details: $($_.Exception.ToString())"
           exit 1
         }
       shell: pwsh
