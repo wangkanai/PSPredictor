@@ -21,11 +21,11 @@
     <File Path=".gitignore" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests\AI.Tests\PSPredictor.AI.Tests.csproj" />
-    <Project Path="tests\Completion.Tests\PSPredictor.Completion.Tests.csproj" />
-    <Project Path="tests\Core.Tests\PSPredictor.Core.Tests.csproj" />
-    <Project Path="tests\Integration.Tests\PSPredictor.Integration.Tests.csproj" />
-    <Project Path="tests\Performance.Tests\PSPredictor.Performance.Tests.csproj" />
+    <Project Path="tests\AI\PSPredictor.AI.Tests.csproj" />
+    <Project Path="tests\Completion\PSPredictor.Completion.Tests.csproj" />
+    <Project Path="tests\Core\PSPredictor.Core.Tests.csproj" />
+    <Project Path="tests\Integration\PSPredictor.Integration.Tests.csproj" />
+    <Project Path="tests\Performance\PSPredictor.Performance.Tests.csproj" />
     <Project Path="tests\Unit\PSPredictor.Tests.csproj" />
   </Folder>
   <Folder Name="/tools/">
