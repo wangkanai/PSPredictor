@@ -9,6 +9,8 @@
     <RootNamespace>PSPredictor.Performance.Tests</RootNamespace>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <OutputType>Exe</OutputType>
+    <UseAppHost>true</UseAppHost>
+    <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
 
   <!-- Benchmark Dependencies -->
@@ -44,6 +46,14 @@
     <Content Include="TestData/**/*" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="Benchmarks/**/*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
+
+  <!-- Platform Configuration for Performance -->
+  <PropertyGroup>
+    <IsARM64 Condition="'$(PROCESSOR_ARCHITECTURE)' == 'ARM64' OR '$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)' == 'Arm64'">true</IsARM64>
+    <PlatformTarget Condition="'$(IsARM64)' == 'true'">AnyCPU</PlatformTarget>
+    <PlatformTarget Condition="'$(IsARM64)' != 'true'">x64</PlatformTarget>
+    <DefineConstants Condition="'$(IsARM64)' == 'true'">$(DefineConstants);NO_MLNET</DefineConstants>
+  </PropertyGroup>
 
   <!-- Build Configuration for Performance -->
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
