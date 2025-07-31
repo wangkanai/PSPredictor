@@ -436,7 +436,7 @@ $SystemConfigPath = "$env:ProgramData\PSPredictor\config.json"     # Windows
 $SystemConfigPath = "/etc/pspredict/config.json"                   # Linux/macOS
 
 # Profile locations
-$ProfilePath = "$env:USERPROFILE\.pspredict\profiles\"             # Windows
+$ProfilePath = Join-Path $env:USERPROFILE '.pspredict\profiles'    # Windows
 $ProfilePath = "$env:HOME/.pspredict/profiles/"                    # Linux/macOS
 
 # View configuration file paths
