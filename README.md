@@ -12,6 +12,15 @@
 > **⚠️ MAJOR VERSION TRANSITION**: PSPredictor v2.0 is a complete rewrite from PowerShell scripts to a high-performance
 > C# .NET 9.0 binary module with AI-powered intelligence and IDE-like features.
 
+## 📚 Legacy Version Reference
+
+**Looking for PSPredictor v1.x?** The previous PowerShell script-based version is available at:
+[📖 PSPredictor v1.x Documentation](https://github.com/wangkanai/PSPredictor/blob/release/1.3/README.md)
+
+**Migration Path**: v1.x users can upgrade to v2.0 for significantly improved performance, AI-powered intelligence, and
+native cross-platform support. See our [migration guide](docs/archives/2025-07-30-PROJECT.md) for detailed transition
+instructions.
+
 ## ✨ Revolutionary Features
 
 ### 🧠 AI-Powered Intelligence
@@ -131,7 +140,7 @@ docker run --memory=invalid              # Visual error indication with suggesti
 if ($condition)
 {
   Get-Process | Where-Object {
-  # Automatic indentation
+    # Automatic indentation
     $_.CPU -gt 100                    # Syntax highlighting
   }
 }                                         # Bracket matching
