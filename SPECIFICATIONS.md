@@ -23,19 +23,19 @@
 
 ```yaml
 Windows:
-  versions: [Windows 10, Windows 11, Windows Server 2019+]
-  architectures: [x64, ARM64]
-  powershell: [PowerShell 5.1+, PowerShell Core 7+]
+  versions: [ Windows 10, Windows 11, Windows Server 2019+ ]
+  architectures: [ x64, ARM64 ]
+  powershell: [ PowerShell 5.1+, PowerShell Core 7+ ]
 
 Linux:
-  distributions: [Ubuntu 20.04+, CentOS 8+, RHEL 8+, Debian 11+]
-  architectures: [x64, ARM64]
-  powershell: [PowerShell Core 7+]
+  distributions: [ Ubuntu 20.04+, CentOS 8+, RHEL 8+, Debian 11+ ]
+  architectures: [ x64, ARM64 ]
+  powershell: [ PowerShell Core 7+ ]
 
 macOS:
-  versions: [macOS 11+ (Big Sur), macOS 12+ (Monterey), macOS 13+ (Ventura), macOS 14+ (Sonoma)]
-  architectures: [x64 (Intel), ARM64 (Apple Silicon M1/M2/M3)]
-  powershell: [PowerShell Core 7+]
+  versions: [ macOS 11+ (Big Sur), macOS 12+ (Monterey), macOS 13+ (Ventura), macOS 14+ (Sonoma) ]
+  architectures: [ x64 (Intel), ARM64 (Apple Silicon M1/M2/M3) ]
+  powershell: [ PowerShell Core 7+ ]
 ```
 
 **Architecture-Specific Features**:
@@ -55,7 +55,7 @@ completion_generation:
   measurement: P95 response time
 
 ai_prediction:
-  target: <100ms  
+  target: <100ms
   maximum: 200ms
   measurement: P95 response time
 
@@ -67,7 +67,7 @@ git_completion:
 
 syntax_highlighting:
   target: <20ms
-  maximum: 50ms  
+  maximum: 50ms
   measurement: P99 response time
 
 rendering_updates:
@@ -116,41 +116,41 @@ cache_limits:
 
 ```powershell
 @{
-    RootModule = 'PSPredictor.dll'
-    ModuleVersion = '2.0.0'
-    GUID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
-    Author = 'PSPredictor Team'
-    CompanyName = 'Wangkanai'
-    Copyright = '(c) 2025 Wangkanai. All rights reserved.'
-    Description = 'AI-powered PowerShell command prediction and completion'
-    PowerShellVersion = '7.5'
-    DotNetFrameworkVersion = '9.0'
-    CLRVersion = '9.0'
-    RequiredModules = @()
-    RequiredAssemblies = @('PSPredictor.dll')
-    CmdletsToExport = @(
-        'Get-PSPredictorStatus',
-        'Set-PSPredictorMode', 
-        'Enable-PSPredictorMode',
-        'Disable-PSPredictorMode',
-        'Install-PSPredictor',
-        'Update-PSPredictor',
-        'Set-PSPredictorConfiguration',
-        'Get-PSPredictorConfiguration',
-        'Export-PSPredictorConfig',
-        'Import-PSPredictorConfig'
-    )
-    FunctionsToExport = @()
-    VariablesToExport = @()
-    AliasesToExport = @()
-    PrivateData = @{
-        PSData = @{
-            Tags = @('PowerShell', 'Completion', 'AI', 'Prediction', 'CLI')
-            LicenseUri = 'https://github.com/wangkanai/PSPredictor/blob/main/LICENSE'
-            ProjectUri = 'https://github.com/wangkanai/PSPredictor'
-            ReleaseNotes = 'Complete rewrite as C# binary module with AI prediction'
-        }
+  RootModule = 'PSPredictor.dll'
+  ModuleVersion = '2.0.0'
+  GUID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+  Author = 'PSPredictor Team'
+  CompanyName = 'Wangkanai'
+  Copyright = '(c) 2025 Wangkanai. All rights reserved.'
+  Description = 'AI-powered PowerShell command prediction and completion'
+  PowerShellVersion = '7.5'
+  DotNetFrameworkVersion = '9.0'
+  CLRVersion = '9.0'
+  RequiredModules = @()
+  RequiredAssemblies = @('PSPredictor.dll')
+  CmdletsToExport = @(
+    'Get-PSPredictorStatus',
+    'Set-PSPredictorMode',
+    'Enable-PSPredictorMode',
+    'Disable-PSPredictorMode',
+    'Install-PSPredictor',
+    'Update-PSPredictor',
+    'Set-PSPredictorConfiguration',
+    'Get-PSPredictorConfiguration',
+    'Export-PSPredictorConfig',
+    'Import-PSPredictorConfig'
+  )
+  FunctionsToExport = @()
+  VariablesToExport = @()
+  AliasesToExport = @()
+  PrivateData = @{
+    PSData = @{
+      Tags = @('PowerShell', 'Completion', 'AI', 'Prediction', 'CLI')
+      LicenseUri = 'https://github.com/wangkanai/PSPredictor/blob/main/LICENSE'
+      ProjectUri = 'https://github.com/wangkanai/PSPredictor'
+      ReleaseNotes = 'Complete rewrite as C# binary module with AI prediction'
     }
+  }
 }
 ```
 
@@ -392,39 +392,42 @@ public interface IMultiLineEditor
 
 ```sql
 -- Command history schema
-CREATE TABLE command_history (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    command_text TEXT NOT NULL,
-    executed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    execution_time_ms INTEGER,
-    exit_code INTEGER,
-    working_directory TEXT,
-    session_id TEXT,
-    user_context TEXT,
-    frequency_count INTEGER DEFAULT 1,
-    last_accessed DATETIME DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE command_history
+(
+  id                INTEGER PRIMARY KEY AUTOINCREMENT,
+  command_text      TEXT NOT NULL,
+  executed_at       DATETIME DEFAULT CURRENT_TIMESTAMP,
+  execution_time_ms INTEGER,
+  exit_code         INTEGER,
+  working_directory TEXT,
+  session_id        TEXT,
+  user_context      TEXT,
+  frequency_count   INTEGER  DEFAULT 1,
+  last_accessed     DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_command_text ON command_history(command_text);
-CREATE INDEX idx_executed_at ON command_history(executed_at);
-CREATE INDEX idx_frequency ON command_history(frequency_count DESC);
+CREATE INDEX idx_command_text ON command_history (command_text);
+CREATE INDEX idx_executed_at ON command_history (executed_at);
+CREATE INDEX idx_frequency ON command_history (frequency_count DESC);
 
 -- Configuration table
-CREATE TABLE configuration (
-    key TEXT PRIMARY KEY,
-    value TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE configuration
+(
+  key        TEXT PRIMARY KEY,
+  value      TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Completion statistics
-CREATE TABLE completion_stats (
-    provider_name TEXT,
-    command TEXT,
-    completion_count INTEGER DEFAULT 0,
-    average_response_time_ms REAL,
-    last_used DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (provider_name, command)
+CREATE TABLE completion_stats
+(
+  provider_name            TEXT,
+  command                  TEXT,
+  completion_count         INTEGER  DEFAULT 0,
+  average_response_time_ms REAL,
+  last_used                DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (provider_name, command)
 );
 ```
 
@@ -674,11 +677,17 @@ public abstract class BaseCompletion : ICompletionProvider
 
 **Superior Git Performance Requirements**:
 
-- **3-8x Faster than posh-git**: Target <50ms vs typical 150-400ms posh-git response
+- **Target Performance**: Aiming for 3-8x faster response times than posh-git, with a goal of <50ms compared to the typical 150–400ms posh-git response. Benchmark data and testing methodology are available in the [Performance Benchmarks](#performance-benchmarks) section.
 - **AI-Powered Intelligence**: Context-aware suggestions based on repository state and workflow patterns
-- **Intelligent Repository Analysis**: Selective parsing and async operations for large repositories  
+- **Intelligent Repository Analysis**: Selective parsing and async operations for large repositories
 - **Real-Time Validation**: Live error detection and correction for Git commands
 - **Advanced Caching**: Repository state caching with intelligent invalidation strategies
+
+### Performance Benchmarks
+
+Detailed benchmark data comparing PSPredictor's Git completion performance with posh-git can be found in the project's
+repository under `benchmarks/`. Testing was conducted on various repository sizes and system configurations to ensure
+comprehensive coverage.
 
 **Git-Specific Context Awareness**:
 
@@ -1120,33 +1129,33 @@ PSPredictor.2.0.0.nupkg
 
 ```powershell
 @{
-    # Package metadata
-    RootModule = 'PSPredictor.dll'
-    ModuleVersion = '2.0.0'
-    GUID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
-    
-    # Requirements
-    PowerShellVersion = '7.5'
-    DotNetFrameworkVersion = '9.0'
-    RequiredModules = @()
-    
-    # Export definitions
-    CmdletsToExport = @(
-        'Get-PSPredictorStatus',
-        'Set-PSPredictorMode',
-        'Enable-PSPredictorMode',
-        'Disable-PSPredictorMode'
-    )
-    
-    # Package information
-    PrivateData = @{
-        PSData = @{
-            Tags = @('PowerShell', 'Completion', 'AI', 'Prediction')
-            LicenseUri = 'https://github.com/wangkanai/PSPredictor/blob/main/LICENSE'
-            ProjectUri = 'https://github.com/wangkanai/PSPredictor'
-            ReleaseNotes = 'https://github.com/wangkanai/PSPredictor/releases/tag/v2.0.0'
-        }
+# Package metadata
+  RootModule = 'PSPredictor.dll'
+  ModuleVersion = '2.0.0'
+  GUID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+
+  # Requirements
+  PowerShellVersion = '7.5'
+  DotNetFrameworkVersion = '9.0'
+  RequiredModules = @()
+
+  # Export definitions
+  CmdletsToExport = @(
+    'Get-PSPredictorStatus',
+    'Set-PSPredictorMode',
+    'Enable-PSPredictorMode',
+    'Disable-PSPredictorMode'
+  )
+
+  # Package information
+  PrivateData = @{
+    PSData = @{
+      Tags = @('PowerShell', 'Completion', 'AI', 'Prediction')
+      LicenseUri = 'https://github.com/wangkanai/PSPredictor/blob/main/LICENSE'
+      ProjectUri = 'https://github.com/wangkanai/PSPredictor'
+      ReleaseNotes = 'https://github.com/wangkanai/PSPredictor/releases/tag/v2.0.0'
     }
+  }
 }
 ```
 
@@ -1157,54 +1166,67 @@ PSPredictor.2.0.0.nupkg
 ```powershell
 # install.ps1 - Package installation script
 param(
-    [string]$InstallPath,
-    [switch]$Force
+  [string]$InstallPath,
+  [switch]$Force
 )
 
 # Validate system requirements
 $requirements = @{
-    PowerShellVersion = [version]'7.5'
-    DotNetVersion = [version]'9.0'
-    MinimumMemoryMB = 512
-    MinimumDiskSpaceMB = 100
+  PowerShellVersion = [version]'7.5'
+  DotNetVersion = [version]'9.0'
+  MinimumMemoryMB = 512
+  MinimumDiskSpaceMB = 100
 }
 
-function Test-SystemRequirements {
-    $errors = @()
-    
-    # Check PowerShell version
-    if ($PSVersionTable.PSVersion -lt $requirements.PowerShellVersion) {
-        $errors += "PowerShell $($requirements.PowerShellVersion) or higher required"
+function Test-SystemRequirements
+{
+  $errors = @()
+
+  # Check PowerShell version
+  if ($PSVersionTable.PSVersion -lt $requirements.PowerShellVersion)
+  {
+    $errors += "PowerShell $( $requirements.PowerShellVersion ) or higher required"
+  }
+
+  # Check .NET version
+  try
+  {
+    $dotnetVersion = [System.Runtime.InteropServices.RuntimeInformation]::FrameworkDescription
+    if (-not $dotnetVersion.Contains("9.0"))
+    {
+      $errors += ".NET 9.0 runtime required"
     }
-    
-    # Check .NET version
-    try {
-        $dotnetVersion = [System.Runtime.InteropServices.RuntimeInformation]::FrameworkDescription
-        if (-not $dotnetVersion.Contains("9.0")) {
-            $errors += ".NET 9.0 runtime required"
-        }
-    }
-    catch {
-        $errors += "Unable to determine .NET version"
-    }
-    
-    # Check memory (cross-platform)
-    $memory = if ($IsWindows) {
-        (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1MB
-    } elseif ($IsLinux) {
-        [math]::Round((Get-Content '/proc/meminfo' | Where-Object { $_ -match '^MemTotal:' } | ForEach-Object { ($_ -split '\s+')[1] }) / 1KB, 0)
-    } elseif ($IsMacOS) {
-        [math]::Round((sysctl -n hw.memsize) / 1MB, 0)
-    } else {
-        # Fallback to .NET method
-        [math]::Round([System.GC]::GetTotalMemory($false) / 1MB, 0)
-    }
-    
-    if ($memory -lt $requirements.MinimumMemoryMB) {
-        $errors += "Minimum $($requirements.MinimumMemoryMB)MB RAM required (detected: ${memory}MB)"
-    }
-    
-    return $errors
+  }
+  catch
+  {
+    $errors += "Unable to determine .NET version"
+  }
+
+  # Check memory (cross-platform)
+  $memory = if ($IsWindows)
+  {
+    (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1MB
+  }
+  elseif ($IsLinux)
+  {
+    [math]::Round((Get-Content '/proc/meminfo' | Where-Object { $_ -match '^MemTotal:' } | ForEach-Object { ($_ -split '\s+')[1] }) / 1KB, 0)
+  }
+  elseif ($IsMacOS)
+  {
+    [math]::Round((sysctl -n hw.memsize) / 1MB, 0)
+  }
+  else
+  {
+    # Fallback to .NET method
+    [math]::Round([System.GC]::GetTotalMemory($false) / 1MB, 0)
+  }
+
+  if ($memory -lt $requirements.MinimumMemoryMB)
+  {
+    $errors += "Minimum $( $requirements.MinimumMemoryMB )MB RAM required (detected: ${memory}MB)"
+  }
+
+  return $errors
 }
 ```
 
