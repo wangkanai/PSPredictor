@@ -1,7 +1,7 @@
 # SPECIFICATIONS.md - PSPredictor Technical Specifications
 
 **Version**: 2.0.0  
-**Last Updated**: 2025-01-31  
+**Last Updated**: 2025-07-31  
 **Target Framework**: .NET 9.0, C# 13.0  
 **Module Type**: PowerShell Binary Module
 
@@ -12,6 +12,7 @@
 ### Runtime Environment
 
 **Minimum Requirements**:
+
 - **.NET Runtime**: .NET 9.0+ with C# 13.0 language support
 - **PowerShell**: PowerShell Core 7.0+ (recommended 7.4+)
 - **Memory**: 512MB available RAM (20MB base + 50MB runtime)
@@ -19,6 +20,7 @@
 - **Network**: Optional for enhanced model downloads
 
 **Supported Platforms**:
+
 ```yaml
 Windows:
   versions: [Windows 10, Windows 11, Windows Server 2019+]
@@ -37,6 +39,7 @@ macOS:
 ```
 
 **Architecture-Specific Features**:
+
 - **x64 Platforms**: Full ML.NET support with AI prediction models
 - **ARM64 Platforms**: Core functionality with graceful ML.NET degradation
 - **Cross-Platform**: Consistent ANSI rendering and input handling
@@ -44,6 +47,7 @@ macOS:
 ### Performance Specifications
 
 **Response Time Requirements**:
+
 ```yaml
 completion_generation:
   target: <50ms
@@ -72,6 +76,7 @@ module_initialization:
 ```
 
 **Memory Specifications**:
+
 ```yaml
 startup_footprint:
   target: <20MB
@@ -102,6 +107,7 @@ cache_limits:
 ### Binary Module Structure
 
 **PowerShell Module Manifest (PSPredictor.psd1)**:
+
 ```powershell
 @{
     RootModule = 'PSPredictor.dll'
@@ -145,6 +151,7 @@ cache_limits:
 ### Core Components API
 
 **IPredictionEngine Interface**:
+
 ```csharp
 /// <summary>
 /// Core prediction engine for generating command completions and suggestions
@@ -198,6 +205,7 @@ public sealed record CompletionContext(
 ```
 
 **ICompletionProvider Interface**:
+
 ```csharp
 /// <summary>
 /// Base interface for CLI tool completion providers
@@ -231,6 +239,7 @@ public interface ICompletionProvider
 ### ML.NET Integration Specifications
 
 **AI Prediction Models**:
+
 ```csharp
 /// <summary>
 /// ML.NET prediction engine wrapper with fallback support
@@ -282,6 +291,7 @@ public static class EmbeddedModels
 ### Native Input Handling
 
 **Key Binding Architecture**:
+
 ```csharp
 /// <summary>
 /// Custom key handler for advanced editing features
@@ -331,6 +341,7 @@ public enum EditingMode
 ```
 
 **Multi-Line Editor Specifications**:
+
 ```csharp
 /// <summary>
 /// Advanced multi-line editing with PowerShell syntax awareness
@@ -372,6 +383,7 @@ public interface IMultiLineEditor
 ### Command History System
 
 **SQLite-Based History Storage**:
+
 ```sql
 -- Command history schema
 CREATE TABLE command_history (
@@ -411,6 +423,7 @@ CREATE TABLE completion_stats (
 ```
 
 **History Management API**:
+
 ```csharp
 /// <summary>
 /// Command history storage and retrieval
@@ -455,6 +468,7 @@ public interface ICommandHistory
 ### ANSI Console Rendering
 
 **Cross-Platform Rendering Engine**:
+
 ```csharp
 /// <summary>
 /// ANSI-compatible console rendering for cross-platform support
@@ -520,6 +534,7 @@ public enum SyntaxCategory
 ```
 
 **IntelliSense Display System**:
+
 ```csharp
 /// <summary>
 /// Predictive IntelliSense display without command line interference
@@ -560,6 +575,7 @@ public interface IIntelliSenseDisplay
 ### Completion Provider Architecture
 
 **Supported CLI Tools (26+ providers)**:
+
 ```yaml
 version_control:
   - git: Git version control with branch/tag/remote awareness
@@ -609,6 +625,7 @@ system_administration:
 ```
 
 **Base Completion Provider Contract**:
+
 ```csharp
 /// <summary>
 /// Base implementation for CLI tool completion providers
@@ -650,6 +667,7 @@ public abstract class BaseCompletion : ICompletionProvider
 ### Git Completion Provider (Reference Implementation)
 
 **Git-Specific Context Awareness**:
+
 ```csharp
 /// <summary>
 /// Advanced Git completion with repository state awareness
@@ -718,6 +736,7 @@ public sealed record GitRepositoryContext(
 ### JSON Configuration Schema
 
 **Primary Configuration File (PSPredictorConfig.json)**:
+
 ```json
 {
   "$schema": "https://schemas.wangkanai.com/pspredictor/v2.0/config.schema.json",
@@ -779,6 +798,7 @@ public sealed record GitRepositoryContext(
 ```
 
 **Configuration Management API**:
+
 ```csharp
 /// <summary>
 /// Configuration management with schema validation
@@ -827,6 +847,7 @@ public interface IPSPredictorConfiguration
 ### Test Architecture Requirements
 
 **Unit Test Coverage Requirements**:
+
 ```csharp
 // Example test structure for completion providers
 [TestClass]
@@ -872,6 +893,7 @@ public class GitCompletionTests
 ```
 
 **Performance Test Specifications**:
+
 ```csharp
 [MemoryDiagnoser]
 [SimpleJob(RuntimeMoniker.Net90)]
@@ -911,6 +933,7 @@ public class CompletionPerformanceBenchmarks
 ### Integration Test Requirements
 
 **End-to-End Test Scenarios**:
+
 ```csharp
 [TestClass]
 public class PSPredictorIntegrationTests
@@ -945,6 +968,7 @@ public class PSPredictorIntegrationTests
 ### Input Validation Requirements
 
 **Command Input Security**:
+
 ```csharp
 /// <summary>
 /// Secure input validation for command processing
@@ -988,6 +1012,7 @@ public static class SecurityValidator
 ### Process Execution Security
 
 **Safe Process Execution**:
+
 ```csharp
 /// <summary>
 /// Secure process execution for CLI tool integration
@@ -1054,6 +1079,7 @@ public static class SecureProcessExecutor
 ### Package Distribution
 
 **NuGet Package Structure**:
+
 ```
 PSPredictor.2.0.0.nupkg
 ├── lib/
@@ -1077,6 +1103,7 @@ PSPredictor.2.0.0.nupkg
 ```
 
 **PowerShell Gallery Manifest**:
+
 ```powershell
 @{
     # Package metadata
@@ -1112,6 +1139,7 @@ PSPredictor.2.0.0.nupkg
 ### Installation Requirements
 
 **System Prerequisites Validation**:
+
 ```powershell
 # install.ps1 - Package installation script
 param(

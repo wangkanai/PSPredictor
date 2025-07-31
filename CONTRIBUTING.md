@@ -22,17 +22,20 @@
 ### Getting Started
 
 1. **Fork the repository**
+
    ```bash
    # Go to https://github.com/wangkanai/PSPredictor and click "Fork"
    ```
 
 2. **Clone your fork**
+
    ```bash
    git clone https://github.com/YOUR-USERNAME/PSPredictor.git
    cd PSPredictor
    ```
 
 3. **Build and test the module**
+
    ```powershell
    # Build the module
    ./build.ps1 -Task Build
@@ -42,6 +45,7 @@
    ```
 
 4. **Install and test**
+
    ```powershell
    # Install locally for testing
    ./build.ps1 -Task Install
@@ -109,16 +113,19 @@ mytool <TAB>
 ## 📋 Completion Best Practices
 
 ### 1. **Performance**
+
 - Keep completion functions fast (< 100ms)
 - Cache expensive operations
 - Limit results to reasonable numbers
 
 ### 2. **Accuracy**
+
 - Provide relevant, context-aware suggestions
 - Include popular commands and options first
 - Handle edge cases gracefully
 
 ### 3. **Consistency**
+
 - Follow the existing code style
 - Use similar parameter naming
 - Maintain consistent behavior
@@ -157,6 +164,7 @@ function Register-GitCompletion {
 ## 🧪 Testing Guidelines
 
 ### Manual Testing
+
 ```powershell
 # Build and install module
 ./build.ps1 -Task Install
@@ -173,7 +181,9 @@ git checkout <TAB>
 ```
 
 ### Writing Tests
+
 Create a new file `tests/Completions/MyTool.Tests.ps1`:
+
 ```powershell
 BeforeAll {
     Import-Module "$PSScriptRoot/../../src/PSPredictor.psd1" -Force
@@ -233,17 +243,20 @@ Brief description of changes
 We're especially looking for contributions in these areas:
 
 ### High Priority
+
 - **Cloud CLIs**: AWS, Azure, GCP completions
 - **Kubernetes**: Enhanced kubectl completions
 - **Container Tools**: Docker, Podman improvements
 - **Package Managers**: Language-specific PM completions
 
 ### Medium Priority
+
 - **Development Tools**: Terraform, Ansible, etc.
 - **System Tools**: Enhanced file operation completions
 - **Database CLIs**: MySQL, PostgreSQL, MongoDB
 
 ### Nice to Have
+
 - **Custom Predictor Engine**: Smarter context awareness
 - **Configuration UI**: Web-based configuration
 - **Telemetry**: Anonymous usage analytics
@@ -257,6 +270,7 @@ We're especially looking for contributions in these areas:
 ## 🙏 Recognition
 
 Contributors will be:
+
 - Listed in README.md
 - Mentioned in release notes
 - Credited in module metadata

@@ -1,7 +1,7 @@
 # FRAMEWORK.md - PSPredictor Architectural Framework
 
 **Version**: 2.0.0  
-**Last Updated**: 2025-01-31  
+**Last Updated**: 2025-07-31  
 **Architecture**: C# .NET 9.0 Binary Module with AI-Powered Prediction Engine
 
 ---
@@ -11,6 +11,7 @@
 ### Core Design Principles
 
 **Performance-First Architecture**:
+
 - **Sub-100ms Response Time**: All user-facing operations optimized for <100ms response
 - **Lazy Loading**: Components loaded on-demand to minimize startup time
 - **Asynchronous Operations**: Non-blocking I/O with proper cancellation token support
@@ -18,6 +19,7 @@
 - **Cross-Platform Optimization**: Consistent performance across Windows, Linux, macOS (x64/ARM64)
 
 **Modular Component Design**:
+
 - **Separation of Concerns**: Clear boundaries between prediction, completion, rendering, and input handling
 - **Dependency Injection**: Loose coupling through IoC container with lifetime management
 - **Plugin Architecture**: Extensible completion providers with registration-based discovery
@@ -182,6 +184,7 @@ public sealed class PredictionEngine : IPredictionEngine, IDisposable
 ```
 
 **ICompletionProvider - Provider Orchestrator**:
+
 ```csharp
 /// <summary>
 /// Orchestrates multiple CLI tool completion providers
@@ -270,6 +273,7 @@ public sealed class CompletionProvider : ICompletionProvider
 ### AI Intelligence Layer
 
 **IMLPredictionEngine - Machine Learning Integration**:
+
 ```csharp
 /// <summary>
 /// ML.NET integration with platform-specific availability
@@ -378,6 +382,7 @@ public sealed class MLPredictionEngine : IMLPredictionEngine, IDisposable
 ### Input System Architecture
 
 **IKeyHandler - Advanced Input Management**:
+
 ```csharp
 /// <summary>
 /// Advanced key handling with multi-modal editing support
@@ -455,6 +460,7 @@ public sealed class KeyHandler : IKeyHandler
 ```
 
 **Multi-Modal Editing Implementations**:
+
 ```csharp
 /// <summary>
 /// Base interface for editing mode implementations
@@ -545,6 +551,7 @@ public sealed class ViEditingMode : IEditingMode
 ### Rendering System Architecture
 
 **IANSIRenderer - Cross-Platform Rendering**:
+
 ```csharp
 /// <summary>
 /// ANSI-based cross-platform console rendering
@@ -649,6 +656,7 @@ public sealed class ANSIRenderer : IANSIRenderer
 ### Base Completion Provider Pattern
 
 **Abstract Base Implementation**:
+
 ```csharp
 /// <summary>
 /// Base implementation providing common functionality for CLI tool providers
@@ -739,6 +747,7 @@ public abstract class BaseCliToolCompletion : ICliToolCompletion
 ### Git Provider Implementation (Reference)
 
 **Advanced Git Integration**:
+
 ```csharp
 /// <summary>
 /// Advanced Git completion with repository state awareness
@@ -930,6 +939,7 @@ public sealed class GitRepositoryAnalyzer : IGitRepositoryAnalyzer
 ### Service Registration Strategy
 
 **Service Collection Extensions**:
+
 ```csharp
 /// <summary>
 /// Extension methods for registering PSPredictor services
@@ -1057,11 +1067,13 @@ public sealed class PSPredictorOptions
 ### Service Lifetime Management
 
 **Service Scope Strategy**:
+
 - **Singleton**: Stateless services with expensive initialization (PredictionEngine, ML models)
 - **Transient**: Lightweight services and completion providers
 - **Scoped**: Per-session services (not applicable in PowerShell module context)
 
 **Resource Management**:
+
 - **IDisposable Pattern**: Proper cleanup of ML models, file handles, and caches
 - **CancellationToken Support**: Graceful cancellation throughout the pipeline
 - **Memory Pressure**: Automatic cache eviction and model unloading under memory pressure
@@ -1073,6 +1085,7 @@ public sealed class PSPredictorOptions
 ### Hierarchical Configuration System
 
 **Configuration Precedence (Highest to Lowest)**:
+
 1. **Command-line Parameters**: Temporary overrides for testing
 2. **Environment Variables**: Deployment-specific settings
 3. **User Configuration**: `~/.pspredictor/config.json`
@@ -1080,6 +1093,7 @@ public sealed class PSPredictorOptions
 5. **Default Configuration**: Built-in defaults
 
 **Configuration Loading Pipeline**:
+
 ```csharp
 /// <summary>
 /// Hierarchical configuration loading with validation
@@ -1166,6 +1180,7 @@ public sealed class PSPredictorConfigurationManager : IPSPredictorConfiguration
 4. **Cross-Platform Tests**: Platform-specific behavior validation
 
 **Test Organization**:
+
 ```
 tests/
 ├── PSPredictor.Tests/                 # Main unit tests
@@ -1180,6 +1195,7 @@ tests/
 ```
 
 **Test Base Classes**:
+
 ```csharp
 /// <summary>
 /// Base class for PSPredictor unit tests with common setup

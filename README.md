@@ -1,4 +1,5 @@
 # PSPredictor
+
 ## PowerShell Universal CLI Predictor
 
 🚀 **Comprehensive auto-completion and intelligent prediction for popular command-line tools in PowerShell**
@@ -52,12 +53,14 @@ npm install --save-d<TAB>  # → npm install --save-dev
 ## 📦 Supported CLI Tools
 
 ### Container & Infrastructure
+
 - **Docker**: Complete container management (run, build, images, networks, volumes)
 - **Podman**: Daemonless container tool with full Docker compatibility
 - **Terraform**: Infrastructure as code (plan, apply, destroy, resources)
 - **Kubernetes**: kubectl with resources, namespaces, and context switching
 
 ### Development Tools
+
 - **Git**: Comprehensive version control (branches, commits, remotes, tags, workflows)
 - **.NET**: Complete dotnet CLI (new templates, build, test, publish, packages)
 - **Node.js**: npm, npx package management and script execution
@@ -65,25 +68,30 @@ npm install --save-d<TAB>  # → npm install --save-dev
 - **Python Interpreter**: Module execution, command-line options
 
 ### AI & Code Assistance
+
 - **Claude AI**: Chat, completion, models, authentication, conversations
 - **Gemini AI**: Generation, models, file operations, multi-modal support
 - **OpenAI Codex**: Code completion and generation
 
 ### Cloud Platforms
+
 - **Azure**: Comprehensive az CLI coverage (compute, storage, networking)
 - **AWS**: Complete aws CLI with services, regions, and parameters
 - **GitHub**: Full gh CLI integration (repos, PRs, issues, workflows, releases)
 
 ### Package Managers
+
 - **Homebrew**: Complete brew commands (install, upgrade, services, cask)
 - **Python**: pip (install, upgrade, requirements), pipx (applications)
 - **Node.js**: npm (packages, scripts), npx (package execution)
 
 ### Terminal & System
+
 - **tmux**: Terminal multiplexer (sessions, windows, panes, key bindings)
 - **Hyper**: Modern terminal emulator
 
 ### Shells & Interpreters
+
 - **PowerShell**: PowerShell Core (pwsh) with parameters, execution policies, profiles
 - **Zsh**: Z shell with comprehensive options, emulation modes, built-in settings
 - **Bash**: Bash shell with options, set configurations, RC file management
@@ -91,6 +99,7 @@ npm install --save-d<TAB>  # → npm install --save-dev
 ## 🎯 Key Advantages
 
 ### vs. Manual Setup
+
 | Feature | PSPredictor | Manual Setup |
 |---------|-------------|--------------|
 | **Coverage** | 26+ tools | Limited |
@@ -99,6 +108,7 @@ npm install --save-d<TAB>  # → npm install --save-dev
 | **Installation** | Single command | Complex setup |
 
 ### vs. Other Solutions
+
 - **🔥 Faster**: Optimized completion engine
 - **🧠 Smarter**: Context-aware predictions
 - **🎨 Better UX**: Enhanced visual feedback
@@ -134,6 +144,7 @@ Set-PSPredictorConfig -AutoUpdate -Frequency "Weekly"
 ## 📚 Examples
 
 ### Git Workflow
+
 ```powershell
 # Branch operations
 git branch <TAB>          # Shows all branches
@@ -146,6 +157,7 @@ git commit -m "<TAB>      # Shows commit message templates
 ```
 
 ### Docker Development
+
 ```powershell
 # Container management
 docker ps <TAB>           # Shows running containers
@@ -158,6 +170,7 @@ docker pull <TAB>         # Shows popular images
 ```
 
 ### Package Management
+
 ```powershell
 # NPM workflow
 npm init <TAB>            # Shows init templates
@@ -171,6 +184,7 @@ dotnet run --<TAB>        # Shows run options
 ```
 
 ### Shell Management
+
 ```powershell
 # PowerShell Core management
 pwsh -<TAB>               # Shows parameters like -Command, -File, -NoProfile

@@ -1,7 +1,7 @@
 # STANDARDS.md - PSPredictor Development Standards
 
 **Version**: 2.0.0  
-**Last Updated**: 2025-01-31  
+**Last Updated**: 2025-07-31  
 **Scope**: PSPredictor C# .NET 9.0 Binary Module
 
 ---
@@ -11,6 +11,7 @@
 ### Performance Requirements
 
 **Response Time Targets**:
+
 - **Completion Generation**: <50ms for standard completions
 - **AI Prediction**: <100ms for ML-powered suggestions  
 - **Syntax Highlighting**: <20ms for real-time coloring
@@ -18,6 +19,7 @@
 - **Module Load Time**: <200ms for initial module import
 
 **Memory Management**:
+
 - **Startup Footprint**: <20MB initial memory usage
 - **Runtime Footprint**: <50MB for typical usage patterns
 - **Model Loading**: Lazy loading with <5MB core models
@@ -25,6 +27,7 @@
 - **Cache Limits**: LRU eviction with configurable memory thresholds
 
 **Reliability Standards**:
+
 - **Zero Crashes**: Graceful error handling for all user-facing operations
 - **Error Recovery**: Automatic fallback to basic functionality on component failure
 - **Cross-Platform**: Consistent behavior across Windows, Linux, macOS (x64/ARM64)
@@ -33,6 +36,7 @@
 ### Code Coverage Requirements
 
 **Minimum Coverage Thresholds**:
+
 - **Core Components**: 90% line coverage, 85% branch coverage
 - **Cmdlets**: 85% line coverage, 80% branch coverage  
 - **Completion Providers**: 80% line coverage, 75% branch coverage
@@ -40,6 +44,7 @@
 - **Overall Project**: 80% line coverage minimum
 
 **Testing Categories**:
+
 - **Unit Tests**: Fast, isolated, deterministic tests for individual components
 - **Integration Tests**: Cross-component interaction testing
 - **Performance Tests**: BenchmarkDotNet regression testing with CI/CD integration
@@ -52,6 +57,7 @@
 ### C# Language Standards
 
 **Language Features (.NET 9.0, C# 13.0)**:
+
 - **Required Features**: Use modern C# features (records, pattern matching, nullable reference types)
 - **File-Scoped Namespaces**: Mandatory for all new files
 - **Target-Typed New**: Prefer `new()` over explicit type specification where clarity maintained
@@ -59,6 +65,7 @@
 - **Primary Constructors**: Use for simple data classes and dependency injection
 
 **Code Style Guidelines**:
+
 ```csharp
 // ✅ GOOD: Modern C# with clear intent
 public sealed record CompletionResult(
@@ -115,6 +122,7 @@ public class GitCompletion : BaseCompletion
 ### Naming Conventions
 
 **Classes and Methods**:
+
 - **Classes**: PascalCase with descriptive names (`GitCompletionProvider`, `MLPredictionEngine`)
 - **Methods**: PascalCase with verb-noun pattern (`GetCompletionsAsync`, `ValidateInput`)
 - **Properties**: PascalCase (`MaxSuggestions`, `EnableFuzzyMatching`)
@@ -122,11 +130,13 @@ public class GitCompletion : BaseCompletion
 - **Constants**: PascalCase (`DefaultTimeout`, `MaxHistoryEntries`)
 
 **Interfaces and Abstractions**:
+
 - **Interfaces**: IPascalCase (`ICompletionProvider`, `IPredictionEngine`)
 - **Abstract Classes**: PascalCase with "Base" prefix (`BaseCompletion`, `BaseCmdlet`)
 - **Generic Type Parameters**: Single uppercase letter (`T`, `TResult`, `TContext`)
 
 **Async Method Standards**:
+
 - **Suffix**: All async methods must end with "Async"
 - **Return Types**: `Task<T>` for value-returning, `Task` for void-returning
 - **CancellationToken**: Always accept CancellationToken parameter with default value
@@ -135,6 +145,7 @@ public class GitCompletion : BaseCompletion
 ### Error Handling Standards
 
 **Exception Management**:
+
 ```csharp
 // ✅ GOOD: Specific exceptions with context
 public async Task<CompletionResult[]> GetCompletionsAsync(CompletionContext context, CancellationToken cancellationToken = default)
@@ -173,6 +184,7 @@ public async Task<CompletionResult[]> GetCompletionsAsync(CompletionContext cont
 ```
 
 **Logging Standards**:
+
 - **Structured Logging**: Use structured logging with Microsoft.Extensions.Logging
 - **Log Levels**: DEBUG (development), INFO (user actions), WARN (recoverable issues), ERROR (failures)
 - **Performance Logging**: Log slow operations (>100ms) at DEBUG level
@@ -185,6 +197,7 @@ public async Task<CompletionResult[]> GetCompletionsAsync(CompletionContext cont
 ### Dependency Injection
 
 **Service Registration Pattern**:
+
 ```csharp
 // Program.cs or ServiceCollectionExtensions.cs
 public static class ServiceCollectionExtensions
@@ -210,6 +223,7 @@ public static class ServiceCollectionExtensions
 ```
 
 **Constructor Injection Requirements**:
+
 - **Primary Constructor**: Use for simple dependency injection
 - **Null Checks**: Use `ArgumentNullException.ThrowIfNull()` for .NET 9.0
 - **Service Lifetime**: Singleton for stateless services, Transient for stateful operations
@@ -217,6 +231,7 @@ public static class ServiceCollectionExtensions
 ### Async/Await Standards
 
 **Async Method Implementation**:
+
 ```csharp
 // ✅ GOOD: Proper async implementation
 public async Task<CompletionResult[]> GetGitStatusAsync(CancellationToken cancellationToken = default)
@@ -254,11 +269,13 @@ public Task<CompletionResult[]> GetGitStatusAsync(CancellationToken cancellation
 ### Resource Management
 
 **IDisposable Pattern**:
+
 - **using statements**: Prefer `using` declarations over `using` blocks where possible
 - **async disposal**: Implement `IAsyncDisposable` for async resource cleanup
 - **cancellation**: Always respect CancellationToken in long-running operations
 
 **Memory Management**:
+
 - **ArrayPool**: Use `ArrayPool<T>` for temporary large arrays
 - **StringBuilder**: Use for string concatenation in loops
 - **Span<T>/Memory<T>**: Use for high-performance buffer operations
@@ -270,6 +287,7 @@ public Task<CompletionResult[]> GetGitStatusAsync(CancellationToken cancellation
 ### Unit Testing Framework
 
 **xUnit with FluentAssertions**:
+
 ```csharp
 [Fact]
 public async Task GetCompletionsAsync_WithValidGitCommand_ReturnsExpectedCompletions()
@@ -307,6 +325,7 @@ public async Task GetCompletionsAsync_WithInvalidInput_ThrowsArgumentException(s
 ```
 
 **Test Organization**:
+
 - **AAA Pattern**: Arrange, Act, Assert structure
 - **Single Responsibility**: One logical assertion per test
 - **Descriptive Names**: Test names should describe scenario and expected outcome
@@ -315,6 +334,7 @@ public async Task GetCompletionsAsync_WithInvalidInput_ThrowsArgumentException(s
 ### Performance Testing
 
 **BenchmarkDotNet Standards**:
+
 ```csharp
 [MemoryDiagnoser]
 [SimpleJob(RuntimeMoniker.Net90)]
@@ -349,6 +369,7 @@ public class CompletionProviderBenchmarks
 ```
 
 **Performance Assertions**:
+
 - **Response Time**: All completions must complete within target times
 - **Memory Allocation**: Track and minimize allocations in hot paths
 - **Throughput**: Measure operations per second for high-frequency operations
@@ -360,6 +381,7 @@ public class CompletionProviderBenchmarks
 ### Code Documentation
 
 **XML Documentation Requirements**:
+
 ```csharp
 /// <summary>
 /// Provides intelligent completion suggestions for Git commands with context awareness.
@@ -391,6 +413,7 @@ public sealed class GitCompletion : BaseCompletion
 ```
 
 **README Standards**:
+
 - **Clear Purpose**: What the component does and why it exists
 - **Quick Start**: Minimal example to get started
 - **API Reference**: Key methods and their usage
@@ -399,6 +422,7 @@ public sealed class GitCompletion : BaseCompletion
 ### Architecture Documentation
 
 **Decision Records**:
+
 - **ADR Format**: Use Architecture Decision Record template
 - **Context**: Why the decision was needed
 - **Options**: Alternatives considered
@@ -412,6 +436,7 @@ public sealed class GitCompletion : BaseCompletion
 ### Input Validation
 
 **Command Input Sanitization**:
+
 ```csharp
 public static class InputValidator
 {
@@ -435,6 +460,7 @@ public static class InputValidator
 ```
 
 **Process Execution Security**:
+
 - **No Shell Execution**: Never use `UseShellExecute = true`
 - **Argument Validation**: Validate all process arguments
 - **Timeout Limits**: Always set process timeouts
@@ -443,6 +469,7 @@ public static class InputValidator
 ### Data Protection
 
 **Configuration Security**:
+
 - **No Hardcoded Secrets**: Use configuration providers
 - **Environment Variables**: For deployment-specific settings
 - **User Directory**: Store user data in appropriate OS locations
@@ -455,11 +482,13 @@ public static class InputValidator
 ### Platform Compatibility
 
 **Supported Platforms**:
+
 - **Windows**: PowerShell 5.1+ and PowerShell Core 7+
 - **Linux**: PowerShell Core 7+ (x64 and ARM64)
 - **macOS**: PowerShell Core 7+ (Intel x64 and Apple Silicon ARM64)
 
 **Platform-Specific Code**:
+
 ```csharp
 public static class PlatformHelper
 {
@@ -480,11 +509,13 @@ public static class PlatformHelper
 ### Architecture Support
 
 **ARM64 Compatibility**:
+
 - **ML.NET Conditional**: ML features only on x64, graceful degradation on ARM64
 - **Performance Testing**: Validate performance on both architectures
 - **Build Targets**: Dynamic platform targeting based on runtime detection
 
 **File System Standards**:
+
 - **Path Separators**: Use `Path.Combine()` and `Path.DirectorySeparatorChar`
 - **File Names**: Avoid reserved names and invalid characters
 - **Case Sensitivity**: Assume case-sensitive file systems
@@ -496,6 +527,7 @@ public static class PlatformHelper
 ### Build Pipeline Requirements
 
 **Pre-Merge Checks**:
+
 1. **Build Success**: All projects must build without errors
 2. **Test Execution**: All tests must pass with required coverage
 3. **Static Analysis**: Clean code analysis with zero critical issues
@@ -503,6 +535,7 @@ public static class PlatformHelper
 5. **Security**: No new security vulnerabilities detected
 
 **Release Criteria**:
+
 1. **Functional Testing**: Manual testing of key scenarios
 2. **Performance Validation**: Response time and memory requirements met
 3. **Cross-Platform Testing**: Validation on Windows, Linux, macOS
@@ -512,6 +545,7 @@ public static class PlatformHelper
 ### Code Review Standards
 
 **Review Checklist**:
+
 - [ ] **Performance**: No obvious performance issues or anti-patterns
 - [ ] **Security**: Input validation, no hardcoded secrets
 - [ ] **Error Handling**: Appropriate exception handling and logging
@@ -521,6 +555,7 @@ public static class PlatformHelper
 - [ ] **Memory**: Proper resource disposal and memory management
 
 **Review Process**:
+
 - **Required Reviewers**: Minimum 1 reviewer for minor changes, 2 for major changes
 - **Automated Checks**: All CI/CD checks must pass before review
 - **Approval**: Explicit approval required from code owner

@@ -73,11 +73,13 @@ PSPredictor/
 ## 🏗️ Architecture Benefits
 
 ### ✅ **Clean Separation**
+
 - **Source code** isolated in `src/` for clean distribution
 - **Tests** separated for focused development and CI/CD
 - **Build artifacts** generated in temporary `build/` directory
 
 ### ✅ **Professional Testing**
+
 - **Pester-based** comprehensive test suite (145+ tests across 17 test files)
 - **Modular test structure** matching source organization
 - **Cross-platform** compatibility validation (Windows/Linux/macOS)  
@@ -85,12 +87,14 @@ PSPredictor/
 - **Error handling** and edge case coverage
 
 ### ✅ **Automated Quality**
+
 - **GitHub Actions** for continuous integration
 - **Automated publishing** to PowerShell Gallery
 - **Version management** with semantic versioning
 - **Release notes** auto-generation
 
 ### ✅ **Developer Experience**
+
 - **Build script** with multiple tasks (Build, Test, Package, Publish)
 - **Version bumping** utility for easy releases
 - **Documentation** for contributors and maintainers
@@ -99,6 +103,7 @@ PSPredictor/
 ## 🚀 Development Workflow
 
 ### 1. **Local Development**
+
 ```powershell
 # Build module (creates modular structure in build/)
 ./build.ps1 -Task Build
@@ -114,6 +119,7 @@ PSPredictor/
 ```
 
 ### 2. **Version Management**
+
 ```powershell
 # Bump version
 ./.github/scripts/bump-version.ps1 -Type Patch
@@ -124,6 +130,7 @@ git commit -m "Bump version to $(Get-Content src/PSPredictor.psd1 | Select-Strin
 ```
 
 ### 3. **Automated Publishing**
+
 ```bash
 # Create pull request
 git checkout -b feature/my-feature
@@ -138,6 +145,7 @@ git push origin feature/my-feature
 ## 🧪 Testing Strategy
 
 ### **Test Coverage**
+
 - **Module Structure**: Manifest validation, imports, exports, modular loading
 - **Public Functions**: All 4 exported functions with comprehensive scenarios
 - **Private Functions**: Internal configuration and helper functions
@@ -147,6 +155,7 @@ git push origin feature/my-feature
 - **Cross-Platform**: Windows, Linux, macOS compatibility validation
 
 ### **Test Execution**
+
 ```powershell
 # Run specific test suites
 Invoke-Pester ./tests/PSPredictor.Tests.ps1
@@ -163,12 +172,14 @@ Invoke-Pester ./tests/Completions/
 ## 📦 Distribution
 
 ### **PowerShell Gallery**
+
 - **Automated publishing** on main branch merges
 - **Version conflict prevention** (won't publish duplicate versions)
 - **Release notes** auto-generated from commits
 - **Installation**: `Install-Module -Name PSPredictor`
 
 ### **GitHub Releases**
+
 - **Tagged releases** with installation instructions
 - **Changelog** with commit history
 - **Download links** for manual installation
@@ -177,6 +188,7 @@ Invoke-Pester ./tests/Completions/
 ## 🔧 Build System
 
 ### **Available Tasks**
+
 - `Build`: Compile module from source to build directory
 - `Test`: Run Pester tests with fallback to basic tests
 - `Package`: Create distribution packages (ZIP, NuGet structure)
@@ -186,6 +198,7 @@ Invoke-Pester ./tests/Completions/
 - `All`: Execute Clean → Build → Test → Package sequence
 
 ### **Build Configuration**
+
 - **Debug**: Development builds with debug version suffix
 - **Release**: Production builds for publishing
 - **Verbose**: Detailed build output for troubleshooting
@@ -194,18 +207,21 @@ Invoke-Pester ./tests/Completions/
 ## 🎯 Quality Standards
 
 ### **Code Quality**
+
 - **PowerShell best practices** compliance
 - **Consistent formatting** and naming conventions
 - **Comprehensive documentation** for all functions
 - **Error handling** with meaningful messages
 
 ### **Testing Requirements**
+
 - **≥80% test coverage** for core functionality
 - **Cross-platform compatibility** validation
 - **Performance benchmarks** (load <2s, functions <500ms)
 - **Error scenarios** covered with expected behaviors
 
 ### **CI/CD Standards**
+
 - **All tests must pass** before merge
 - **Version increments** required for publishing
 - **Automated quality gates** with build validation
