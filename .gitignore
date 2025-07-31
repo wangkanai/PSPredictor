@@ -1,5 +1,12 @@
 # PowerShell Module .gitignore
 
+## AI Generated Files
+repomix-output.*
+.idea/
+.continue/
+.vercel/
+.claude/
+
 ## Build Artifacts
 build/
 dist/
