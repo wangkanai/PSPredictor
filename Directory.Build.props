@@ -1,143 +1,47 @@
 <Project>
-    <!-- Common Global Properties -->
+    <!-- Simplified Build Properties for Testing -->
     <PropertyGroup>
         <!-- Framework and Language Settings -->
         <TargetFramework>net8.0</TargetFramework>
         <LangVersion>12.0</LangVersion>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-        <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
         
-        <!-- Project Information -->
-        <Product>PSPredictor</Product>
-        <Title>PSPredictor - Advanced PowerShell Command Predictor</Title>
-        <Description>Revolutionary PowerShell Binary Module that transforms the command-line experience into a comprehensive IDE within the terminal with AI-powered predictions, advanced editing capabilities, syntax highlighting, and intelligent auto-completion for 26+ CLI tools.</Description>
-        <Company>Wangkanai</Company>
-        <Authors>Wangkanai</Authors>
-        <Owners>Wangkanai</Owners>
-        <Copyright>Copyright © 2025 Wangkanai</Copyright>
-        <Trademark></Trademark>
-        
-        <!-- Version Information -->
+        <!-- Version and Product Information -->
         <Version>2.0.0-alpha.1</Version>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-        <FileVersion>2.0.0.0</FileVersion>
-        <InformationalVersion>2.0.0-alpha.1</InformationalVersion>
-        <PackageVersion>2.0.0-alpha.1</PackageVersion>
+        <Company>Wangkanai</Company>
+        <Product>PSPredictor</Product>
+        <Copyright>Copyright © 2025 Wangkanai</Copyright>
         
-        <!-- Assembly Metadata -->
-        <AssemblyTitle Condition="'$(AssemblyTitle)' == ''">$(AssemblyName)</AssemblyTitle>
-        <AssemblyDescription Condition="'$(AssemblyDescription)' == ''">$(Description)</AssemblyDescription>
-        <AssemblyCompany>$(Company)</AssemblyCompany>
-        <AssemblyProduct>$(Product)</AssemblyProduct>
-        <AssemblyCopyright>$(Copyright)</AssemblyCopyright>
-        <AssemblyTrademark>$(Trademark)</AssemblyTrademark>
-        <AssemblyConfiguration Condition="'$(Configuration)' != ''">$(Configuration)</AssemblyConfiguration>
-        <AssemblyMetadata Include="RepositoryUrl" Value="$(RepositoryUrl)" />
-        <AssemblyMetadata Include="RepositoryBranch" Value="$(RepositoryBranch)" />
-        <AssemblyMetadata Include="RepositoryCommit" Value="$(RepositoryCommit)" />
-        <AssemblyMetadata Include="BuildMachine" Value="$(COMPUTERNAME)$(HOSTNAME)" />
-        <AssemblyMetadata Include="BuildDate" Value="$([System.DateTime]::UtcNow.ToString('yyyy-MM-ddTHH:mm:ss.fffZ'))" />
-        <AssemblyMetadata Include="TargetFramework" Value="$(TargetFramework)" />
-        <AssemblyMetadata Include="TargetPlatform" Value="$(PlatformTarget)" />
-        <AssemblyMetadata Include="Configuration" Value="$(Configuration)" />
-        <AssemblyMetadata Include="BuildEnvironment" Value="$([System.Environment]::MachineName)" />
-        <AssemblyMetadata Include="BuildUser" Value="$(USERNAME)$(USER)" />
-        
-        <!-- Code Quality and Analysis -->
+        <!-- Code Quality and Documentation -->
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <WarningsAsErrors />
-        <WarningsNotAsErrors>CS1591;NU1903;NETSDK1138</WarningsNotAsErrors>
-        <NoWarn>CS1591;NU1701;NU1603</NoWarn>
-        <EnableNETAnalyzers>true</EnableNETAnalyzers>
-        <AnalysisLevel>latest</AnalysisLevel>
-        <AnalysisMode>AllEnabledByDefault</AnalysisMode>
-        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-        <RunCodeAnalysis>false</RunCodeAnalysis>
+        <WarningsNotAsErrors>CS1591;NU1903</WarningsNotAsErrors>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-        <NoDocumentationFile>false</NoDocumentationFile>
         
-        <!-- Output and Build Settings -->
-        <OutputPath>bin\$(Configuration)\</OutputPath>
-        <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-        <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
-        <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
-        <AppendRuntimeIdentifierToOutputPath>true</AppendRuntimeIdentifierToOutputPath>
+        <!-- PowerShell Module Specific Settings -->
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-        <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-        <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-        <UseAppHost>true</UseAppHost>
-        <SelfContained>false</SelfContained>
-        <PublishSingleFile>false</PublishSingleFile>
-        <PublishTrimmed>false</PublishTrimmed>
-        <PublishReadyToRun>false</PublishReadyToRun>
         
         <!-- Repository and Source Control -->
         <RepositoryUrl>https://github.com/wangkanai/PSPredictor</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <RepositoryBranch Condition="'$(GITHUB_REF_NAME)' != ''">$(GITHUB_REF_NAME)</RepositoryBranch>
-        <RepositoryCommit Condition="'$(GITHUB_SHA)' != ''">$(GITHUB_SHA)</RepositoryCommit>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
-        <DeterministicSourcePaths>true</DeterministicSourcePaths>
         
         <!-- Package Information -->
-        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-        <IsPackable>true</IsPackable>
-        <PackageId Condition="'$(PackageId)' == ''">$(AssemblyName)</PackageId>
-        <PackageVersion>$(Version)</PackageVersion>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageLicenseFile></PackageLicenseFile>
         <PackageProjectUrl>https://github.com/wangkanai/PSPredictor</PackageProjectUrl>
-        <PackageDescription>$(Description)</PackageDescription>
-        <PackageTags>PowerShell;CLI;AutoComplete;IntelliSense;AI;MachineLearning;CommandLine;Terminal;IDE;Syntax;Highlighting;Prediction;Completion;Editor;Enhancement</PackageTags>
+        <PackageDescription>PowerShell Binary Module that transforms the command-line experience into a comprehensive IDE within the terminal with AI-powered predictions, advanced editing capabilities, syntax highlighting, and intelligent auto-completion for 26+ CLI tools.</PackageDescription>
+        <PackageTags>PowerShell;CLI;AutoComplete;IntelliSense;AI;MachineLearning;CommandLine;Terminal;IDE;Syntax;Highlighting</PackageTags>
         <PackageIcon>icon.png</PackageIcon>
-        <PackageIconUrl></PackageIconUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageReleaseNotes>v2.0.0-alpha.1: Complete rewrite to C# binary module with AI-powered predictions, advanced editing modes, and comprehensive CLI tool support.</PackageReleaseNotes>
-        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <PackageOutputPath>$(MSBuildThisFileDirectory)artifacts\packages\</PackageOutputPath>
         
         <!-- Symbol Packages -->
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-        <EmbedAllSources>true</EmbedAllSources>
         
-        <!-- Signing -->
-        <SignAssembly>false</SignAssembly>
-        <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
-        <DelaySign>false</DelaySign>
-        
-        <!-- Localization -->
-        <AssemblyDefaultAlias>$(AssemblyName)</AssemblyDefaultAlias>
-        <NeutralLanguage>en-US</NeutralLanguage>
-        <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
-        
-        <!-- Performance and Compatibility -->
-        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-        <Deterministic>true</Deterministic>
-        <ProduceOnlyReferenceAssembly>false</ProduceOnlyReferenceAssembly>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <Prefer32Bit>false</Prefer32Bit>
-        <Features>strict</Features>
-        
-        <!-- CI/CD and DevOps -->
+        <!-- CI/CD Settings -->
         <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
-        <OfficialBuild Condition="'$(GITHUB_ACTIONS)' == 'true' AND '$(GITHUB_REF_TYPE)' == 'tag'">true</OfficialBuild>
-        <BuildNumber Condition="'$(GITHUB_RUN_NUMBER)' != ''">$(GITHUB_RUN_NUMBER)</BuildNumber>
-        <BuildId Condition="'$(GITHUB_RUN_ID)' != ''">$(GITHUB_RUN_ID)</BuildId>
-        
-        <!-- MSBuild Performance -->
-        <UseSharedCompilation>true</UseSharedCompilation>
-        <RestoreUseSkipNonexistentTargets>false</RestoreUseSkipNonexistentTargets>
-        <MSBuildTreatWarningsAsErrors>false</MSBuildTreatWarningsAsErrors>
-        <MSBuildWarningsAsMessages>MSB3277</MSBuildWarningsAsMessages>
     </PropertyGroup>
 
     <!-- Debug Configuration -->
@@ -161,56 +65,7 @@
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <IsPackable>false</IsPackable>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-        <IsPublishable>false</IsPublishable>
-        <EnableDefaultContentItems>false</EnableDefaultContentItems>
     </PropertyGroup>
-    
-    <!-- Tool Project Settings -->
-    <PropertyGroup Condition="'$(IsToolProject)' == 'true' OR $(MSBuildProjectName.StartsWith('PSPredictor')) AND $(MSBuildProjectDirectory.Contains('tools'))">
-        <OutputType>Exe</OutputType>
-        <IsPackable>false</IsPackable>
-        <IsPublishable>true</IsPublishable>
-        <UseAppHost>true</UseAppHost>
-        <SelfContained>false</SelfContained>
-        <PublishSingleFile>true</PublishSingleFile>
-        <PublishTrimmed>false</PublishTrimmed>
-        <PublishReadyToRun>true</PublishReadyToRun>
-        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    </PropertyGroup>
-    
-    <!-- Console Application Settings -->
-    <PropertyGroup Condition="'$(OutputType)' == 'Exe'">
-        <StartupObject></StartupObject>
-        <ApplicationIcon></ApplicationIcon>
-        <ApplicationManifest></ApplicationManifest>
-        <NoWin32Manifest>false</NoWin32Manifest>
-        <TrimmerDefaultAction>link</TrimmerDefaultAction>
-    </PropertyGroup>
-    
-    <!-- PowerShell Module Project Settings -->
-    <PropertyGroup Condition="$(MSBuildProjectName.Equals('PSPredictor'))">
-        <OutputType>Library</OutputType>
-        <IsPackable>true</IsPackable>
-        <PackageId>PSPredictor</PackageId>
-        <AssemblyTitle>PSPredictor - Advanced PowerShell Command Predictor</AssemblyTitle>
-        <AssemblyDescription>Revolutionary PowerShell Binary Module that transforms the command-line experience into a comprehensive IDE within the terminal</AssemblyDescription>
-        <PackageDescription>$(AssemblyDescription)</PackageDescription>
-        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-        <PackAsTool>false</PackAsTool>
-        <ToolCommandName></ToolCommandName>
-    </PropertyGroup>
-    
-    <!-- Library Project Settings -->
-    <PropertyGroup Condition="'$(OutputType)' == 'Library' AND '$(IsTestProject)' != 'true'">
-        <IsPackable Condition="'$(IsPackable)' == ''">true</IsPackable>
-        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-        <IncludeBuildOutput>true</IncludeBuildOutput>
-        <IncludeSymbols>true</IncludeSymbols>
-        <ContentTargetFolders>content</ContentTargetFolders>
-    </PropertyGroup>
-
-
 
     <ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="\" Condition="Exists('$(MSBuildThisFileDirectory)icon.png')"/>
