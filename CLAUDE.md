@@ -18,9 +18,11 @@ command-line experience into a comprehensive IDE within the terminal. It provide
 syntax highlighting, error indication, multi-line editing, predictive IntelliSense, and advanced editing  
 capabilities for 26+ popular command-line tools.
 
-**⚠️ MAJOR VERSION TRANSITION**: This is v2.0 - a complete rewrite from PowerShell scripts to C# .NET 9.0 binary module. For v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`.
+**⚠️ MAJOR VERSION TRANSITION**: This is v2.0 - a complete rewrite from PowerShell scripts to C# .NET 9.0  
+binary module. For v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`.
 
-**🚀 LATEST UPDATE**: Project upgraded to .NET 9.0 (July 2025) with C# 13.0 language features, updated NuGet packages, and full cross-platform compatibility including ARM64 architecture support for Apple Silicon Macs.
+**🚀 LATEST UPDATE**: Project upgraded to .NET 9.0 (July 2025) with C# 13.0 language features, updated  
+NuGet packages, and full cross-platform compatibility including ARM64 architecture support for Apple Silicon Macs.
 
 ## Current Project Status (July 2025)
 
@@ -183,7 +185,7 @@ dotnet run --project tools/PSPredictor.ModelTrainer/ -- --validate-models
 
 ### Project Structure
 
-```
+```text
 PSPredictor/
 ├── src/                                    # Source code (C# .NET 9.0)
 │   ├── PSPredictor/                       # Main binary module project
@@ -712,12 +714,14 @@ The PSPredictor project now includes a comprehensive documentation framework to 
 ### Quality Assurance Integration
 
 **Markdown Quality Control:**
+
 - ✅ **markdownlint Integration**: Added to GitHub Actions CI/CD pipeline
 - ✅ **Configuration**: `.markdownlint.json` with project-specific rules
 - ✅ **EditorConfig**: Updated `.editorconfig` with markdown-specific settings
 - ✅ **IDE Support**: Automatic formatting and real-time linting in development environment
 
 **Quality Standards:**
+
 - **Line Length**: 120 characters maximum for readability
 - **Consistent Formatting**: Proper heading structure, list formatting, code block language specification
 - **Cross-Platform Compatibility**: Consistent rendering across all markdown viewers
@@ -728,18 +732,22 @@ The PSPredictor project now includes a comprehensive documentation framework to 
 The documentation framework is integrated into the development workflow:
 
 **Pre-Development Phase:**
+
 - Review STANDARDS.md for coding guidelines and quality requirements
 - Consult SPECIFICATIONS.md for API contracts and technical requirements
 - Reference FRAMEWORK.md for architectural patterns and design principles
 
 **During Development:**
+
 - Follow PLANNING.md for sprint planning and milestone tracking
 - Use ROADMAP.md for strategic direction and long-term planning
 - Leverage documentation for consistent decision-making
 
 **Quality Gates:**
+
 - Markdown linting runs automatically on all pull requests
 - Documentation updates required for significant architectural changes
 - Regular review and updates to maintain accuracy and relevance
 
-This documentation framework ensures consistent development practices, clear technical specifications, and strategic alignment across the entire PSPredictor project lifecycle.
+This documentation framework ensures consistent development practices, clear technical specifications, and  
+strategic alignment across the entire PSPredictor project lifecycle.

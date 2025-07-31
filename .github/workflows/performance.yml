@@ -2,9 +2,9 @@ name: Performance Tests
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, dev]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, dev ]
   schedule:
     # Run performance tests daily at 2 AM UTC
     - cron: '0 2 * * *'
@@ -88,20 +88,20 @@ jobs:
       run: |
         $resultsFile = "performance-results-${{ matrix.runtime }}.json"
         $threshold = [int]$env:PERFORMANCE_THRESHOLD_MS
-        
+
         if (Test-Path $resultsFile) {
           $results = Get-Content $resultsFile | ConvertFrom-Json
           $failedTests = @()
-          
+
           Write-Host "🔍 Performance Results Analysis:"
           Write-Host "================================"
-          
+
           foreach ($benchmark in $results.Benchmarks) {
             $meanMs = [math]::Round($benchmark.Statistics.Mean / 1000000, 2)  # Convert ns to ms
             $status = if ($meanMs -le $threshold) { "✅ PASS" } else { "❌ FAIL" }
-            
+
             Write-Host "$status $($benchmark.DisplayInfo) - $meanMs ms (threshold: ${threshold}ms)"
-            
+
             if ($meanMs -gt $threshold) {
               $failedTests += @{
                 Test = $benchmark.DisplayInfo
@@ -111,14 +111,14 @@ jobs:
               }
             }
           }
-          
+
           if ($failedTests.Count -gt 0) {
             Write-Host ""
             Write-Host "❌ Performance regression detected:"
             foreach ($failed in $failedTests) {
               Write-Host "   $($failed.Test): $($failed.ActualMs)ms (+$($failed.Difference)ms over threshold)"
             }
-            
+
             if ($env:GITHUB_EVENT_NAME -eq "pull_request") {
               Write-Host "::error::Performance regression detected in PR. See details above."
               exit 1
@@ -139,62 +139,62 @@ jobs:
       if: runner.os != 'Windows'
       run: |
         set -euo pipefail
-        
+
         if [ "$RUNNER_OS" == "Linux" ]; then
           # Install PowerShell on Ubuntu using the official method with error handling
           echo "Installing PowerShell on Linux..."
-          
+
           # Get Ubuntu version dynamically and validate
           UBUNTU_VERSION=$(lsb_release -rs)
           echo "Detected Ubuntu version: $UBUNTU_VERSION"
-          
+
           # Download Microsoft package configuration with timeout and verification
           TEMP_DEB="/tmp/packages-microsoft-prod.deb"
           if ! wget --timeout=30 --tries=3 -q "https://packages.microsoft.com/config/ubuntu/$UBUNTU_VERSION/packages-microsoft-prod.deb" -O "$TEMP_DEB"; then
             echo "Failed to download Microsoft package configuration"
             exit 1
           fi
-          
+
           # Verify the downloaded file exists and has reasonable size
           if [ ! -f "$TEMP_DEB" ] || [ ! -s "$TEMP_DEB" ]; then
             echo "Downloaded file is invalid or empty"
             exit 1
           fi
-          
+
           # Install with proper error handling
           if ! sudo dpkg -i "$TEMP_DEB"; then
             echo "Failed to install Microsoft package configuration"
             exit 1
           fi
-          
+
           # Clean up temporary file
           rm -f "$TEMP_DEB"
-          
+
           # Update package list and install PowerShell
           if ! sudo apt-get update; then
             echo "Failed to update package list"
             exit 1
           fi
-          
+
           if ! sudo apt-get install -y powershell; then
             echo "Failed to install PowerShell"
             exit 1
           fi
-          
+
           echo "PowerShell installed successfully on Linux"
-          
+
         elif [ "$RUNNER_OS" == "macOS" ]; then
           # Install PowerShell on macOS with error handling
           echo "Installing PowerShell on macOS..."
-          
+
           if ! brew install --cask powershell; then
             echo "Failed to install PowerShell via Homebrew"
             exit 1
           fi
-          
+
           echo "PowerShell installed successfully on macOS"
         fi
-        
+
         # Verify PowerShell installation
         if command -v pwsh >/dev/null 2>&1; then
           echo "✅ PowerShell installation verified"
@@ -208,13 +208,13 @@ jobs:
     - name: Real-world performance test
       run: |
         $modulePath = "./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
-        
+
         if (Test-Path $modulePath) {
           Write-Host "🧪 Running real-world performance tests..."
-          
+
           try {
             Import-Module $modulePath -Force -ErrorAction Stop
-            
+
             # Test command completion performance
             $testCommands = @(
               "git ",
@@ -223,55 +223,55 @@ jobs:
               "npm ",
               "dotnet "
             )
-            
+
             $results = @()
-            
+
             foreach ($cmd in $testCommands) {
               Write-Host "Testing completion for: $cmd"
-              
+
               # Measure completion time (simulate what happens when user presses TAB)
               $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
-              
+
               # This would trigger completion in real usage
               # For testing, we'll call internal completion methods if available
               try {
                 $completions = @() # Placeholder - actual completion call would go here
                 $stopwatch.Stop()
                 $elapsedMs = [math]::Round($stopwatch.Elapsed.TotalMilliseconds, 2)
-                
+
                 $results += @{
                   Command = $cmd.Trim()
                   ElapsedMs = $elapsedMs
                   Status = if ($elapsedMs -le $env:PERFORMANCE_THRESHOLD_MS) { "PASS" } else { "FAIL" }
                 }
-                
+
                 Write-Host "  ⏱️  $elapsedMs ms"
               } catch {
                 Write-Host "  ⚠️  Error during completion test: $_"
               }
             }
-            
+
             # Summary
             Write-Host ""
             Write-Host "🎯 Real-world Performance Summary:"
             Write-Host "=================================="
-            
+
             $passCount = ($results | Where-Object { $_.Status -eq "PASS" }).Count
             $failCount = ($results | Where-Object { $_.Status -eq "FAIL" }).Count
-            
+
             foreach ($result in $results) {
               $statusIcon = if ($result.Status -eq "PASS") { "✅" } else { "❌" }
               Write-Host "$statusIcon $($result.Command) completion: $($result.ElapsedMs)ms"
             }
-            
+
             Write-Host ""
             Write-Host "Results: $passCount passed, $failCount failed"
-            
+
             if ($failCount -gt 0 -and $env:GITHUB_EVENT_NAME -eq "pull_request") {
               Write-Host "::error::Real-world performance tests failed"
               exit 1
             }
-            
+
           } catch {
             Write-Host "❌ Failed to test real-world performance: $_"
             exit 1
@@ -285,31 +285,31 @@ jobs:
       run: |
         Write-Host "🧠 Memory Usage Analysis"
         Write-Host "========================"
-        
+
         $modulePath = "./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
-        
+
         if (Test-Path $modulePath) {
           try {
             # Get initial memory usage
             $initialMemory = [System.GC]::GetTotalMemory($false)
             Write-Host "Initial memory: $([math]::Round($initialMemory / 1MB, 2)) MB"
-            
+
             # Load module
             Import-Module $modulePath -Force -ErrorAction Stop
-            
+
             # Get memory after loading
             [System.GC]::Collect()
             [System.GC]::WaitForPendingFinalizers()
             $afterLoadMemory = [System.GC]::GetTotalMemory($false)
             $loadMemoryDelta = $afterLoadMemory - $initialMemory
-            
+
             Write-Host "Memory after module load: $([math]::Round($afterLoadMemory / 1MB, 2)) MB"
             Write-Host "Module load memory impact: $([math]::Round($loadMemoryDelta / 1MB, 2)) MB"
-            
+
             # Test if memory usage is within acceptable bounds (< 50MB as per requirements)
             $memoryThresholdMB = 50
             $actualMemoryMB = [math]::Round($loadMemoryDelta / 1MB, 2)
-            
+
             if ($actualMemoryMB -le $memoryThresholdMB) {
               Write-Host "✅ Memory usage within acceptable bounds: $actualMemoryMB MB <= ${memoryThresholdMB} MB"
             } else {
@@ -321,7 +321,7 @@ jobs:
                 Write-Host "::warning::Memory usage exceeds recommended threshold"
               }
             }
-            
+
           } catch {
             Write-Host "❌ Failed to analyze memory usage: $_"
           }
