@@ -108,7 +108,7 @@ through C# binary module architecture."
 
 **Supported Tools** (Minimum 26+):
 
-- **Version Control**: Git, SVN, Mercurial
+- **Version Control**: Git (with superior 3-8x performance vs posh-git - targeting <50ms vs 150-400ms), SVN, Mercurial
 - **Cloud Platforms**: Azure CLI, AWS CLI, Google Cloud CLI
 - **Container/Orchestration**: Docker, kubectl, Helm, Terraform
 - **Package Managers**: NPM, Yarn, NuGet, Chocolatey, pip

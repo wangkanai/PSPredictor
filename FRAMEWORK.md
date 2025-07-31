@@ -748,6 +748,44 @@ public abstract class BaseCliToolCompletion : ICliToolCompletion
 }
 ```
 
+## Git Provider Architecture
+
+### Superior Git Performance Requirements
+
+**Performance Specifications vs posh-git**:
+
+- **3-8x Faster Response Time**: Target <50ms vs typical 150-400ms posh-git response
+- **AI-Powered Intelligence**: Context-aware suggestions based on repository state and workflow patterns
+- **Intelligent Repository Analysis**: Selective parsing and async operations for large repositories
+- **Real-Time Validation**: Live error detection and correction for Git commands
+- **Advanced Caching**: Repository state caching with intelligent invalidation strategies
+
+**Git-Specific Architecture Components**:
+
+```csharp
+/// <summary>
+/// Git repository context information with performance optimization
+/// </summary>
+public sealed record GitRepositoryContext(
+    bool IsRepository,
+    string? CurrentBranch,
+    string[] LocalBranches,
+    string[] RemoteBranches,
+    string[] Tags, 
+    string[] Remotes,
+    GitStatus Status,
+    string? UpstreamBranch = null,
+    DateTime LastAnalyzed = default,
+    TimeSpan CacheValidity = default
+)
+{
+    public static readonly GitRepositoryContext NotARepository = new(
+        false, null, [], [], [], [], GitStatus.Unknown);
+        
+    public bool IsCacheValid => DateTime.UtcNow - LastAnalyzed < CacheValidity;
+}
+```
+
 ### Git Provider Implementation (Reference)
 
 **Advanced Git Integration**:
