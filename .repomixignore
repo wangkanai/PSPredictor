@@ -1,4 +1,136 @@
-# Add patterns to ignore here, one per line
-# Example:
-# *.log
-# tmp/
+# .repomixignore - PSPredictor MCP Repomix Ignore Patterns
+# Optimized for PSPredictor C# PowerShell Binary Module Analysis
+
+## Build Artifacts & Binaries
+bin/
+obj/
+build/
+dist/
+packages/
+*.nupkg
+*.zip
+TestResults/
+coverage.xml
+*.coverage
+*.coveragexml
+
+## IDE & Editor Files
+.vs/
+.vscode/launch.json
+.vscode/tasks.json
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Temporary & Cache Files
+*.tmp
+*.temp
+*.log
+*~
+*.swp
+*.swo
+PowerShell_transcript.*
+
+## AI & Generated Files
+repomix-output.*
+.claude/
+.continue/
+mcp-output/
+mcp-cache/
+
+## OS Generated Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+._*
+.AppleDouble
+.LSOverride
+Icon?
+
+## Documentation Archives & Marketing
+docs/archives/
+docs/marketing/
+
+## Test & Development Utilities
+test-runner.ps1
+scripts/demo-generator.ps1
+scripts/tests/
+scripts/src/Tests/
+**/PlaceholderTests.cs
+
+## Runtime & User Data
+.pspredict-cache/
+completion-cache/
+prediction-models/
+user-data/
+ai-models/
+model-cache/
+
+## Performance & Debugging
+benchmark-results/
+perf-logs/
+*.benchmark
+*.psprofile
+profile-*.json
+debug-*.log
+
+## Development Tools Output
+codegen-output/
+model-training-data/
+training-results/
+demo-output/
+test-output/
+sandbox/
+scratch/
+
+## Security & Secrets
+*.key
+*.pem
+*.pfx
+*.p12
+*.crt
+*.cer
+*.der
+secrets.json
+appsettings.*.json
+.env*
+psgallery.key
+apikey.txt
+
+## Database Files
+*.db
+*.sqlite
+*.sqlite3
+
+## Node.js (if any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+## Archive Files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+
+## ML/AI Model Files (large binaries)
+*.model
+*.onnx
+*.mlnet
+src/**/Models/*.zip
+
+## Backup Files
+*.bak
+*.backup
+*.old
+*.orig
