@@ -46,8 +46,9 @@
   <!-- Build Configuration for Performance -->
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <Optimize>true</Optimize>
-    <DebugType>none</DebugType>
-    <DebugSymbols>false</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <EmbedAllSources>false</EmbedAllSources>
   </PropertyGroup>
 
 </Project>
