@@ -86,7 +86,8 @@ cd PSPredictor
 dotnet build --configuration Release
 
 # Import development build
-Import-Module ./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll -Force
+$ModulePath = Join-Path -Path (Get-Location) -ChildPath "src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
+Import-Module $ModulePath -Force
 ```
 
 ### Usage
@@ -317,7 +318,8 @@ dotnet test tests/AI/       # AI/ML model tests
 dotnet pack --configuration Release
 
 # Install development build locally
-Import-Module ./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll -Force
+$ModulePath = Join-Path -Path (Get-Location) -ChildPath "src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
+Import-Module $ModulePath -Force
 ```
 
 ### Architecture Overview

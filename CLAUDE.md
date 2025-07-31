@@ -134,7 +134,8 @@ dotnet pack --configuration Release
 
 # Install module locally for testing
 dotnet build --configuration Debug
-Import-Module ./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll -Force
+$ModulePath = Join-Path -Path (Get-Location) -ChildPath "src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll"
+Import-Module $ModulePath -Force
 ```
 
 ### Module Installation and Testing
@@ -469,7 +470,8 @@ dotnet test
 
 # Install development build for testing
 dotnet build --configuration Debug
-Import-Module ./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll -Force
+$ModulePath = Join-Path -Path (Get-Location) -ChildPath "src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll"
+Import-Module $ModulePath -Force
 ```
 
 ### Development Cycle
