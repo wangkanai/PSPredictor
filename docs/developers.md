@@ -32,21 +32,21 @@ PSPredictor v2.0 features comprehensive documentation organized into specialized
 
 ### Core Documentation
 
-| Document | Purpose | Key Contents |
-|----------|---------|--------------|
-| **[STANDARDS.md](../STANDARDS.md)** | Development Standards | Code quality standards, performance requirements, testing guidelines |
-| **[SPECIFICATIONS.md](../SPECIFICATIONS.md)** | Technical Specifications | API contracts, system requirements, platform support matrix |
-| **[FRAMEWORK.md](../FRAMEWORK.md)** | Architectural Framework | Design patterns, component architecture, AI integration |
-| **[PRD.md](../PRD.md)** | Product Requirements | Strategic objectives, feature requirements, success metrics |
-| **[PLANNING.md](../PLANNING.md)** | Development Planning | Agile methodology, project timeline, resource planning |
+| Document                                      | Purpose                  | Key Contents                                                         |
+|-----------------------------------------------|--------------------------|----------------------------------------------------------------------|
+| **[STANDARDS.md](../STANDARDS.md)**           | Development Standards    | Code quality standards, performance requirements, testing guidelines |
+| **[SPECIFICATIONS.md](../SPECIFICATIONS.md)** | Technical Specifications | API contracts, system requirements, platform support matrix          |
+| **[FRAMEWORK.md](../FRAMEWORK.md)**           | Architectural Framework  | Design patterns, component architecture, AI integration              |
+| **[PRD.md](../PRD.md)**                       | Product Requirements     | Strategic objectives, feature requirements, success metrics          |
+| **[PLANNING.md](../PLANNING.md)**             | Development Planning     | Agile methodology, project timeline, resource planning               |
 
 ### Specialized Documentation
 
-| Document | Purpose | Audience |
-|----------|---------|----------|
-| **[CONTRIBUTING.md](../CONTRIBUTING.md)** | Contribution Guidelines | External contributors |
-| **[README.md](../README.md)** | Project Overview | End users and newcomers |
-| **[CLAUDE.md](../CLAUDE.md)** | AI Assistant Guidelines | Development tooling |
+| Document                                  | Purpose                 | Audience                |
+|-------------------------------------------|-------------------------|-------------------------|
+| **[CONTRIBUTING.md](../CONTRIBUTING.md)** | Contribution Guidelines | External contributors   |
+| **[README.md](../README.md)**             | Project Overview        | End users and newcomers |
+| **[CLAUDE.md](../CLAUDE.md)**             | AI Assistant Guidelines | Development tooling     |
 
 ---
 
@@ -81,7 +81,7 @@ PSPredictor v2.0 is a **complete rewrite** from PowerShell scripts to a C# .NET 
 ```text
 ┌────────────────────────────────────────────────────────────────┐
 │                    PowerShell Host Layer                       │
-│        Cmdlets: Get-Status, Set-Mode, Install, etc.           │
+│        Cmdlets: Get-Status, Set-Mode, Install, etc.            │
 └────────────────────────────────────────────────────────────────┘
                                 │
 ┌────────────────────────────────────────────────────────────────┐
@@ -354,12 +354,12 @@ public async Task PredictionEngine_ShouldGenerateCompletions_WithinPerformanceTh
     // Arrange
     var engine = new PredictionEngine(mockProvider, mockConfig);
     var command = "git che";
-    
+
     // Act
     var stopwatch = Stopwatch.StartNew();
     var results = await engine.GetCompletionsAsync(command);
     stopwatch.Stop();
-    
+
     // Assert
     results.Should().NotBeEmpty();
     results.Should().Contain(c => c.Text.StartsWith("checkout"));
@@ -405,7 +405,7 @@ For complete testing guidelines, see **[STANDARDS.md](../STANDARDS.md)**.
    # Make changes
    dotnet build
    dotnet test
-   
+
    # Commit changes
    git add .
    git commit -m "feat: implement your feature"
@@ -556,9 +556,10 @@ For detailed workflow information, see **[PLANNING.md](../PLANNING.md)**.
    ```
 
 4. **Update Documentation**
-   - Add tool to README.md supported tools list
-   - Update completion provider documentation
-   - Include usage examples
+
+- Add tool to README.md supported tools list
+- Update completion provider documentation
+- Include usage examples
 
 For complete contribution guidelines, see **[CONTRIBUTING.md](../CONTRIBUTING.md)**.
 
@@ -646,20 +647,20 @@ pwsh -c "Import-Module ./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll; Get-P
 
 ### Technical Documentation
 
-| Resource | Description | Link |
-|----------|-------------|------|
-| **API Specifications** | Detailed API contracts and interfaces | [SPECIFICATIONS.md](../SPECIFICATIONS.md) |
-| **Architecture Guide** | System design and component relationships | [FRAMEWORK.md](../FRAMEWORK.md) |
-| **Performance Standards** | Response time and memory requirements | [STANDARDS.md](../STANDARDS.md) |
-| **Product Requirements** | Feature requirements and success metrics | [PRD.md](../PRD.md) |
+| Resource                  | Description                               | Link                                      |
+|---------------------------|-------------------------------------------|-------------------------------------------|
+| **API Specifications**    | Detailed API contracts and interfaces     | [SPECIFICATIONS.md](../SPECIFICATIONS.md) |
+| **Architecture Guide**    | System design and component relationships | [FRAMEWORK.md](../FRAMEWORK.md)           |
+| **Performance Standards** | Response time and memory requirements     | [STANDARDS.md](../STANDARDS.md)           |
+| **Product Requirements**  | Feature requirements and success metrics  | [PRD.md](../PRD.md)                       |
 
 ### Development Resources
 
-| Resource | Description | Link |
-|----------|-------------|------|
-| **Project Planning** | Development methodology and timeline | [PLANNING.md](../PLANNING.md) |
-| **Contribution Guide** | Detailed contribution workflows | [CONTRIBUTING.md](../CONTRIBUTING.md) |
-| **AI Assistant Guide** | Development tooling guidelines | [CLAUDE.md](../CLAUDE.md) |
+| Resource               | Description                          | Link                                  |
+|------------------------|--------------------------------------|---------------------------------------|
+| **Project Planning**   | Development methodology and timeline | [PLANNING.md](../PLANNING.md)         |
+| **Contribution Guide** | Detailed contribution workflows      | [CONTRIBUTING.md](../CONTRIBUTING.md) |
+| **AI Assistant Guide** | Development tooling guidelines       | [CLAUDE.md](../CLAUDE.md)             |
 
 ### External Resources
 
