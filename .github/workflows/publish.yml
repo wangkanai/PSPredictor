@@ -14,7 +14,6 @@ on:
 
 permissions:
   contents: write
-  releases: write
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
