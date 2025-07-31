@@ -9,35 +9,41 @@
 [![License](https://img.shields.io/github/license/wangkanai/PSPredictor?style=flat-square)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/wangkanai/PSPredictor?style=flat-square)](https://github.com/wangkanai/PSPredictor/stargazers)
 
-> **⚠️ MAJOR VERSION TRANSITION**: PSPredictor v2.0 is a complete rewrite from PowerShell scripts to a high-performance C# .NET 9.0 binary module with AI-powered intelligence and IDE-like features.
+> **⚠️ MAJOR VERSION TRANSITION**: PSPredictor v2.0 is a complete rewrite from PowerShell scripts to a high-performance
+> C# .NET 9.0 binary module with AI-powered intelligence and IDE-like features.
 
 ## ✨ Revolutionary Features
 
 ### 🧠 AI-Powered Intelligence
+
 - **ML.NET Integration**: Local machine learning with embedded models for intelligent predictions
 - **Context-Aware Suggestions**: Understands your workflow and environment for smarter completions
 - **Predictive IntelliSense**: IDE-like IntelliSense experience directly in your terminal
 - **Command History Learning**: Learns from your patterns to provide personalized suggestions
 
 ### 🎨 IDE-Like Terminal Experience
+
 - **Real-Time Syntax Highlighting**: Live syntax coloring for PowerShell and CLI tools
 - **Visual Error Indication**: Instant error detection and contextual error messages
 - **Multi-Line Editing**: Advanced multi-line command editing with proper indentation
 - **Dynamic Help Display**: Real-time help without losing your command-line position
 
 ### ⚡ Native Performance
+
 - **C# Binary Module**: High-performance .NET 9.0 implementation with <100ms response times
 - **Cross-Platform Support**: Full compatibility across Windows, Linux, and macOS (x64 and ARM64)
 - **Memory Efficient**: <50MB memory footprint optimized for long-running sessions
 - **PSReadLine Independent**: Native input handling system with advanced editing capabilities
 
 ### 🎯 Advanced Editing Modes
+
 - **Multi-Modal Editing**: Cmd, Emacs, and Vi editing modes with full feature parity
 - **Custom Key Bindings**: Fully customizable keyboard shortcuts and macro support
 - **Kill-Ring System**: Emacs-style advanced clipboard functionality
 - **Token-Based Navigation**: PowerShell syntax-aware cursor movement and selection
 
 ### 🛠️ Comprehensive CLI Tool Support
+
 - **26+ CLI Tools**: Intelligent completion for Git, Docker, Azure, AWS, Kubernetes, and more
 - **Plugin Architecture**: Easily extensible system for adding new tools
 - **Context Awareness**: Tool-specific intelligence (Git branches, Docker containers, etc.)
@@ -48,6 +54,7 @@
 ### Installation
 
 #### Production Release (Coming Soon)
+
 ```powershell
 # Install from PowerShell Gallery
 Install-Module -Name PSPredictor -RequiredVersion 2.0.0 -Scope CurrentUser
@@ -60,6 +67,7 @@ Add-Content $PROFILE "Import-Module PSPredictor"
 ```
 
 #### Development Build (Current)
+
 ```powershell
 # Clone and build from source
 git clone https://github.com/wangkanai/PSPredictor.git
@@ -77,6 +85,7 @@ Import-Module ./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll -Force
 PSPredictor v2.0 transforms your PowerShell terminal into an intelligent IDE-like experience:
 
 #### Basic Intelligent Completion
+
 ```powershell
 # AI-powered Git completion with context awareness
 git che<TAB>                    # → git checkout (with branch suggestions)
@@ -94,6 +103,7 @@ kubectl describe pod <TAB>     # Shows actual pod names from current namespace
 ```
 
 #### Advanced IDE Features
+
 ```powershell
 # Enable enhanced editing mode with AI predictions
 Set-PSPredictorMode -Mode Enhanced
@@ -111,16 +121,19 @@ Get-PSPredictorStatus                     # Shows AI model status, performance m
 ```
 
 #### Real-Time Syntax and Error Detection
+
 ```powershell
 # Real-time syntax highlighting (automatically active)
 git status --invalid-flag                # Shows error highlighting
 docker run --memory=invalid              # Visual error indication with suggestions
 
 # Multi-line editing with proper indentation
-if ($condition) {
-    Get-Process | Where-Object {          # Automatic indentation
-        $_.CPU -gt 100                    # Syntax highlighting
-    }
+if ($condition)
+{
+  Get-Process | Where-Object {
+  # Automatic indentation
+    $_.CPU -gt 100                    # Syntax highlighting
+  }
 }                                         # Bracket matching
 ```
 
@@ -174,12 +187,12 @@ if ($condition) {
 
 ### vs. Manual Setup
 
-| Feature | PSPredictor | Manual Setup |
-|---------|-------------|--------------|
-| **Coverage** | 26+ tools | Limited |
-| **Maintenance** | Auto-updates | Manual effort |
-| **Consistency** | Unified experience | Varies by tool |
-| **Installation** | Single command | Complex setup |
+| Feature          | PSPredictor        | Manual Setup   |
+|------------------|--------------------|----------------|
+| **Coverage**     | 26+ tools          | Limited        |
+| **Maintenance**  | Auto-updates       | Manual effort  |
+| **Consistency**  | Unified experience | Varies by tool |
+| **Installation** | Single command     | Complex setup  |
 
 ### vs. Other Solutions
 
@@ -325,7 +338,7 @@ tests/
 
 - **.NET 9.0**: High-performance C# 13.0 with latest language features
 - **ML.NET 3.0.1**: Local machine learning with embedded models
-- **PowerShell SDK 7.4.6**: Native PowerShell cmdlet integration  
+- **PowerShell SDK 7.4.6**: Native PowerShell cmdlet integration
 - **xUnit + FluentAssertions**: Modern testing framework
 - **BenchmarkDotNet**: Performance regression testing
 
@@ -364,6 +377,7 @@ public class MyCliCompletion : BaseCompletion
 ```
 
 Register the new completion provider:
+
 ```csharp
 // In CompletionProvider.cs
 RegisterProvider(new MyCliCompletion());
@@ -372,18 +386,21 @@ RegisterProvider(new MyCliCompletion());
 ## 📈 Performance Specifications
 
 ### Response Time Targets (v2.0)
+
 - **⚡ Completion Generation**: < 50ms for standard completions
-- **🧠 AI Predictions**: < 100ms for ML-powered suggestions  
+- **🧠 AI Predictions**: < 100ms for ML-powered suggestions
 - **🎨 Syntax Highlighting**: < 20ms for real-time coloring
 - **📝 Multi-line Rendering**: < 30ms for complex command structures
 
 ### Memory Efficiency
+
 - **🚀 Startup Footprint**: < 20MB initial memory usage
 - **💾 Runtime Footprint**: < 50MB for typical usage patterns
 - **🤖 Model Loading**: Lazy loading with < 5MB core embedded models
 - **📚 History Management**: SQLite with automatic cleanup and archiving
 
 ### Architecture Performance
+
 - **🔧 C# Binary Module**: Native .NET 9.0 performance with JIT optimization
 - **🌐 Cross-Platform**: Consistent performance across Windows, Linux, macOS (x64/ARM64)
 - **💡 Intelligent Caching**: LRU cache with 1000-item capacity and 5-minute TTL
@@ -392,16 +409,20 @@ RegisterProvider(new MyCliCompletion());
 ## 🔗 Related Projects & Ecosystem
 
 ### PowerShell Enhancement Tools
-- [PSReadLine](https://github.com/PowerShell/PSReadLine) - Enhanced command line editing (PSPredictor v2.0 is independent)
+
+- [PSReadLine](https://github.com/PowerShell/PSReadLine) - Enhanced command line editing (PSPredictor v2.0 is
+  independent)
 - [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) - Beautiful prompt themes (compatible)
 - [PSFzf](https://github.com/kelleyma49/PSFzf) - Fuzzy finder integration (complementary)
 - [posh-git](https://github.com/dahlbyk/posh-git) - Git integration for PowerShell (enhanced by PSPredictor)
 
 ### AI & Machine Learning
+
 - [ML.NET](https://github.com/dotnet/machinelearning) - Core machine learning framework used in PSPredictor
 - [PowerShell AI](https://github.com/dfinke/PowerShellAI) - AI integration for PowerShell (complementary)
 
 ### Development Tools
+
 - [PowerShell Extension for VS Code](https://github.com/PowerShell/vscode-powershell) - IDE integration
 - [Pester](https://github.com/pester/Pester) - PowerShell testing framework
 
@@ -412,6 +433,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🛣️ Roadmap & Version History
 
 ### v2.0.0 (In Development) - The Revolutionary Rewrite
+
 - **Complete Architecture Rewrite**: PowerShell scripts → C# .NET 9.0 binary module
 - **AI-Powered Intelligence**: ML.NET integration with embedded models
 - **Native Input System**: PSReadLine-independent with advanced editing modes
@@ -419,6 +441,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Cross-Platform Performance**: Full ARM64 support including Apple Silicon Macs
 
 ### v1.x (Legacy) - PowerShell Script Foundation
+
 - PowerShell script-based completion system
 - Basic CLI tool support and tab completion
 - PSReadLine dependency for input handling
@@ -429,12 +452,14 @@ For detailed v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`
 ## 🙏 Acknowledgments
 
 ### v2.0 Development
+
 - **.NET Team**: For the powerful .NET 9.0 platform and ML.NET framework
 - **PowerShell Team**: For the excellent PowerShell SDK and System.Management.Automation
 - **ML.NET Team**: For local machine learning capabilities and AutoML
 - **Community Contributors**: For testing, feedback, and CLI tool expertise
 
-### Legacy v1.x Foundation  
+### Legacy v1.x Foundation
+
 - **PowerShell Team**: For PSReadLine module that inspired v1.x architecture
 - **CLI Tool Maintainers**: For creating the fantastic tools we enhance
 - **Early Adopters**: For feedback and contributions to the PowerShell script foundation
