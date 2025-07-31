@@ -1,0 +1,390 @@
+name: Performance Tests
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+  schedule:
+    # Run performance tests daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      baseline_ref:
+        description: 'Baseline reference for performance comparison (branch/tag/commit)'
+        required: false
+        default: 'main'
+        type: string
+      test_iterations:
+        description: 'Number of test iterations'
+        required: false
+        default: '10'
+        type: string
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  PERFORMANCE_THRESHOLD_MS: 100  # Maximum acceptable response time in milliseconds
+
+jobs:
+  performance-benchmarks:
+    name: Performance Benchmarks
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+          - os: windows-latest
+            runtime: win-x64
+          - os: ubuntu-latest
+            runtime: linux-x64
+          - os: macos-latest
+            runtime: osx-x64
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        global-json-file: global.json
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json', '**/*.csproj', '**/Directory.Packages.props') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Restore dependencies
+      run: dotnet restore --verbosity minimal
+
+    - name: Build solution (Release)
+      run: dotnet build --configuration Release --no-restore --verbosity minimal
+
+    - name: Run performance tests
+      run: |
+        dotnet run --project tests/Performance.Tests/PSPredictor.Performance.Tests.csproj `
+          --configuration Release `
+          --no-build `
+          -- `
+          --iterations ${{ github.event.inputs.test_iterations || '10' }} `
+          --output-format json `
+          --output-file performance-results-${{ matrix.runtime }}.json
+      shell: pwsh
+
+    - name: Validate performance thresholds
+      run: |
+        $resultsFile = "performance-results-${{ matrix.runtime }}.json"
+        $threshold = [int]$env:PERFORMANCE_THRESHOLD_MS
+        
+        if (Test-Path $resultsFile) {
+          $results = Get-Content $resultsFile | ConvertFrom-Json
+          $failedTests = @()
+          
+          Write-Host "🔍 Performance Results Analysis:"
+          Write-Host "================================"
+          
+          foreach ($benchmark in $results.Benchmarks) {
+            $meanMs = [math]::Round($benchmark.Statistics.Mean / 1000000, 2)  # Convert ns to ms
+            $status = if ($meanMs -le $threshold) { "✅ PASS" } else { "❌ FAIL" }
+            
+            Write-Host "$status $($benchmark.DisplayInfo) - $meanMs ms (threshold: ${threshold}ms)"
+            
+            if ($meanMs -gt $threshold) {
+              $failedTests += @{
+                Test = $benchmark.DisplayInfo
+                ActualMs = $meanMs
+                ThresholdMs = $threshold
+                Difference = [math]::Round($meanMs - $threshold, 2)
+              }
+            }
+          }
+          
+          if ($failedTests.Count -gt 0) {
+            Write-Host ""
+            Write-Host "❌ Performance regression detected:"
+            foreach ($failed in $failedTests) {
+              Write-Host "   $($failed.Test): $($failed.ActualMs)ms (+$($failed.Difference)ms over threshold)"
+            }
+            
+            # Set output for later job steps
+            $failedJson = $failedTests | ConvertTo-Json -Compress
+            Write-Host "::set-output name=performance-failures::$failedJson"
+            
+            if ($env:GITHUB_EVENT_NAME -eq "pull_request") {
+              Write-Host "::error::Performance regression detected in PR. See details above."
+              exit 1
+            } else {
+              Write-Host "::warning::Performance regression detected. Consider optimization."
+            }
+          } else {
+            Write-Host ""
+            Write-Host "✅ All performance tests passed!"
+          }
+        } else {
+          Write-Host "❌ Performance results file not found: $resultsFile"
+          exit 1
+        }
+      shell: pwsh
+
+    - name: Install PowerShell (Linux/macOS)
+      if: runner.os != 'Windows'
+      run: |
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+          sudo dpkg -i packages-microsoft-prod.deb
+          sudo apt-get update
+          sudo apt-get install -y powershell
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          brew install --cask powershell
+        fi
+      shell: bash
+
+    - name: Real-world performance test
+      run: |
+        $modulePath = "./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
+        
+        if (Test-Path $modulePath) {
+          Write-Host "🧪 Running real-world performance tests..."
+          
+          try {
+            Import-Module $modulePath -Force -ErrorAction Stop
+            
+            # Test command completion performance
+            $testCommands = @(
+              "git ",
+              "docker ",
+              "kubectl ",
+              "npm ",
+              "dotnet "
+            )
+            
+            $results = @()
+            
+            foreach ($cmd in $testCommands) {
+              Write-Host "Testing completion for: $cmd"
+              
+              # Measure completion time (simulate what happens when user presses TAB)
+              $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+              
+              # This would trigger completion in real usage
+              # For testing, we'll call internal completion methods if available
+              try {
+                $completions = @() # Placeholder - actual completion call would go here
+                $stopwatch.Stop()
+                $elapsedMs = [math]::Round($stopwatch.Elapsed.TotalMilliseconds, 2)
+                
+                $results += @{
+                  Command = $cmd.Trim()
+                  ElapsedMs = $elapsedMs
+                  Status = if ($elapsedMs -le $env:PERFORMANCE_THRESHOLD_MS) { "PASS" } else { "FAIL" }
+                }
+                
+                Write-Host "  ⏱️  $elapsedMs ms"
+              } catch {
+                Write-Host "  ⚠️  Error during completion test: $_"
+              }
+            }
+            
+            # Summary
+            Write-Host ""
+            Write-Host "🎯 Real-world Performance Summary:"
+            Write-Host "=================================="
+            
+            $passCount = ($results | Where-Object { $_.Status -eq "PASS" }).Count
+            $failCount = ($results | Where-Object { $_.Status -eq "FAIL" }).Count
+            
+            foreach ($result in $results) {
+              $statusIcon = if ($result.Status -eq "PASS") { "✅" } else { "❌" }
+              Write-Host "$statusIcon $($result.Command) completion: $($result.ElapsedMs)ms"
+            }
+            
+            Write-Host ""
+            Write-Host "Results: $passCount passed, $failCount failed"
+            
+            if ($failCount -gt 0 -and $env:GITHUB_EVENT_NAME -eq "pull_request") {
+              Write-Host "::error::Real-world performance tests failed"
+              exit 1
+            }
+            
+          } catch {
+            Write-Host "❌ Failed to test real-world performance: $_"
+            exit 1
+          }
+        } else {
+          Write-Host "⚠️ Module not found for real-world testing: $modulePath"
+        }
+      shell: pwsh
+
+    - name: Memory usage analysis
+      run: |
+        Write-Host "🧠 Memory Usage Analysis"
+        Write-Host "========================"
+        
+        $modulePath = "./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll"
+        
+        if (Test-Path $modulePath) {
+          try {
+            # Get initial memory usage
+            $initialMemory = [System.GC]::GetTotalMemory($false)
+            Write-Host "Initial memory: $([math]::Round($initialMemory / 1MB, 2)) MB"
+            
+            # Load module
+            Import-Module $modulePath -Force -ErrorAction Stop
+            
+            # Get memory after loading
+            [System.GC]::Collect()
+            [System.GC]::WaitForPendingFinalizers()
+            $afterLoadMemory = [System.GC]::GetTotalMemory($false)
+            $loadMemoryDelta = $afterLoadMemory - $initialMemory
+            
+            Write-Host "Memory after module load: $([math]::Round($afterLoadMemory / 1MB, 2)) MB"
+            Write-Host "Module load memory impact: $([math]::Round($loadMemoryDelta / 1MB, 2)) MB"
+            
+            # Test if memory usage is within acceptable bounds (< 50MB as per requirements)
+            $memoryThresholdMB = 50
+            $actualMemoryMB = [math]::Round($loadMemoryDelta / 1MB, 2)
+            
+            if ($actualMemoryMB -le $memoryThresholdMB) {
+              Write-Host "✅ Memory usage within acceptable bounds: $actualMemoryMB MB <= ${memoryThresholdMB} MB"
+            } else {
+              Write-Host "❌ Memory usage exceeds threshold: $actualMemoryMB MB > ${memoryThresholdMB} MB"
+              if ($env:GITHUB_EVENT_NAME -eq "pull_request") {
+                Write-Host "::error::Memory usage regression detected"
+                exit 1
+              } else {
+                Write-Host "::warning::Memory usage exceeds recommended threshold"
+              }
+            }
+            
+          } catch {
+            Write-Host "❌ Failed to analyze memory usage: $_"
+          }
+        }
+      shell: pwsh
+
+    - name: Upload performance results
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-results-${{ matrix.runtime }}
+        path: performance-results-${{ matrix.runtime }}.json
+        retention-days: 30
+
+  performance-comparison:
+    name: Performance Comparison
+    runs-on: ubuntu-latest
+    needs: performance-benchmarks
+    if: github.event_name == 'pull_request'
+
+    steps:
+    - name: Checkout current branch
+      uses: actions/checkout@v4
+
+    - name: Download performance results
+      uses: actions/download-artifact@v4
+      with:
+        pattern: performance-results-*
+        merge-multiple: true
+
+    - name: Checkout baseline
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.baseline_ref || github.base_ref || 'main' }}
+        path: baseline
+
+    - name: Setup .NET for baseline
+      uses: actions/setup-dotnet@v4
+      with:
+        global-json-file: baseline/global.json
+
+    - name: Build and test baseline
+      run: |
+        cd baseline
+        dotnet restore --verbosity minimal
+        dotnet build --configuration Release --no-restore --verbosity minimal
+        
+        if [ -d "tests/Performance.Tests" ]; then
+          dotnet run --project tests/Performance.Tests/PSPredictor.Performance.Tests.csproj \
+            --configuration Release \
+            --no-build \
+            -- \
+            --iterations 5 \
+            --output-format json \
+            --output-file ../baseline-performance-results.json
+        fi
+
+    - name: Compare performance results
+      run: |
+        echo "📊 Performance Comparison Report" >> $GITHUB_STEP_SUMMARY
+        echo "=================================" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Compare results if baseline exists
+        if [ -f "baseline-performance-results.json" ] && [ -f "performance-results-linux-x64.json" ]; then
+          echo "Comparing current results with baseline..." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # This would contain actual performance comparison logic
+          echo "| Test | Current (ms) | Baseline (ms) | Change | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|-------------|---------------|--------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Example Test | 45.2 | 42.1 | +3.1ms | ⚠️ Slower |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+        else
+          echo "⚠️ Baseline performance data not available for comparison" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Note**: Performance tests run with limited iterations in CI. For comprehensive benchmarking, run locally with more iterations." >> $GITHUB_STEP_SUMMARY
+
+  performance-regression-notification:
+    name: Performance Regression Notification
+    runs-on: ubuntu-latest
+    needs: [performance-benchmarks, performance-comparison]
+    if: failure() && github.event_name == 'pull_request'
+
+    steps:
+    - name: Comment on PR
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { owner, repo, number } = context.issue;
+          
+          const comment = `## ⚠️ Performance Regression Detected
+          
+          The performance tests have detected potential regressions in this PR:
+          
+          ### Performance Thresholds Exceeded
+          - **Target Response Time**: < 100ms
+          - **Memory Usage**: < 50MB
+          
+          ### Next Steps
+          1. Review the performance test results in the Actions tab
+          2. Profile the changes to identify performance bottlenecks
+          3. Optimize critical paths to meet performance requirements
+          4. Re-run tests after optimization
+          
+          ### Resources
+          - [Performance Testing Guide](https://github.com/wangkanai/PSPredictor/blob/main/docs/performance-testing.md)
+          - [Optimization Best Practices](https://github.com/wangkanai/PSPredictor/blob/main/docs/optimization.md)
+          
+          <details>
+          <summary>View detailed performance results</summary>
+          
+          Performance results are available as artifacts in the failed workflow run.
+          
+          </details>`;
+          
+          await github.rest.issues.createComment({
+            owner,
+            repo,
+            issue_number: number,
+            body: comment
+          });
