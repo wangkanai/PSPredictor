@@ -36,13 +36,13 @@ dotnet pack --configuration Release
 
 # Install module locally for testing
 dotnet build --configuration Debug
-Import-Module ./src/PSPredictor/bin/Debug/net8.0/PSPredictor.dll -Force
+Import-Module ./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll -Force
 ```
 
 ### Module Installation and Testing
 ```powershell
 # Install development build locally
-Install-PSPredictor -Development -Path "./src/PSPredictor/bin/Debug/net8.0/PSPredictor.dll"
+Install-PSPredictor -Development -Path "./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll"
 
 # Test core functionality
 Get-PSPredictorStatus
@@ -90,7 +90,7 @@ dotnet run --project tools/PSPredictor.ModelTrainer/ -- --validate-models
 
 ```
 PSPredictor/
-├── src/                                    # Source code (C# .NET 8.0)
+├── src/                                    # Source code (C# .NET 9.0)
 │   ├── PSPredictor/                       # Main binary module project
 │   │   ├── PSPredictor.csproj            # Primary project file
 │   │   ├── Module/                        # PowerShell module definition
@@ -186,9 +186,10 @@ PSPredictor/
 │       └── 2025-07-30-PROJECT.md        # v1.x PowerShell script documentation
 ├── .github/
 │   ├── workflows/                         # GitHub Actions
-│   │   ├── build-and-test.yml           # CI/CD pipeline
-│   │   ├── publish-nuget.yml            # NuGet package publishing
-│   │   └── performance-tests.yml         # Performance regression testing
+│   │   ├── dotnet.yml                   # Cross-platform CI/CD pipeline
+│   │   ├── publish.yml                  # NuGet & PowerShell Gallery publishing
+│   │   └── performance.yml              # Performance regression testing
+│   ├── FUNDING.yml                      # GitHub sponsorship configuration
 │   └── scripts/                           # GitHub automation scripts
 │       ├── version-bump.ps1             # Version management
 │       └── generate-changelog.ps1        # Changelog generation
@@ -235,7 +236,7 @@ PSPredictor/
 
 ### Key Architecture Patterns
 
-**Binary Module Architecture**: C# .NET 8.0 PowerShell module with:
+**Binary Module Architecture**: C# .NET 9.0 PowerShell module with:
 - **Cmdlets/**: PowerShell cmdlet implementations for user interface
 - **Core/**: Core engine components (prediction, completion, syntax, history)
 - **AI/**: Machine learning integration with embedded models
@@ -291,7 +292,7 @@ PSPredictor/
 ## Technology Stack
 
 ### Core Technologies
-- **.NET 8.0**: Modern C# with latest language features and performance improvements
+- **.NET 9.0**: Modern C# with latest language features and performance improvements
 - **PowerShell SDK**: System.Management.Automation for cmdlet development
 - **ML.NET**: Local machine learning with embedded model support
 - **SQLite**: Lightweight database for command history and configuration
@@ -347,7 +348,7 @@ dotnet test
 
 # Install development build for testing
 dotnet build --configuration Debug
-Import-Module ./src/PSPredictor/bin/Debug/net8.0/PSPredictor.dll -Force
+Import-Module ./src/PSPredictor/bin/Debug/net9.0/PSPredictor.dll -Force
 ```
 
 ### Development Cycle
@@ -449,9 +450,10 @@ Import-PSPredictorConfig -Path "./my-config.json"
 ```
 
 ### GitHub Actions Workflows
-- **build-and-test.yml**: Cross-platform CI with matrix testing
-- **publish-nuget.yml**: Automated NuGet publishing on tagged releases
-- **performance-tests.yml**: Automated performance regression detection
+- **dotnet.yml**: Cross-platform CI/CD pipeline with comprehensive testing across Windows, Linux, and macOS
+- **publish.yml**: Automated dual publishing to NuGet.org and PowerShell Gallery with tag-based versioning
+- **performance.yml**: Performance regression testing with <100ms response time and <50MB memory validation
+- **FUNDING.yml**: GitHub sponsorship configuration for project sustainability
 
 ## Migration from v1.x
 

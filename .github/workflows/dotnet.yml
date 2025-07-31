@@ -1,10 +1,10 @@
-name: Build and Test
+name: .NET CI/CD
 
 on:
   push:
-    branches: [ main, dev, 'feature/*', 'release/*' ]
+    branches: [ main, develop, 'feature/*', 'release/*' ]
   pull_request:
-    branches: [ main, dev ]
+    branches: [ main, develop ]
   workflow_dispatch:
 
 env:
@@ -39,7 +39,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Required for GitVersion
+        fetch-depth: 0
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -74,8 +74,7 @@ jobs:
           --verbosity minimal `
           --logger trx `
           --results-directory TestResults/Unit `
-          --collect:"XPlat Code Coverage" `
-          --settings coverlet.runsettings
+          --collect:"XPlat Code Coverage"
       continue-on-error: false
 
     - name: Run core tests
@@ -188,81 +187,3 @@ jobs:
         name: coverage-reports
         path: TestResults/**/coverage.cobertura.xml
         retention-days: 7
-
-  code-quality:
-    name: Code Quality Analysis
-    runs-on: ubuntu-latest
-    needs: build-and-test
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        global-json-file: global.json
-
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Run code analysis
-      run: dotnet build --configuration Release --verbosity minimal --property WarningsAsErrors=""
-
-    - name: Install dotnet tools
-      run: |
-        dotnet tool install --global dotnet-reportgenerator-globaltool
-        dotnet tool install --global dotnet-coverage
-
-    - name: Download coverage reports
-      uses: actions/download-artifact@v4
-      with:
-        name: coverage-reports
-        path: coverage-reports/
-
-    - name: Generate coverage report
-      run: |
-        reportgenerator \
-          -reports:"coverage-reports/**/coverage.cobertura.xml" \
-          -targetdir:"coverage-html" \
-          -reporttypes:"Html;Cobertura" \
-          -assemblyfilters:"+PSPredictor*" \
-          -classfilters:"-*.Tests*"
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        files: ./coverage-html/Cobertura.xml
-        fail_ci_if_error: false
-        verbose: true
-
-  security-scan:
-    name: Security Scan
-    runs-on: ubuntu-latest
-    needs: build-and-test
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        global-json-file: global.json
-
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Run security scan
-      run: |
-        dotnet list package --vulnerable --include-transitive > vulnerability-report.txt 2>&1 || true
-        cat vulnerability-report.txt
-
-    - name: Upload security report
-      uses: actions/upload-artifact@v4
-      with:
-        name: security-report
-        path: vulnerability-report.txt
-        retention-days: 30

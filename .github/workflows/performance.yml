@@ -2,9 +2,9 @@ name: Performance Tests
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main, dev ]
+    branches: [ main, develop ]
   schedule:
     # Run performance tests daily at 2 AM UTC
     - cron: '0 2 * * *'
@@ -113,10 +113,6 @@ jobs:
             foreach ($failed in $failedTests) {
               Write-Host "   $($failed.Test): $($failed.ActualMs)ms (+$($failed.Difference)ms over threshold)"
             }
-            
-            # Set output for later job steps
-            $failedJson = $failedTests | ConvertTo-Json -Compress
-            Write-Host "::set-output name=performance-failures::$failedJson"
             
             if ($env:GITHUB_EVENT_NAME -eq "pull_request") {
               Write-Host "::error::Performance regression detected in PR. See details above."
@@ -276,115 +272,3 @@ jobs:
         name: performance-results-${{ matrix.runtime }}
         path: performance-results-${{ matrix.runtime }}.json
         retention-days: 30
-
-  performance-comparison:
-    name: Performance Comparison
-    runs-on: ubuntu-latest
-    needs: performance-benchmarks
-    if: github.event_name == 'pull_request'
-
-    steps:
-    - name: Checkout current branch
-      uses: actions/checkout@v4
-
-    - name: Download performance results
-      uses: actions/download-artifact@v4
-      with:
-        pattern: performance-results-*
-        merge-multiple: true
-
-    - name: Checkout baseline
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.event.inputs.baseline_ref || github.base_ref || 'main' }}
-        path: baseline
-
-    - name: Setup .NET for baseline
-      uses: actions/setup-dotnet@v4
-      with:
-        global-json-file: baseline/global.json
-
-    - name: Build and test baseline
-      run: |
-        cd baseline
-        dotnet restore --verbosity minimal
-        dotnet build --configuration Release --no-restore --verbosity minimal
-        
-        if [ -d "tests/Performance.Tests" ]; then
-          dotnet run --project tests/Performance.Tests/PSPredictor.Performance.Tests.csproj \
-            --configuration Release \
-            --no-build \
-            -- \
-            --iterations 5 \
-            --output-format json \
-            --output-file ../baseline-performance-results.json
-        fi
-
-    - name: Compare performance results
-      run: |
-        echo "📊 Performance Comparison Report" >> $GITHUB_STEP_SUMMARY
-        echo "=================================" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        # Compare results if baseline exists
-        if [ -f "baseline-performance-results.json" ] && [ -f "performance-results-linux-x64.json" ]; then
-          echo "Comparing current results with baseline..." >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-          # This would contain actual performance comparison logic
-          echo "| Test | Current (ms) | Baseline (ms) | Change | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|------|-------------|---------------|--------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Example Test | 45.2 | 42.1 | +3.1ms | ⚠️ Slower |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-        else
-          echo "⚠️ Baseline performance data not available for comparison" >> $GITHUB_STEP_SUMMARY
-        fi
-        
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Note**: Performance tests run with limited iterations in CI. For comprehensive benchmarking, run locally with more iterations." >> $GITHUB_STEP_SUMMARY
-
-  performance-regression-notification:
-    name: Performance Regression Notification
-    runs-on: ubuntu-latest
-    needs: [performance-benchmarks, performance-comparison]
-    if: failure() && github.event_name == 'pull_request'
-
-    steps:
-    - name: Comment on PR
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const { owner, repo, number } = context.issue;
-          
-          const comment = `## ⚠️ Performance Regression Detected
-          
-          The performance tests have detected potential regressions in this PR:
-          
-          ### Performance Thresholds Exceeded
-          - **Target Response Time**: < 100ms
-          - **Memory Usage**: < 50MB
-          
-          ### Next Steps
-          1. Review the performance test results in the Actions tab
-          2. Profile the changes to identify performance bottlenecks
-          3. Optimize critical paths to meet performance requirements
-          4. Re-run tests after optimization
-          
-          ### Resources
-          - [Performance Testing Guide](https://github.com/wangkanai/PSPredictor/blob/main/docs/performance-testing.md)
-          - [Optimization Best Practices](https://github.com/wangkanai/PSPredictor/blob/main/docs/optimization.md)
-          
-          <details>
-          <summary>View detailed performance results</summary>
-          
-          Performance results are available as artifacts in the failed workflow run.
-          
-          </details>`;
-          
-          await github.rest.issues.createComment({
-            owner,
-            repo,
-            issue_number: number,
-            body: comment
-          });
