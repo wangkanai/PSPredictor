@@ -1,4 +1,4 @@
-name: Publish to NuGet
+name: Publish to PowerShell Gallery
 
 on:
   push:
@@ -11,14 +11,6 @@ on:
         description: 'Version to publish (e.g., 2.0.0-alpha.1)'
         required: true
         type: string
-      nuget_source:
-        description: 'NuGet source'
-        required: false
-        default: 'https://api.nuget.org/v3/index.json'
-        type: choice
-        options:
-          - 'https://api.nuget.org/v3/index.json'
-          - 'https://pkgs.dev.azure.com/wangkanai/_packaging/wangkanai/nuget/v3/index.json'
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -62,8 +54,8 @@ jobs:
         echo "📦 Publishing version: $VERSION"
         echo "🏷️ Is prerelease: $([ "$VERSION" =~ - ] && echo "true" || echo "false")"
 
-  build-and-publish:
-    name: Build and Publish
+  build-and-package:
+    name: Build and Package
     runs-on: windows-latest
     needs: validate-version
     environment: 
@@ -146,7 +138,7 @@ jobs:
         }
       shell: pwsh
 
-    - name: Create NuGet packages
+    - name: Create packages
       run: |
         dotnet pack src/PSPredictor/PSPredictor.csproj `
           --configuration Release `
@@ -157,37 +149,6 @@ jobs:
           -p:SymbolPackageFormat=snupkg
       shell: pwsh
 
-    - name: Publish to NuGet
-      run: |
-        $apiKey = "${{ secrets.NUGET_API_KEY }}"
-        $source = "${{ github.event.inputs.nuget_source || 'https://api.nuget.org/v3/index.json' }}"
-        
-        if ([string]::IsNullOrEmpty($apiKey)) {
-          Write-Host "❌ NUGET_API_KEY secret not found"
-          exit 1
-        }
-        
-        Write-Host "🚀 Publishing to: $source"
-        
-        # Publish main package
-        $package = Get-ChildItem ./packages -Filter "PSPredictor.*.nupkg" | Where-Object { $_.Name -notlike "*symbols*" } | Select-Object -First 1
-        if ($package) {
-          Write-Host "📦 Publishing: $($package.Name)"
-          dotnet nuget push $package.FullName --api-key $apiKey --source $source --skip-duplicate
-          
-          # Publish symbols package if it exists
-          $symbolsPackage = Get-ChildItem ./packages -Filter "PSPredictor.*.snupkg" | Select-Object -First 1
-          if ($symbolsPackage) {
-            Write-Host "🔍 Publishing symbols: $($symbolsPackage.Name)"
-            dotnet nuget push $symbolsPackage.FullName --api-key $apiKey --source $source --skip-duplicate
-          }
-        } else {
-          Write-Host "❌ No package found to publish"
-          exit 1
-        }
-      shell: pwsh
-      env:
-        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
     - name: Create GitHub Release
       if: github.event_name == 'push'
@@ -231,14 +192,14 @@ jobs:
     - name: Upload packages as artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: nuget-packages-${{ needs.validate-version.outputs.version }}
+        name: packages-${{ needs.validate-version.outputs.version }}
         path: ./packages/*.nupkg
         retention-days: 90
 
   publish-to-powershell-gallery:
     name: Publish to PowerShell Gallery
     runs-on: windows-latest
-    needs: [validate-version, build-and-publish]
+    needs: [validate-version, build-and-package]
     if: success()
     environment: 
       name: ${{ needs.validate-version.outputs.is-prerelease == 'true' && 'prerelease' || 'production' }}
@@ -250,15 +211,15 @@ jobs:
     - name: Download packages
       uses: actions/download-artifact@v4
       with:
-        name: nuget-packages-${{ needs.validate-version.outputs.version }}
+        name: packages-${{ needs.validate-version.outputs.version }}
         path: ./packages
 
     - name: Publish to PowerShell Gallery
       run: |
-        $apiKey = "${{ secrets.POWERSHELL_GALLERY_API_KEY }}"
+        $apiKey = "${{ secrets.PSGALLERY_API_KEY }}"
         
         if ([string]::IsNullOrEmpty($apiKey)) {
-          Write-Host "⚠️ POWERSHELL_GALLERY_API_KEY not found, skipping PowerShell Gallery publish"
+          Write-Host "⚠️ PSGALLERY_API_KEY not found, skipping PowerShell Gallery publish"
           exit 0
         }
         
@@ -276,4 +237,4 @@ jobs:
         }
       shell: pwsh
       env:
-        POWERSHELL_GALLERY_API_KEY: ${{ secrets.POWERSHELL_GALLERY_API_KEY }}
+        PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
