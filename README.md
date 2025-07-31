@@ -282,15 +282,52 @@ bash --rcfile <TAB>       # Shows available RC files: ~/.bashrc, ~/.bash_profile
 git clone https://github.com/wangkanai/PSPredictor.git
 cd PSPredictor
 
-# Build the module
-./build.ps1
+# Restore dependencies and build C# binary module
+dotnet restore
+dotnet build --configuration Release
 
-# Run tests
-./test.ps1
+# Run comprehensive test suite
+dotnet test                                    # All tests (unit, integration, performance)
+dotnet test tests/PSPredictor.Tests/          # Core module tests
+dotnet test tests/PSPredictor.AI.Tests/       # AI/ML model tests
 
-# Install locally
-./install.ps1
+# Build NuGet package
+dotnet pack --configuration Release
+
+# Install development build locally
+Import-Module ./src/PSPredictor/bin/Release/net9.0/PSPredictor.dll -Force
 ```
+
+### Architecture Overview
+
+PSPredictor v2.0 follows a modern C# binary module architecture:
+
+```
+src/
+├── PSPredictor/                    # Main binary module (.NET 9.0)
+│   ├── Cmdlets/                   # PowerShell cmdlet implementations  
+│   ├── Core/                      # Prediction engine, completion provider
+│   ├── AI/                        # ML.NET integration with embedded models
+│   ├── Input/                     # Native input handling (Cmd/Emacs/Vi modes)
+│   ├── Rendering/                 # ANSI rendering, syntax highlighting
+│   └── Completions/               # 26+ CLI tool completion providers
+├── PSPredictor.Core/              # Shared core library
+└── PSPredictor.Shared/            # Common utilities
+
+tests/
+├── PSPredictor.Tests/             # Main module tests
+├── PSPredictor.AI.Tests/          # AI/ML prediction tests
+├── PSPredictor.Integration.Tests/ # End-to-end integration tests
+└── PSPredictor.Performance.Tests/ # Performance benchmarks
+```
+
+### Technology Stack
+
+- **.NET 9.0**: High-performance C# 13.0 with latest language features
+- **ML.NET 3.0.1**: Local machine learning with embedded models
+- **PowerShell SDK 7.4.6**: Native PowerShell cmdlet integration  
+- **xUnit + FluentAssertions**: Modern testing framework
+- **BenchmarkDotNet**: Performance regression testing
 
 ### Contributing
 
@@ -302,46 +339,114 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 4. Write tests
 5. Submit a pull request
 
-### Adding New Completions
+### Adding New CLI Tool Support
 
-```powershell
-# Example: Adding support for a new CLI tool
-Register-PSPredictorCompletion -Command "mycli" -ScriptBlock {
-    param($wordToComplete, $commandAst, $cursorPosition)
+```csharp
+// Example: Adding support for a new CLI tool in C#
+public class MyCliCompletion : BaseCompletion
+{
+    public override string ToolName => "mycli";
     
-    # Your completion logic here
-    return @("option1", "option2", "option3")
+    public override IEnumerable<CompletionResult> GetCompletions(
+        string commandLine, int cursorPosition)
+    {
+        // AI-powered completion logic with context awareness
+        var context = AnalyzeContext(commandLine, cursorPosition);
+        var predictions = _aiEngine.PredictCompletions(context);
+        
+        return predictions.Select(p => new CompletionResult(
+            p.Text, p.DisplayText, p.Description, p.ResultType));
+    }
+    
+    protected override bool ShouldCache(string input) => true;
+    protected override TimeSpan CacheDuration => TimeSpan.FromMinutes(5);
 }
 ```
 
-## 📈 Performance
+Register the new completion provider:
+```csharp
+// In CompletionProvider.cs
+RegisterProvider(new MyCliCompletion());
+```
 
-- **⚡ Startup Time**: < 100ms module load
-- **🎯 Completion Speed**: < 50ms average response
-- **💾 Memory Usage**: < 10MB runtime footprint
-- **📦 Size**: < 5MB total package size
+## 📈 Performance Specifications
 
-## 🔗 Related Projects
+### Response Time Targets (v2.0)
+- **⚡ Completion Generation**: < 50ms for standard completions
+- **🧠 AI Predictions**: < 100ms for ML-powered suggestions  
+- **🎨 Syntax Highlighting**: < 20ms for real-time coloring
+- **📝 Multi-line Rendering**: < 30ms for complex command structures
 
-- [PSReadLine](https://github.com/PowerShell/PSReadLine) - Enhanced command line editing
-- [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) - Beautiful prompt themes
-- [PSFzf](https://github.com/kelleyma49/PSFzf) - Fuzzy finder integration
-- [posh-git](https://github.com/dahlbyk/posh-git) - Git integration for PowerShell
+### Memory Efficiency
+- **🚀 Startup Footprint**: < 20MB initial memory usage
+- **💾 Runtime Footprint**: < 50MB for typical usage patterns
+- **🤖 Model Loading**: Lazy loading with < 5MB core embedded models
+- **📚 History Management**: SQLite with automatic cleanup and archiving
+
+### Architecture Performance
+- **🔧 C# Binary Module**: Native .NET 9.0 performance with JIT optimization
+- **🌐 Cross-Platform**: Consistent performance across Windows, Linux, macOS (x64/ARM64)
+- **💡 Intelligent Caching**: LRU cache with 1000-item capacity and 5-minute TTL
+- **⚙️ Resource Management**: Dynamic memory allocation with automatic garbage collection
+
+## 🔗 Related Projects & Ecosystem
+
+### PowerShell Enhancement Tools
+- [PSReadLine](https://github.com/PowerShell/PSReadLine) - Enhanced command line editing (PSPredictor v2.0 is independent)
+- [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) - Beautiful prompt themes (compatible)
+- [PSFzf](https://github.com/kelleyma49/PSFzf) - Fuzzy finder integration (complementary)
+- [posh-git](https://github.com/dahlbyk/posh-git) - Git integration for PowerShell (enhanced by PSPredictor)
+
+### AI & Machine Learning
+- [ML.NET](https://github.com/dotnet/machinelearning) - Core machine learning framework used in PSPredictor
+- [PowerShell AI](https://github.com/dfinke/PowerShellAI) - AI integration for PowerShell (complementary)
+
+### Development Tools
+- [PowerShell Extension for VS Code](https://github.com/PowerShell/vscode-powershell) - IDE integration
+- [Pester](https://github.com/pester/Pester) - PowerShell testing framework
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🛣️ Roadmap & Version History
+
+### v2.0.0 (In Development) - The Revolutionary Rewrite
+- **Complete Architecture Rewrite**: PowerShell scripts → C# .NET 9.0 binary module
+- **AI-Powered Intelligence**: ML.NET integration with embedded models
+- **Native Input System**: PSReadLine-independent with advanced editing modes
+- **IDE-Like Features**: Real-time syntax highlighting, error indication, multi-line editing
+- **Cross-Platform Performance**: Full ARM64 support including Apple Silicon Macs
+
+### v1.x (Legacy) - PowerShell Script Foundation
+- PowerShell script-based completion system
+- Basic CLI tool support and tab completion
+- PSReadLine dependency for input handling
+- Community-driven completion definitions
+
+For detailed v1.x documentation, see `docs/archives/2025-07-30-PROJECT.md`
+
 ## 🙏 Acknowledgments
 
-- PowerShell team for the excellent PSReadLine module
-- All CLI tool maintainers for their fantastic tools
-- Community contributors for completions and feedback
+### v2.0 Development
+- **.NET Team**: For the powerful .NET 9.0 platform and ML.NET framework
+- **PowerShell Team**: For the excellent PowerShell SDK and System.Management.Automation
+- **ML.NET Team**: For local machine learning capabilities and AutoML
+- **Community Contributors**: For testing, feedback, and CLI tool expertise
+
+### Legacy v1.x Foundation  
+- **PowerShell Team**: For PSReadLine module that inspired v1.x architecture
+- **CLI Tool Maintainers**: For creating the fantastic tools we enhance
+- **Early Adopters**: For feedback and contributions to the PowerShell script foundation
 
 ---
 
-## Made with ❤️ for the PowerShell community
+## 🚀 Made with ❤️ and AI for the PowerShell community
 
-[Report Bug](https://github.com/wangkanai/PSPredictor/issues) ·
-[Request Feature](https://github.com/wangkanai/PSPredictor/issues) ·
-[Contribute](CONTRIBUTING.md)
+**Transform your terminal into an intelligent, IDE-like experience with PSPredictor v2.0**
+
+[📋 Report Bug](https://github.com/wangkanai/PSPredictor/issues) ·
+[💡 Request Feature](https://github.com/wangkanai/PSPredictor/issues) ·
+[🤝 Contribute](CONTRIBUTING.md) ·
+[📚 Documentation](docs/) ·
+[🏗️ Architecture](docs/FRAMEWORK.md)
